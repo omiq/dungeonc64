@@ -1,0 +1,155 @@
+program dungeon64;
+
+	@projectsettings "system" PET
+	@projectsettings "petmodel" "4032"
+
+/*
+
+	@projectsettings "system" C64
+
+
+*/
+
+
+
+
+
+@use "text/txt"
+@use "levels"
+
+var
+	player_char: byte=0;	
+	key_press: byte=0;
+	charat:byte;
+	game_won,game_running: byte;
+	x,y,oldx,oldy,i,c,l,w,r: byte;
+	
+	@include "functions.inc"
+
+@ifdef C64	
+	@include "c64.inc"
+@endif
+
+	procedure init_screen();
+	begin
+		
+		// Clear screen,
+		txt::cls();
+
+		game_won:=false;
+		game_running:=true;
+
+		// Draw current level
+		levels::draw_level();
+		
+		// Draw the player
+		levels::plot_buffer(x,y, player_char);
+		
+		// Update the screen from the buffer
+		levels::refresh_screen();
+	end;
+	
+
+
+
+
+
+
+begin
+
+	// Initialise start position
+	x:=5;
+	y:=5;	
+
+	@ifdef C64
+		// C64 has it's own special characters
+		c64_chars();
+		player_char:=0;
+		
+	@endif
+
+	// Initial screen fill
+	init_screen();
+
+	
+	// Infinite loop
+	while(1) do begin
+	
+	
+		/*
+		
+		Show start screen
+		
+		
+		*/
+	
+	
+	
+	
+		// Main loop
+		while(game_running) do
+		begin
+	
+			
+			
+			// Backup the current position			
+			oldx:=x;
+			oldy:=y;
+	
+			// Get keyboard input
+			key_press:=txt::get_key();
+	
+				// Check the pressed key
+				case key_press of
+			       
+					// Cursor keys defined in unit		        
+					txt::CUR_U: if(y>0) then dec(y);
+					txt::CUR_D: if(y<23) then inc(y);
+					txt::CUR_L: if(x>0) then dec(x);
+					txt::CUR_R: if(x<39) then inc(x);
+			        
+				end;
+				
+	
+				// Find out if the space we want to move to
+				// is empty or if it contains anything special
+				charat:=levels::get_buffer(x,y);
+	
+				
+				// $20 is space
+				if(charat=$20 or charat=player_char) then
+				begin
+					
+					// Keep the new position and output
+					// our @ symbol
+					levels::plot_buffer(x,y, player_char);
+					levels::plot_buffer(oldx,oldy,32);
+		
+				end
+				else
+				begin
+				
+					// Tile isn't empty so check what should happen
+					check_collision();
+		
+				end;
+	
+			
+				// Update screen from the buffer
+				levels::refresh_screen();
+			
+		end;
+		
+			
+		/*
+		
+		Show end screen
+		
+		
+		*/
+	
+	
+	end;
+		
+end.
+

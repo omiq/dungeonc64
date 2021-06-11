@@ -1,0 +1,85 @@
+Unit levels;
+var
+	
+	// Variables
+	r, row, column, height, width, b: byte;
+	level: incbin("map-pet.flf");
+	temp_s, temp_d, screen, dest, ch_index: pointer;
+	this_row: integer;
+		
+	// screen buffer
+	screen_buffer: array[1000] of byte;
+
+	procedure draw_level();
+	begin
+		
+		dest:=#screen_buffer;
+		temp_s:=#level+45;
+				
+		for r:=0 to 20 do
+		begin
+			MemCpyFast(temp_s, 0, dest,40);
+			dest:=dest+40;
+			temp_s:=temp_s+40;
+		end;	
+
+		
+	end;
+
+
+	// Seems there are 45 bytes of goodness knows
+	// what in the level
+	procedure get_header();
+	
+	begin
+		
+		// Read level header info
+		fori b:=0 to 45 do
+		begin
+			txt::print_dec(level[b],True);
+		end;
+	end;
+	
+
+	procedure refresh_screen();
+	begin
+		
+		//CopyFullScreen(#screen_buffer,SCREEN_CHAR_LOC);
+		temp_s:=#screen_buffer;
+		
+		// Need rows at the bottom 
+		// for text output
+		for r:=0 to 20 do
+		begin
+			dest:=txt::ytab[r];
+			MemCpyFast(temp_s, 0, #dest, 40);
+			temp_s:=temp_s+40;
+		end;	
+
+		
+
+	end;
+
+
+	// Put a char in the screen buffer
+	function get_buffer(buf_x, buf_y: byte):byte;
+	begin
+		
+		ch_index:=#screen_buffer+(buf_y*40)+buf_x;
+		get_buffer:=ch_index[0];
+		
+	end;
+
+
+	// Put a char in the screen buffer
+	procedure plot_buffer(plot_x, plot_y: byte, plot_ch: byte);
+	begin
+		
+		ch_index:=#screen_buffer+(plot_y*40)+plot_x;
+		ch_index[0]:=plot_ch;
+		
+	end;
+
+
+
+end.

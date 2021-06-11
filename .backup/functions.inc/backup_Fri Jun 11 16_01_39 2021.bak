@@ -1,0 +1,98 @@
+	procedure show_start_screen();
+	begin
+
+		txt::cls();
+		if (game_running=false) then 
+		begin	
+			txt::print_string("DUNGEON CRAWL GAME FOR COMMODORES",true);
+		end;
+
+		txt::wait_key();
+
+
+	end;
+
+
+
+	procedure show_end_screen();
+	begin
+
+		txt::cls();
+		if (game_won) then 
+		begin	
+			txt::print_string("YAY YOU WON!",true);
+		end
+		else
+		begin
+			txt::print_string("EEK YOU DIED!",true);
+		end;
+
+		txt::wait_key();
+
+
+	end;
+
+
+	procedure door();
+	begin
+		levels::screen_buffer[40]:="D";
+		
+		if(keys>0) then 
+		begin
+			dec(keys);
+		end
+		else
+		begin
+			// Reset to backup position
+			x:=oldx;
+			y:=oldy;	
+		end;
+		
+	end;		
+
+	
+	procedure check_collisions();
+	begin
+		
+		
+		case charat of	
+
+			$0B: // Key
+				begin 
+					levels::screen_buffer[40]:="K";
+					inc(keys);
+			 	end;
+
+			$58: // Artifact
+				begin
+					levels::screen_buffer[40]:="A";
+				end;
+
+			$5D: door();
+			$43: door();
+		
+
+		 	player_char: 
+		 		begin
+
+		 		end;
+
+		 
+		else
+		begin
+			
+				// Reset to backup position
+				x:=oldx;
+				y:=oldy;		
+			
+				// Unknown
+				_A:=charat;
+				txt::move_to(0,21);
+				txt::print_string("EXISTING TILE:       ", false);
+				txt::move_to(15,21);
+				txt::print_dec(charat, false);
+			
+		end;
+			
+		
+	end;

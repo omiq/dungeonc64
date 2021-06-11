@@ -1,0 +1,46 @@
+Unit map;
+var
+	
+	
+	i, x, y: byte;
+	height, width: byte;
+	level: incbin("map.bin");
+
+
+
+procedure get_header();
+
+begin
+	
+	// Read level header info
+	fori i:=0 to 8 do
+	begin
+		txt::print_dec(level[i],True);
+	end;
+end;
+
+procedure paint_map();
+begin
+
+	height:=24;
+	width:=40;
+
+	// Fill screen with chars
+	for y:=0 to height do 
+	begin
+		for x:=0 to width do 
+		begin
+			
+			txt::put_char_at(x,y,level[i]);
+			i:=i+1;
+
+		 end;
+
+	end;
+
+
+end;
+
+
+
+end.
