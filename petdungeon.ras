@@ -1,14 +1,14 @@
 program dungeon64;
 @use "text/txt"
 @use "levels"
-/*
+
 	@projectsettings "system" PET
 	@projectsettings "petmodel" "4032"
 
-*/
 
 
-	@projectsettings "system" C64
+
+//	@projectsettings "system" C64
 
 
 var
