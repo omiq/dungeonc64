@@ -50,8 +50,6 @@
 		poke(^53280,0,0);
 		poke(^53281,0,0);
 		
-		// Forecolour to white for now
-		ClearScreen(1,SCREEN_COL_LOC);
 		
 		// Ensure no flashing cursor
 		txt::cursor_off();
@@ -65,7 +63,9 @@
 
 		txt::cls();
 		if (game_running=false) then 
-		begin	
+		begin
+			// Text colour to green:
+			txt::put_ch(30);	
 			txt::print_string("DUNGEON CRAWL GAME FOR COMMODORES",true);
 		end;
 
