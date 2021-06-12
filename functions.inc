@@ -32,10 +32,17 @@
 	var
 		dest,temp_s:pointer;
 	begin
+		
 		// Set to use the new characterset
 		setbank(vic_bank1);
 		setcharsetlocation($6000);
 		
+		// Force the screen address
+		txt::temp_address_p:=$4400;
+		
+		// Tells basic routines where screen memory is located
+		poke(^648,0,68);
+	
 		// Clear screen,
 		txt::cls();
 	
@@ -44,7 +51,7 @@
 		poke(^53281,0,0);
 		
 		// Forecolour to white for now
-		ClearScreen(1,^$D800);
+		ClearScreen(1,SCREEN_COL_LOC);
 		
 		// Ensure no flashing cursor
 		txt::cursor_off();
