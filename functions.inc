@@ -1,3 +1,57 @@
+
+
+	
+	procedure init();
+	begin
+		
+		// Initialise start position
+		x:=5;
+		y:=5;	
+		
+		// Initialise player inventory
+		keys:=0;
+		
+		// Clear screen,
+		txt::cls();
+
+		game_won:=false;
+		game_running:=true;
+
+		// Draw current level
+		levels::draw_level();
+		
+		// Draw the player
+		levels::plot_buffer(x,y, player_char);
+		
+		// Update the screen from the buffer
+		levels::refresh_screen();
+	end;
+	
+
+	procedure c64_chars();
+	var
+		dest,temp_s:pointer;
+	begin
+		// Set to use the new characterset
+		SetCharsetLocation(^$6000); 
+		
+		// Clear screen,
+		txt::cls();
+	
+		// Black screen
+		poke(^53280,0,0);
+		poke(^53281,0,0);
+		
+		// Forecolour to white for now
+		ClearScreen(1,^$D800);
+		
+		// Ensure no flashing cursor
+		txt::cursor_off();
+	
+	end;
+	
+
+
 	procedure show_start_screen();
 	begin
 

@@ -5,10 +5,7 @@ var
 	r, row, column, height, width, b: byte;
 	
 
-//level: incbin("map.flf");
-	
-
-	level: array[1000] of byte;
+	//level: array[1000] of byte;
 
 	wall_tiles: array[108] of byte = (
 		240,241,242,242,241,242,241,242,242,242,242,241, 
@@ -28,6 +25,12 @@ var
 		
 	// screen buffer
 	screen_buffer: array[1000] of byte;
+	
+	
+	level: incbin("map.flf");	
+
+
+	
 	
 	procedure draw_tile(t_x, t_y, tile_no: byte);
 	begin
@@ -121,7 +124,7 @@ var
 	procedure draw_level();
 	begin
 
-
+		/*
 		draw_tile(0,0,0);
 		draw_tile(1,0,1);		
 		draw_tile(2,0,1);		
@@ -196,11 +199,12 @@ var
 		draw_tile(6,6,5);		
 		draw_tile(7,6,5);		
 		draw_tile(8,6,6);	
-		
+		*/
 
 		
 		dest:=#screen_buffer;
-		temp_s:=#level;//+45;
+		//temp_s:=#level;
+		temp_s:=#level+45;
 				
 		for r:=0 to 20 do
 		begin

@@ -2,16 +2,22 @@ program dungeon64;
 @use "text/txt"
 @use "levels"
 
-	@projectsettings "system" PET
-	@projectsettings "petmodel" "4032"
+	//@projectsettings "system" PET
+	//@projectsettings "petmodel" "4032"
 
+	@projectsettings "system" C64
 
-
-
-//	@projectsettings "system" C64
 
 
 var
+	
+@ifdef C64	
+	// Custom characterset
+	@export "custom.flf" "custom.bin" 256
+	charset: incbin("custom.bin", $6000);
+
+@endif		
+	
 	player_char: byte=0;	
 	key_press: byte=0;
 	charat:byte;
@@ -21,46 +27,10 @@ var
 	
 	//player inventory
 	keys: byte=0;
-	
 
-
-@ifdef C64	
-	@include "c64.inc"
-@endif
-
+// ********************************
 	@include "functions.inc"
-	
-	procedure init();
-	begin
-		
-		// Initialise start position
-		x:=5;
-		y:=5;	
-		
-		// Initialise player inventory
-		keys:=0;
-		
-		// Clear screen,
-		txt::cls();
-
-		game_won:=false;
-		game_running:=true;
-
-		// Draw current level
-		levels::draw_level();
-		
-		// Draw the player
-		levels::plot_buffer(x,y, player_char);
-		
-		// Update the screen from the buffer
-		levels::refresh_screen();
-	end;
-	
-
-
-
-
-
+// ********************************
 
 begin
 
