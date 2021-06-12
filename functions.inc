@@ -34,7 +34,7 @@
 	begin
 		// Set to use the new characterset
 		setbank(vic_bank1);
-		setcharsetlocation($2000);
+		setcharsetlocation($6000);
 		
 		// Clear screen,
 		txt::cls();

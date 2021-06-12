@@ -273,7 +273,7 @@ txt_DefineScreen_ConditionalTrueBlock7: ;Main true block ;keep
 txt_DefineScreen_elsedoneblock9
 	; LineNumber: 273
 	lda #$00
-	ldx #$04
+	ldx #$44
 	sta txt_temp_address_p
 	stx txt_temp_address_p+1
 	; LineNumber: 281
@@ -1837,7 +1837,7 @@ check_collisions_stringassignstr264		dc.b	"ARTIFACT!         "
 	dc.b	0
 check_collisions_stringassignstr273		dc.b	"EXISTING TILE:       "
 	dc.b	0
-	org $2000
+	org $6000
 charset
 	incbin "/Users/chris.garrett/GitHub/dungeonc64///custom.bin"
-EndBlock2000
+EndBlock6000

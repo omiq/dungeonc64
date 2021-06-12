@@ -242,7 +242,7 @@ var
 		for r:=0 to 20 do
 		begin
 			dest:=txt::ytab[r];
-			MemCpyFast(temp_s, 0, #dest, 40);
+			MemCpyFast(temp_s, 0, dest, 40);
 			temp_s:=temp_s+40;
 		end;	
 
