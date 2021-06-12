@@ -33,7 +33,7 @@
 		dest,temp_s:pointer;
 	begin
 		// Set to use the new characterset
-		SetCharsetLocation(^$6000); 
+		SetCharsetLocation(^$3000); 
 		
 		// Clear screen,
 		txt::cls();
