@@ -34,11 +34,11 @@ txt_temp_i	dc.b	$00
 	; LineNumber: 5
 levels_r	dc.b	0
 	; LineNumber: 23
-levels_temp_s	=    $04
+levels_temp_s	=  $04
 	; LineNumber: 23
-levels_dest	=    $08
+levels_dest	=  $08
 	; LineNumber: 23
-levels_ch_index	=    $16
+levels_ch_index	=  $16
 	; LineNumber: 27
 levels_screen_buffer	dc.b	 
 	org levels_screen_buffer+1000
@@ -526,7 +526,7 @@ txt_cursor_return
 	; LineNumber: 463
 txt_next_ch	dc.b	0
 	; LineNumber: 461
-txt_in_str	=    $0B
+txt_in_str	=  $0B
 	; LineNumber: 461
 txt_CRLF	dc.b	$01
 txt_print_string_block56
@@ -681,7 +681,7 @@ txt_print_dec_ConditionalTrueBlock120: ;Main true block ;keep
 	lda #$a
 	sta mul16x8_num2
 	jsr mul16x8_procedure
-txt_print_dec_rightvarInteger_var144 =    $56
+txt_print_dec_rightvarInteger_var144 =  $56
 	sta txt_print_dec_rightvarInteger_var144
 	sty txt_print_dec_rightvarInteger_var144+1
 	; Right is PURE NUMERIC : Is word =1
@@ -744,7 +744,7 @@ txt_print_dec_elsedoneblock148
 ; // right digit
 	; Modulo
 	lda #$a
-txt_print_dec_val_var153 =    $56
+txt_print_dec_val_var153 =  $56
 	sta txt_print_dec_val_var153
 	lda txt__in_n
 	sec
@@ -816,7 +816,7 @@ txt_print_dec_elseblock121
 	lda #$a
 	sta mul16x8_num2
 	jsr mul16x8_procedure
-txt_print_dec_rightvarInteger_var157 =    $56
+txt_print_dec_rightvarInteger_var157 =  $56
 	sta txt_print_dec_rightvarInteger_var157
 	sty txt_print_dec_rightvarInteger_var157+1
 	lda txt__in_n+1
@@ -1084,13 +1084,13 @@ levels_get_buffer
 	; Generic 16 bit op
 	ldy #0
 	lda levels_buf_x
-levels_get_buffer_rightvarInteger_var197 =    $56
+levels_get_buffer_rightvarInteger_var197 =  $56
 	sta levels_get_buffer_rightvarInteger_var197
 	sty levels_get_buffer_rightvarInteger_var197+1
 	; Generic 16 bit op
 	lda #<levels_screen_buffer
 	ldy #>levels_screen_buffer
-levels_get_buffer_rightvarInteger_var200 =    $58
+levels_get_buffer_rightvarInteger_var200 =  $58
 	sta levels_get_buffer_rightvarInteger_var200
 	sty levels_get_buffer_rightvarInteger_var200+1
 	; Right is PURE NUMERIC : Is word =1
@@ -1147,13 +1147,13 @@ levels_plot_buffer
 	; Generic 16 bit op
 	ldy #0
 	lda levels_plot_x
-levels_plot_buffer_rightvarInteger_var204 =    $56
+levels_plot_buffer_rightvarInteger_var204 =  $56
 	sta levels_plot_buffer_rightvarInteger_var204
 	sty levels_plot_buffer_rightvarInteger_var204+1
 	; Generic 16 bit op
 	lda #<levels_screen_buffer
 	ldy #>levels_screen_buffer
-levels_plot_buffer_rightvarInteger_var207 =    $58
+levels_plot_buffer_rightvarInteger_var207 =  $58
 	sta levels_plot_buffer_rightvarInteger_var207
 	sty levels_plot_buffer_rightvarInteger_var207+1
 	; Right is PURE NUMERIC : Is word =1
@@ -1259,9 +1259,9 @@ init
 	;    Procedure type : User-defined procedure
 	; LineNumber: 65
 	; LineNumber: 64
-dest	=    $0B
+dest	=  $0B
 	; LineNumber: 64
-temp_s	=    $0D
+temp_s	=  $0D
 c64_chars_block209
 c64_chars
 	; LineNumber: 68
