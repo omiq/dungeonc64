@@ -23,10 +23,17 @@ var
 	charat:byte;
 	game_won,game_running: byte;
 	x,y,oldx,oldy,i,c,l,w,r: byte;
+	status_message: cstring=("                                     ");
+	new_status, the_status: pointer;
 	
-	
-	//player inventory
+	//player inventory/stats
 	keys: byte=0;
+	gold: integer=0;
+	health: byte=12;
+	magic: byte=12;
+	strength: byte=12;
+	attack: byte=12;
+	defense: byte=12;
 
 // ********************************
 	@include "functions.inc"
@@ -56,7 +63,8 @@ begin
 		// Initial screen fill
 		// and (re)set variables
 		init();
-
+		update_status("WELCOME ADVENTURER!");
+		display_text();
 	
 	
 		// Main loop

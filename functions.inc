@@ -18,6 +18,7 @@
 		game_running:=true;
 
 		// Draw current level
+		levels::current_level:=1;
 		levels::draw_level();
 		
 		// Draw the player
@@ -27,35 +28,35 @@
 		levels::refresh_screen();
 	end;
 	
-
-	procedure c64_chars();
-	var
-		dest,temp_s:pointer;
-	begin
+	@ifdef C64
+		procedure c64_chars();
+		var
+			dest,temp_s:pointer;
+		begin
+			
+			// Set to use the new characterset
+			setbank(vic_bank1);
+			setcharsetlocation($6000);
+			
+			// Force the screen address
+			txt::temp_address_p:=$4400;
+			
+			// Tells basic routines where screen memory is located
+			poke(^648,0,68);
 		
-		// Set to use the new characterset
-		setbank(vic_bank1);
-		setcharsetlocation($6000);
+			// Clear screen,
+			txt::cls();
 		
-		// Force the screen address
-		txt::temp_address_p:=$4400;
+			// Black screen
+			poke(^53280,0,0);
+			poke(^53281,0,0);
+			
+			
+			// Ensure no flashing cursor
+			txt::cursor_off();
 		
-		// Tells basic routines where screen memory is located
-		poke(^648,0,68);
-	
-		// Clear screen,
-		txt::cls();
-	
-		// Black screen
-		poke(^53280,0,0);
-		poke(^53281,0,0);
-		
-		
-		// Ensure no flashing cursor
-		txt::cursor_off();
-	
-	end;
-	
+		end;
+	@endif
 
 
 	procedure show_start_screen();
@@ -69,7 +70,7 @@
 			txt::print_string("DUNGEON CRAWL GAME FOR COMMODORES",true);
 		end;
 
-		txt::wait_key();
+		//txt::wait_key();
 
 
 	end;
@@ -93,6 +94,61 @@
 
 
 	end;
+	
+	procedure display_text();
+	begin
+	
+		txt::put_ch(18);
+		txt::move_to(0,21);
+		txt::print_string("                    ", false);
+		txt::move_to(0,21);
+		txt::print_string(the_status, false);
+		txt::put_ch(146);
+		
+		txt::move_to(25,22);
+		txt::put_ch(75);
+		txt::put_ch(32);	
+		txt::print_dec(keys, false);
+		
+		txt::move_to(25,23);
+		txt::put_ch(122);
+		txt::put_ch(32);	
+		txt::print_dec(gold, false);
+		
+		
+		txt::move_to(33,21);
+		txt::put_ch(18);
+		txt::put_ch(211);
+		txt::put_ch(146);
+		txt::put_ch(32);	
+		txt::print_dec(health, false);
+	
+		
+		txt::move_to(33,22);
+		txt::put_ch(118);
+		txt::put_ch(32);	
+		txt::print_dec(attack, false);
+		
+		
+		txt::move_to(33,23);
+		txt::put_ch(18);
+		txt::put_ch(214);
+		txt::put_ch(146);
+		txt::put_ch(32);		
+		txt::print_dec(defense, false);
+		
+		
+		
+		
+	end;
+
+	procedure update_status(new_status: global pointer);
+	begin
+		
+		the_status:=new_status;
+		display_text();
+		
+	end;
 
 
 	procedure door();
@@ -102,12 +158,11 @@
 		if(keys>0) then 
 		begin
 			dec(keys);
-			txt::print_string("KEY USED!                ",true);
+			update_status("KEY USED!");
 		end
 		else
 		begin
-			
-			txt::print_string("YOU NEED A KEY!          ",true);
+			update_status("YOU NEED A KEY!");
 			
 			// Reset to backup position
 			x:=oldx;
@@ -120,22 +175,37 @@
 	procedure check_collisions();
 	begin
 		
-		txt::move_to(0,21);
+
 		case charat of	
 
 			$0B: // Key
 				begin 
 					inc(keys);
-					txt::print_string("KEY!              ",true);
+					update_status("KEY ACQUIRED");
 			 	end;
 
 			$58: // Artifact
 				begin
-					txt::print_string("ARTIFACT!         ",true);
+					update_status("ARTIFACT!");
 				end;
 
 			$5D: door();
 			$43: door();
+			
+			90: // Jewell
+				begin
+					gold:=gold+100;
+					update_status("KA-CHING!");
+
+				end;		
+
+			
+			83: // Health potion
+				begin
+					health:=health+1;
+					update_status("AHH THAT'S BETTER!");
+
+				end;	
 		
 
 		 	player_char: 
@@ -153,7 +223,7 @@
 			
 				// Unknown
 				_A:=charat;
-				txt::print_string("EXISTING TILE:       ", false);
+				update_status("EXISTING TILE:");
 				txt::move_to(15,21);
 				txt::print_dec(charat, false);
 			

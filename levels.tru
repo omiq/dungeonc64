@@ -3,7 +3,7 @@ var
 	
 	// Variables
 	r, row, column, height, width, b: byte;
-	
+	current_level: integer=0;
 
 	//level: array[1000] of byte;
 
@@ -120,11 +120,11 @@ var
 		MemCpyFast(temp_s, 0, dest,3);
 
 	end;
-
-	procedure draw_level();
+	
+	
+	procedure draw_level_tiles();
 	begin
-
-		/*
+		
 		draw_tile(0,0,0);
 		draw_tile(1,0,1);		
 		draw_tile(2,0,1);		
@@ -199,12 +199,20 @@ var
 		draw_tile(6,6,5);		
 		draw_tile(7,6,5);		
 		draw_tile(8,6,6);	
-		*/
+	
+
+	end;
+	
+
+	procedure draw_level();
+	var
+		level_size:integer=1000;
+	begin
 
 		
 		dest:=#screen_buffer;
 		//temp_s:=#level;
-		temp_s:=#level+45;
+		temp_s:=#level+46;
 				
 		for r:=0 to 20 do
 		begin
