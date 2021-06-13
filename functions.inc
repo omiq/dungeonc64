@@ -171,6 +171,36 @@
 		
 	end;		
 
+
+	procedure combat();
+	begin
+	
+		
+		if((random()/12)>10) then
+		begin
+			update_status("YOU WON THIS FIGHT");
+		end		
+		else
+		begin
+			
+			dec(health);
+	
+			// Reset to backup position
+			x:=oldx;
+			y:=oldy;		
+			
+			update_status("YOU LOST THIS FIGHT");
+			
+			if(health<=0) then 
+			begin
+				game_won:=false;
+				game_running:=false;
+			end;
+			
+		end;
+			
+	end;
+
 	
 	procedure check_collisions();
 	begin
@@ -183,6 +213,14 @@
 					inc(keys);
 					update_status("KEY ACQUIRED");
 			 	end;
+			 	
+			42: // Spider
+				begin
+					
+					update_status("SPIDER ATTACKS!"); 
+					combat();
+	
+				end;
 
 			$58: // Artifact
 				begin
@@ -192,12 +230,7 @@
 			$5D: door();
 			$43: door();
 			
-			90: // Jewell
-				begin
-					gold:=gold+100;
-					update_status("KA-CHING!");
 
-				end;		
 
 			
 			83: // Health potion
@@ -206,6 +239,21 @@
 					update_status("AHH THAT'S BETTER!");
 
 				end;	
+				
+			87: // Gobbo
+				begin				
+					
+					update_status("GOBBO ATTACKS!");
+					combat();
+				end;			
+		
+			90: // Jewell
+				begin
+					gold:=gold+100;
+					update_status("KA-CHING!");
+
+				end;		
+		
 		
 
 		 	player_char: 
