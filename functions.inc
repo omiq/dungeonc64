@@ -67,10 +67,34 @@
 		begin
 			// Text colour to green:
 			txt::put_ch(30);	
-			txt::print_string("DUNGEON CRAWL GAME FOR COMMODORES",true);
+			txt::put_ch(13);		
+			txt::put_ch(13);
+			txt::print_string_centered("DUNGEON OF COMMODORE", true, 40);				
+			txt::print_string_centered("A DUNGEON CRAWL ADVENTURE", true, 40);
+			txt::print_string_centered("FOR COMMODORE PET AND C64", true, 40);		
+			txt::put_ch(13);		
+			txt::put_ch(13);
+			txt::print_string_centered("BY", true, 40);
+			txt::print_string_centered("CHRIS GARRETT / RETROGAMECODERS", true, 40);		
+			txt::print_string_centered("(C)2021", true, 40);	
+			txt::put_ch(13);
+			txt::print_string_centered("BUILT WITH TRSE", true, 40);
+			txt::put_ch(13);		
+			txt::put_ch(13);
+			txt::print_string_centered("@ = YOU", true, 40);
+			txt::print_string_centered("k = KEY", true, 40);
+			txt::print_string_centered("s = HEALTH POTION", true, 40);
+			txt::print_string_centered("x = ARTIFACT", true, 40);			
 		end;
 
-		//txt::wait_key();
+		// Wait for keypress
+		txt::put_ch(13);
+		txt::put_ch(18);
+		txt::print_string_centered("PRESS A KEY TO CONTINUE", false, 40);
+		txt::print_space(txt::max_digits);
+		txt::put_ch(13);
+		txt::put_ch(146);
+		txt::wait_key();
 
 
 	end;
@@ -83,13 +107,18 @@
 		txt::cls();
 		if (game_won) then 
 		begin	
-			txt::print_string("YAY YOU WON!",true);
+			txt::print_string_centered("YAY YOU WON!", true, 40);
 		end
 		else
 		begin
-			txt::print_string("EEK YOU DIED!",true);
+			txt::print_string_centered("EEK YOU DIED!", true, 40);
 		end;
 
+		// Wait for keypress
+		txt::print_string_centered(" ", true, 40);
+		txt::put_ch(18);
+		txt::print_string_centered("PRESS A KEY TO CONTINUE", true, 40);
+		txt::put_ch(146);
 		txt::wait_key();
 
 
@@ -106,7 +135,7 @@
 		txt::put_ch(146);
 		
 		txt::move_to(25,22);
-		txt::put_ch(75);
+		txt::put_ch(203);
 		txt::put_ch(32);	
 		txt::print_dec(keys, false);
 		
@@ -214,10 +243,10 @@
 					update_status("KEY ACQUIRED");
 			 	end;
 			 	
-			42: // Spider
+			42: // Gazer
 				begin
 					
-					update_status("SPIDER ATTACKS!"); 
+					update_status("GAZER ATTACKS!"); 
 					combat();
 	
 				end;
