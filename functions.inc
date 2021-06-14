@@ -192,6 +192,17 @@
 		begin
 			dec(keys);
 			update_status("KEY USED!");
+			
+			if(x=0) then update_status("KEY USED! W");
+			if(x=30) then update_status("KEY USED! E");
+			if(y=0) then update_status("KEY USED! N");
+			if(y=17) then 
+			begin
+				update_status("KEY USED! S");
+				inc(levels::current_level);
+				dec(y);
+				levels::draw_level();
+			end;
 		end
 		else
 		begin
@@ -241,12 +252,7 @@
 
 		case charat of	
 
-			$0B: // Key
-				begin 
-					inc(keys);
-					update_status("KEY ACQUIRED");
-			 	end;
-			 	
+
 			42: // Gazer
 				begin
 					
@@ -260,11 +266,14 @@
 					update_status("ARTIFACT!");
 				end;
 
-			$5D: door();
 			$43: door();
-			
 
-
+			75: // Key
+				begin 
+					inc(keys);
+					update_status("KEY ACQUIRED");
+			 	end;
+			 				
 			
 			83: // Health potion
 				begin
@@ -287,6 +296,13 @@
 
 				end;		
 		
+			94: // Rat
+				begin
+					
+					update_status("RAT ATTACKS!"); 
+					combat();
+	
+				end;
 		
 
 		 	player_char: 
