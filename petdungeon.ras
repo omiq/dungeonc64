@@ -12,9 +12,9 @@ program dungeon64;
 var
 	
 @ifdef C64	
+
 	// Custom characterset
-	@export "custom.flf" "custom.bin" 256
-	charset: incbin("custom.bin", $6000);
+	charset: incbin("levels/chars.bin", $6000);
 
 @endif		
 	

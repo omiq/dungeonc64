@@ -18,7 +18,7 @@
 		game_running:=true;
 
 		// Draw current level
-		levels::current_level:=1;
+		levels::current_level:=0;
 		levels::draw_level();
 		
 		// Draw the player
@@ -132,9 +132,9 @@
 	begin
 	
 		txt::put_ch(18);
-		txt::move_to(0,21);
+		txt::move_to(0,19);
 		txt::print_string("                    ", false);
-		txt::move_to(0,21);
+		txt::move_to(0,19);
 		txt::print_string(the_status, false);
 		txt::put_ch(146);
 		
@@ -305,7 +305,7 @@
 				// Unknown
 				_A:=charat;
 				update_status("EXISTING TILE:");
-				txt::move_to(15,21);
+				txt::move_to(15,19);
 				txt::print_dec(charat, false);
 			
 		end;
