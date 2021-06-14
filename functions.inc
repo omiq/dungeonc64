@@ -67,24 +67,28 @@
 		begin
 			// Text colour to green:
 			txt::put_ch(30);	
-			txt::put_ch(13);		
 			txt::put_ch(13);
+			txt::print_string_centered("ddddddddddddddddddddddddddddddd", true, 40);	
+			txt::put_ch(13);	
 			txt::print_string_centered("DUNGEON OF COMMODORE", true, 40);				
 			txt::print_string_centered("A DUNGEON CRAWL ADVENTURE", true, 40);
-			txt::print_string_centered("FOR COMMODORE PET AND C64", true, 40);		
+			txt::print_string_centered("FOR COMMODORE PET AND C64", true, 40);	
 			txt::put_ch(13);		
+			txt::print_string_centered("ddddddddddddddddddddddddddddddd", true, 40);	
 			txt::put_ch(13);
-			txt::print_string_centered("BY", true, 40);
 			txt::print_string_centered("CHRIS GARRETT / RETROGAMECODERS", true, 40);		
 			txt::print_string_centered("(C)2021", true, 40);	
 			txt::put_ch(13);
 			txt::print_string_centered("BUILT WITH TRSE", true, 40);
 			txt::put_ch(13);		
-			txt::put_ch(13);
+			txt::print_string_centered("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", true, 40);	
 			txt::print_string_centered("@ = YOU", true, 40);
 			txt::print_string_centered("k = KEY", true, 40);
-			txt::print_string_centered("s = HEALTH POTION", true, 40);
-			txt::print_string_centered("x = ARTIFACT", true, 40);			
+			txt::print_string_centered("c = DOOR", true, 40);
+			txt::print_string_centered("s = HEALTH", true, 40);
+			txt::print_string_centered("x = ARTIFACT", true, 40);	
+			txt::print_string_centered("z = GEM", true, 40);	
+			txt::print_string_centered("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", true, 40);	
 		end;
 
 		// Wait for keypress
