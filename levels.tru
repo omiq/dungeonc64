@@ -11,6 +11,9 @@ var
 	detected_screen_width: byte; // built-in doesn't work for pet
 	this_string: string=("                              ");
 	
+	// Buffer array lookup table for electron
+	b_tab: array[18] of integer;
+	
 	// screen buffer
 	screen_buffer: array[1000] of byte;
 
@@ -98,6 +101,15 @@ var
 @endif
 
 @ifdef BBCM
+
+	procedure electron_row(r:global byte) inline;
+	begin
+		temp_s:=b_tab[r];
+		memcpyfast(#temp_s,0,#this_string,30);
+		txt::print_string(#this_string,true);	
+	end;
+
+
 	procedure refresh_screen();
 	var
 
@@ -110,6 +122,8 @@ var
 		if(txt::current_bbc()>0) then
 		begin
 
+
+			// BBC
 			for r:=0 to 18 do
 			begin
 				dest:=txt::ytab[r];
@@ -119,14 +133,28 @@ var
 		end
 		else
 		begin
+			
+			
 			// Electron
 			txt::move_to(0,0);
-			for r:=0 to 18 do
-			begin
-				memcpyfast(#temp_s,0,#this_string,30);
-				txt::print_string(#this_string,true);
-				temp_s:=temp_s+40;
-			end;	
+			electron_row(0);
+			electron_row(1);
+			electron_row(2);
+			electron_row(3);
+			electron_row(4);
+			electron_row(5);
+			electron_row(6);
+			electron_row(7);
+			electron_row(8);
+			electron_row(9);
+			electron_row(10);
+			electron_row(11);
+			electron_row(12);
+			electron_row(13);
+			electron_row(14);
+			electron_row(15);
+			electron_row(16);
+			electron_row(17);
 
 		end;
 

@@ -28,6 +28,19 @@
 		keys:=0;
 		
 		levels::tiles_across:=10;
+		
+		
+	@ifdef BBCM
+
+		p:=#levels::screen_buffer;
+		fori i:= 0 to 18 do
+		begin
+			levels::b_tab[i]:=p;
+			p:=p+40;			
+		end;	
+
+	@endif	
+		
 
 	@ifdef VIC20
 		levels::tiles_across:=7;
