@@ -11,6 +11,9 @@
 		// Initialise player inventory
 		keys:=0;
 		
+		levels::tiles_across:=10;
+		if(screen_width<39) then levels::tiles_across:=7;
+		
 		// Clear screen,
 		txt::cls();
 
@@ -66,7 +69,9 @@
 			// Force the screen address
 			txt::temp_address_p:=$1000;
 			poke(^36879,0,8);
-		
+			
+			// Clear screen,
+			txt::cls();
 	
 			
 		end;
@@ -79,36 +84,34 @@
 		txt::cls();
 		if (game_running=false) then 
 		begin
+			//                         01234567890123456789012
 			// Text colour to green:
 			txt::put_ch(30);	
 			txt::put_ch(13);
-			txt::print_string_centered("ddddddddddddddddddddddddddddddd", true, 40);	
+			txt::print_string_centered("dddddddddddddd", true, screen_width);	
 			txt::put_ch(13);	
-			txt::print_string_centered("DUNGEON OF COMMODORE", true, 40);				
-			txt::print_string_centered("A DUNGEON CRAWL ADVENTURE", true, 40);
-			txt::print_string_centered("FOR COMMODORE PET AND C64", true, 40);	
+			txt::print_string_centered("DUNGEON OF COMMODORE", true, screen_width);				
+			txt::print_string_centered("A DUNGEON CRAWL", true, screen_width);
+			txt::print_string_centered("FOR PET AND C64", true, screen_width);	
 			txt::put_ch(13);		
-			txt::print_string_centered("ddddddddddddddddddddddddddddddd", true, 40);	
+			txt::print_string_centered("dddddddddddddd", true, screen_width);	
 			txt::put_ch(13);
-			txt::print_string_centered("CHRIS GARRETT / RETROGAMECODERS", true, 40);		
-			txt::print_string_centered("(C)2021", true, 40);	
+			txt::print_string_centered("CHRIS GARRETT", true, screen_width);		
+			txt::print_string_centered("(C)2021", true, screen_width);	
 			txt::put_ch(13);
-			txt::print_string_centered("BUILT WITH TRSE", true, 40);
+			txt::print_string_centered("BUILT WITH TRSE", true, screen_width);
 			txt::put_ch(13);		
-			txt::print_string_centered("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", true, 40);	
-			txt::print_string_centered("@ = YOU", true, 40);
-			txt::print_string_centered("k = KEY", true, 40);
-			txt::print_string_centered("c = DOOR", true, 40);
-			txt::print_string_centered("s = HEALTH", true, 40);
-			txt::print_string_centered("x = ARTIFACT", true, 40);	
-			txt::print_string_centered("z = GEM", true, 40);	
-			txt::print_string_centered("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", true, 40);	
+			txt::print_string_centered("eeeeeeeeeeeeeeeee", true, screen_width);	
+			txt::print_string_centered("@ = YOU k = KEY", true, screen_width);
+			txt::print_string_centered("s = HEALTH c = DOOR", true, screen_width);
+			txt::print_string_centered("z = GEM x = ARTIFACT", true, screen_width);	
+			txt::print_string_centered("rrrrrrrrrrrrrrrrr", true, screen_width);	
 		end;
 
 		// Wait for keypress
 		txt::put_ch(13);
 		txt::put_ch(18);
-		txt::print_string_centered("PRESS A KEY TO CONTINUE", false, 40);
+		txt::print_string_centered("PRESS A KEY", false, screen_width);
 		txt::print_space(txt::max_digits);
 		txt::put_ch(13);
 		txt::put_ch(146);
@@ -125,17 +128,17 @@
 		txt::cls();
 		if (game_won) then 
 		begin	
-			txt::print_string_centered("YAY YOU WON!", true, 40);
+			txt::print_string_centered("YAY YOU WON!", true, screen_width);
 		end
 		else
 		begin
-			txt::print_string_centered("EEK YOU DIED!", true, 40);
+			txt::print_string_centered("EEK YOU DIED!", true, screen_width);
 		end;
 
 		// Wait for keypress
-		txt::print_string_centered(" ", true, 40);
+		txt::print_string_centered(" ", true, screen_width);
 		txt::put_ch(18);
-		txt::print_string_centered("PRESS A KEY TO CONTINUE", true, 40);
+		txt::print_string_centered("PRESS A KEY TO CONTINUE", true, screen_width);
 		txt::put_ch(146);
 		txt::wait_key();
 
@@ -152,18 +155,18 @@
 		txt::print_string(the_status, false);
 		txt::put_ch(146);
 		
-		txt::move_to(25,22);
+		txt::move_to(5,20);
 		txt::put_ch(203);
 		txt::put_ch(32);	
 		txt::print_dec(keys, false);
-		
-		txt::move_to(25,23);
+				
+		txt::move_to(15,20);
 		txt::put_ch(122);
 		txt::put_ch(32);	
 		txt::print_dec(gold, false);
 		
-		
-		txt::move_to(33,21);
+
+		txt::move_to(5,21);
 		txt::put_ch(18);
 		txt::put_ch(211);
 		txt::put_ch(146);
@@ -171,20 +174,20 @@
 		txt::print_dec(health, false);
 	
 		
-		txt::move_to(33,22);
+		txt::move_to(15,21);
 		txt::put_ch(118);
 		txt::put_ch(32);	
 		txt::print_dec(attack, false);
 		
 		
-		txt::move_to(33,23);
+		txt::move_to(5,22);
 		txt::put_ch(18);
 		txt::put_ch(214);
 		txt::put_ch(146);
 		txt::put_ch(32);		
 		txt::print_dec(defense, false);
 		
-		
+	
 		
 		
 	end;
