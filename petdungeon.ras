@@ -5,9 +5,9 @@ program dungeon64;
 	//@projectsettings "system" PET
 	//@projectsettings "petmodel" "4032"
 
-	@projectsettings "system" C64
+	//@projectsettings "system" C64
 
-
+@projectsettings "system" VIC20
 
 var
 	
@@ -48,6 +48,11 @@ begin
 		c64_chars();
 		player_char:=0;
 		
+	@endif
+
+	@ifdef VIC20
+		DefineScreen();
+		vic20_chars();
 	@endif
 
 
