@@ -60,10 +60,15 @@
 	
 	@ifdef VIC20
 		procedure vic20_chars();
+		var
+	
 		begin
 			// Force the screen address
 			txt::temp_address_p:=$1000;
-			poke(^36879,0,8);			
+			poke(^36879,0,8);
+		
+	
+			
 		end;
 	@endif
 
