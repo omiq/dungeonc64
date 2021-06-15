@@ -5,15 +5,15 @@ program dungeon64;
 //	@projectsettings "system" PET
 //	@projectsettings "petmodel" "4032"
 //
-//	@projectsettings "system" C64
+	@projectsettings "system" C64
 
 //	@projectsettings "system" VIC20
 
 //	@projectsettings "system" APPLEII
 
-@projectsettings "system" BBCM
+// @projectsettings "system" BBCM
 
-// @projectsettings "system" ATARI800
+//@projectsettings "system" ATARI800
 
 var
 
@@ -27,28 +27,7 @@ var
 @endif		
 
 
-const ICHID: address =    $0340;
-const ICDNO: address =    $0341;
-const ICCOM: address =    $0342;
-const ICSTA: address =    $0343;
-const ICBAL: address =    $0344;
-const ICBAH: address =    $0345;
-const ICPTL: address =    $0346;
-const ICPTH: address =    $0347;
-const ICBLL: address =    $0348;
-const ICBLH: address =    $0349;
-const ICAX1: address =    $034A;
-const ICAX2: address =    $034B;
-const CIOV: address  =    $E456;
-const COLOR0: address =   $02C4;
-const COLCRS: address =   $55;
-const ROWCRS: address =   $54;
-const ATACHR: address =   $02FB;
-const STORE1: address =   $CC;
-const STOCOL: address =   $CD;
 
-
-	
 	player_char: byte=0;	
 	space_char: byte=32;
 	

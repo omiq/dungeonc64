@@ -121,7 +121,7 @@
 		begin
 			//                         01234567890123456789012
 			// Text colour to green:
-			txt::put_ch(30);	
+				txt::put_ch(30);	
 			txt::put_ch(13);
 			txt::print_string_centered("dddddddddddddd", true, levels::detected_screen_width);	
 			txt::put_ch(13);	
@@ -132,14 +132,14 @@
 			txt::print_string_centered("dddddddddddddd", true, levels::detected_screen_width);	
 			txt::put_ch(13);
 			txt::print_string_centered("CHRIS GARRETT", true, levels::detected_screen_width);		
-			//txt::print_string_centered("(C)2021", true, levels::detected_screen_width);	
+				//txt::print_string_centered("(C)2021", true, levels::detected_screen_width);	
 			txt::put_ch(13);
 			txt::print_string_centered("BUILT WITH TRSE", true, levels::detected_screen_width);
 			txt::put_ch(13);		
 			txt::print_string_centered("eeeeeeeeeeeeeeeee", true, levels::detected_screen_width);	
-			//txt::print_string_centered("@ = YOU k = KEY", true, levels::detected_screen_width);
-			//txt::print_string_centered("s = HEALTH c = DOOR", true, levels::detected_screen_width);
-			//txt::print_string_centered("z = GEM x = ARTIFACT", true, levels::detected_screen_width);	
+				//txt::print_string_centered("@ = YOU k = KEY", true, levels::detected_screen_width);
+				//txt::print_string_centered("s = HEALTH c = DOOR", true, levels::detected_screen_width);
+				//txt::print_string_centered("z = GEM x = ARTIFACT", true, levels::detected_screen_width);	
 			txt::print_string_centered("rrrrrrrrrrrrrrrrr", true, levels::detected_screen_width);	
 		end;
 
@@ -317,54 +317,54 @@
 			42: // Gazer
 				begin
 					
-					//update_status("GAZER ATTACKS!"); 
-					//combat();
+					update_status("GAZER ATTACKS!"); 
+					combat();
 	
 				end;
 
 			$58: // Artifact
 				begin
-					//update_status("ARTIFACT!");
+					update_status("ARTIFACT!");
 				end;
 
 			$43:
 				begin  
-				//door();
+					door();
 				end;
 
 			75: // Key
 				begin 
 					inc(keys);
-					//update_status("KEY ACQUIRED");
+					update_status("KEY ACQUIRED");
 			 	end;
 			 				
 			
 			83: // Health potion
 				begin
 					health:=health+1;
-					//update_status("AHH THAT'S BETTER!");
+					update_status("AHH THAT'S BETTER!");
 
 				end;	
 				
 			87: // Gobbo
 				begin				
 					
-					//update_status("GOBBO ATTACKS!");
-					//combat();
+					update_status("GOBBO ATTACKS!");
+					combat();
 				end;			
 		
 			90: // Jewell
 				begin
 					gold:=gold+100;
-					//update_status("KA-CHING!");
+					update_status("KA-CHING!");
 
 				end;		
 		
 			94: // Rat
 				begin
 					
-					//update_status("RAT ATTACKS!"); 
-					//combat();
+					update_status("RAT ATTACKS!"); 
+					combat();
 	
 				end;
 		
@@ -384,10 +384,10 @@
 				
 			
 				// Unknown
-				//_A:=charat;
-				//update_status("EXISTING TILE:");
-				//txt::move_to(15,19);
-				//txt::print_dec(charat, false);
+				_A:=charat;
+				update_status("EXISTING TILE:");
+				txt::move_to(15,19);
+				txt::print_dec(charat, false);
 			
 		end;
 			
