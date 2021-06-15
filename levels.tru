@@ -8,11 +8,21 @@ var
 	temp_s, temp_d, screen, dest, ch_index: pointer;
 	this_row: integer;
 	tiles_across:byte;
+	detected_screen_width: byte; // built-in doesn't work for pet
 	
 	// screen buffer
 	screen_buffer: array[1000] of byte;
-	
-	tiles: incbin("levels/map - Tiles.bin");	
+
+
+	@ifndef ATARI800	
+		tiles: incbin("levels/map - Tiles.bin");	
+	@endif
+
+	@ifdef ATARI800	
+		tiles: incbin("levels/Atari Tiles.bin");	
+	@endif
+
+
 	
 	level: incbin("levels/map.bin");	
 	level_p: pointer;
@@ -27,14 +37,14 @@ var
 		temp_s:=#tiles+(tile_no*9);
 	
 		// Dest
-		dest:=#screen_buffer+((t_y*3)*screen_width)+(t_x*3);
+		dest:=#screen_buffer+((t_y*3)*detected_screen_width)+(t_x*3);
 		MemCpyFast(temp_s, 0, dest,3);
 
 		temp_s:=temp_s+3;
-		dest:=dest+screen_width;		
+		dest:=dest+detected_screen_width;		
 		MemCpyFast(temp_s, 0, dest,3);
 		
-		dest:=dest+screen_width;	
+		dest:=dest+detected_screen_width;	
 		temp_s:=temp_s+3;	
 		MemCpyFast(temp_s, 0, dest,3);
 
@@ -76,8 +86,8 @@ var
 		for r:=0 to 18 do
 		begin
 			dest:=txt::ytab[r];
-			MemCpyFast(temp_s, 0, dest, screen_width);
-			temp_s:=temp_s+screen_width;
+			MemCpyFast(temp_s, 0, dest, detected_screen_width);
+			temp_s:=temp_s+detected_screen_width;
 		end;	
 
 		
@@ -89,7 +99,7 @@ var
 	function get_buffer(buf_x, buf_y: byte):byte;
 	begin
 		
-		ch_index:=#screen_buffer+(buf_y*screen_width)+buf_x;
+		ch_index:=#screen_buffer+(buf_y*detected_screen_width)+buf_x;
 		get_buffer:=ch_index[0];
 		
 	end;
@@ -99,7 +109,7 @@ var
 	procedure plot_buffer(plot_x, plot_y: byte, plot_ch: byte);
 	begin
 		
-		ch_index:=#screen_buffer+(plot_y*screen_width)+plot_x;
+		ch_index:=#screen_buffer+(plot_y*detected_screen_width)+plot_x;
 		ch_index[0]:=plot_ch;
 		
 	end;

@@ -96,6 +96,10 @@
 	@endif
 
 
+
+
+
+
 	procedure show_start_screen();
 	begin
 
@@ -106,33 +110,37 @@
 			// Text colour to green:
 			txt::put_ch(30);	
 			txt::put_ch(13);
-			txt::print_string_centered("dddddddddddddd", true, screen_width);	
+			txt::print_string_centered("dddddddddddddd", true, levels::detected_screen_width);	
 			txt::put_ch(13);	
-			txt::print_string_centered("DUNGEON OF COMMODORE", true, screen_width);				
-			txt::print_string_centered("A DUNGEON CRAWL", true, screen_width);
-			txt::print_string_centered("FOR PET AND C64", true, screen_width);	
+			txt::print_string_centered("DUNGEON OF COMMODORE", true, levels::detected_screen_width);				
+			txt::print_string_centered("A DUNGEON CRAWL", true, levels::detected_screen_width);
+			txt::print_string_centered("FOR PET AND C64", true, levels::detected_screen_width);	
 			txt::put_ch(13);		
-			txt::print_string_centered("dddddddddddddd", true, screen_width);	
+			txt::print_string_centered("dddddddddddddd", true, levels::detected_screen_width);	
 			txt::put_ch(13);
-			txt::print_string_centered("CHRIS GARRETT", true, screen_width);		
-			txt::print_string_centered("(C)2021", true, screen_width);	
+			txt::print_string_centered("CHRIS GARRETT", true, levels::detected_screen_width);		
+			//txt::print_string_centered("(C)2021", true, levels::detected_screen_width);	
 			txt::put_ch(13);
-			txt::print_string_centered("BUILT WITH TRSE", true, screen_width);
+			txt::print_string_centered("BUILT WITH TRSE", true, levels::detected_screen_width);
 			txt::put_ch(13);		
-			txt::print_string_centered("eeeeeeeeeeeeeeeee", true, screen_width);	
-			txt::print_string_centered("@ = YOU k = KEY", true, screen_width);
-			txt::print_string_centered("s = HEALTH c = DOOR", true, screen_width);
-			txt::print_string_centered("z = GEM x = ARTIFACT", true, screen_width);	
-			txt::print_string_centered("rrrrrrrrrrrrrrrrr", true, screen_width);	
+			txt::print_string_centered("eeeeeeeeeeeeeeeee", true, levels::detected_screen_width);	
+			//txt::print_string_centered("@ = YOU k = KEY", true, levels::detected_screen_width);
+			//txt::print_string_centered("s = HEALTH c = DOOR", true, levels::detected_screen_width);
+			//txt::print_string_centered("z = GEM x = ARTIFACT", true, levels::detected_screen_width);	
+			txt::print_string_centered("rrrrrrrrrrrrrrrrr", true, levels::detected_screen_width);	
 		end;
 
 		// Wait for keypress
-		txt::put_ch(13);
-		txt::put_ch(18);
-		txt::print_string_centered("PRESS A KEY", false, screen_width);
+		@ifndef ATARI800
+			txt::put_ch(13);
+			txt::put_ch(18);
+		@endif
+		txt::print_string_centered("PRESS A KEY", false, levels::detected_screen_width);
 		txt::print_space(txt::max_digits);
-		txt::put_ch(13);
-		txt::put_ch(146);
+		@ifndef ATARI800
+			txt::put_ch(13);
+			txt::put_ch(146);
+		@endif
 		txt::wait_key();
 
 
@@ -146,18 +154,22 @@
 		txt::cls();
 		if (game_won) then 
 		begin	
-			txt::print_string_centered("YAY YOU WON!", true, screen_width);
+			txt::print_string_centered("YAY YOU WON!", true, levels::detected_screen_width);
 		end
 		else
 		begin
-			txt::print_string_centered("EEK YOU DIED!", true, screen_width);
+			txt::print_string_centered("EEK YOU DIED!", true, levels::detected_screen_width);
 		end;
 
 		// Wait for keypress
-		txt::print_string_centered(" ", true, screen_width);
-		txt::put_ch(18);
-		txt::print_string_centered("PRESS A KEY TO CONTINUE", true, screen_width);
-		txt::put_ch(146);
+		txt::print_string_centered(" ", true, levels::detected_screen_width);
+		@ifndef ATARI800	 
+			txt::put_ch(18); 
+		@endif
+		txt::print_string_centered("PRESS A KEY TO CONTINUE", true, levels::detected_screen_width);
+		@ifndef 
+			ATARI800	txt::put_ch(146); 
+		@endif
 		txt::wait_key();
 
 
@@ -165,7 +177,7 @@
 	
 	procedure display_text();
 	begin
-	
+	@ifndef ATARI800	
 		txt::put_ch(18);
 		txt::move_to(0,19);
 		txt::print_string("                    ", false);
@@ -207,15 +219,15 @@
 		
 	
 		
-		
+		@endif
 	end;
 
 	procedure update_status(new_status: global pointer);
 	begin
-		
-		the_status:=new_status;
-		display_text();
-		
+		@ifndef ATARI800	
+			the_status:=new_status;
+			display_text();
+		@endif
 	end;
 
 
@@ -352,12 +364,13 @@
 				// Reset to backup position
 				x:=oldx;
 				y:=oldy;		
-			
+			@ifndef ATARI800	
 				// Unknown
 				_A:=charat;
 				update_status("EXISTING TILE:");
 				txt::move_to(15,19);
 				txt::print_dec(charat, false);
+			@endif
 			
 		end;
 			

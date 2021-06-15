@@ -2,14 +2,22 @@ program dungeon64;
 @use "text/txt"
 @use "levels"
 
-	//@projectsettings "system" PET
-	//@projectsettings "petmodel" "4032"
+//	@projectsettings "system" PET
+//	@projectsettings "petmodel" "4032"
+//
+//	@projectsettings "system" C64
 
-	//@projectsettings "system" C64
+//	@projectsettings "system" VIC20
 
-	@projectsettings "system" VIC20
+//	@projectsettings "system" APPLEII
+
+//  @projectsettings "system" BBCM
+
+@projectsettings "system" ATARI800
 
 var
+
+
 	
 @ifdef C64	
 
@@ -17,8 +25,33 @@ var
 	charset: incbin("levels/map - Chars.bin", $6000);
 
 @endif		
+
+
+const ICHID: address =    $0340;
+const ICDNO: address =    $0341;
+const ICCOM: address =    $0342;
+const ICSTA: address =    $0343;
+const ICBAL: address =    $0344;
+const ICBAH: address =    $0345;
+const ICPTL: address =    $0346;
+const ICPTH: address =    $0347;
+const ICBLL: address =    $0348;
+const ICBLH: address =    $0349;
+const ICAX1: address =    $034A;
+const ICAX2: address =    $034B;
+const CIOV: address  =    $E456;
+const COLOR0: address =   $02C4;
+const COLCRS: address =   $55;
+const ROWCRS: address =   $54;
+const ATACHR: address =   $02FB;
+const STORE1: address =   $CC;
+const STOCOL: address =   $CD;
+
+
 	
 	player_char: byte=0;	
+	space_char: byte=32;
+	
 	key_press: byte=0;
 	charat:byte;
 	game_won,game_running: byte;
@@ -41,20 +74,35 @@ var
 
 begin
 
-
+	levels::detected_screen_width:=40;
 
 	@ifdef C64
 		// C64 has it's own special characters
 		c64_chars();
 		player_char:=0;
-		
 	@endif
 
 	@ifdef VIC20
-		DefineScreen();
 		vic20_chars();
+		levels::detected_screen_width:=22;
 	@endif
 
+	@ifdef BBCM
+		txt::cursor_off();
+		player_char:=64;
+	@endif
+
+
+	// Borked, will need some work
+	@ifdef ATARI800
+	
+	levels::detected_screen_width:=30;
+		txt::cursor_off();
+		player_char:=32;
+		space_char:=0;
+		txt::move_to(0,0);
+
+	@endif
 
 	
 	// Infinite loop
@@ -68,9 +116,11 @@ begin
 		// Initial screen fill
 		// and (re)set variables
 		init();
-		update_status("WELCOME ADVENTURER!");
-		display_text();
-	
+		
+		@ifndef ATARI800
+			update_status("WELCOME ADVENTURER!");
+			display_text();
+		@endif
 	
 		// Main loop
 		while(game_running) do
@@ -103,7 +153,7 @@ begin
 	
 				
 				// $20 is space
-				if(charat<>$20) then
+				if(charat<>space_char) then
 				begin
 				
 					// Tile isn't empty so check what should happen
@@ -117,7 +167,7 @@ begin
 				// Remove old position
 				// Rather than blank could also get background
 				// from the level, but this is easier
-				levels::plot_buffer(oldx,oldy,32);
+				levels::plot_buffer(oldx,oldy,space_char);
 
 				// Keep the new position and output
 				// our player
