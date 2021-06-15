@@ -96,7 +96,7 @@ begin
 	// Borked, will need some work
 	@ifdef ATARI800
 	
-	levels::detected_screen_width:=30;
+		levels::detected_screen_width:=40;
 		txt::cursor_off();
 		player_char:=32;
 		space_char:=0;
@@ -157,10 +157,8 @@ begin
 				begin
 				
 					// Tile isn't empty so check what should happen
-					if(charat>0) then check_collisions();
-				
-
-		
+					check_collisions();
+	
 				end;
 	
 

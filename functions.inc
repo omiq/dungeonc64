@@ -13,16 +13,16 @@
 
 		// Clean the screen buffer		
 		p:=#levels::screen_buffer;
-		fill(p,32,250);
+		fill(p,space_char,250);
 		
 		p:=p+250;
-		fill(p,32,250);
+		fill(p,space_char,250);
 		
 		p:=p+250;
-		fill(p,32,250);
+		fill(p,space_char,250);
 		
 		p:=p+250;
-		fill(p,32,250);
+		fill(p,space_char,250);
 		
 		// Initialise player inventory
 		keys:=0;
@@ -174,10 +174,12 @@
 
 
 	end;
-	
+
+
+@ifndef ATARI800		
 	procedure display_text();
 	begin
-	@ifndef ATARI800	
+
 		txt::put_ch(18);
 		txt::move_to(0,19);
 		txt::print_string("                    ", false);
@@ -217,17 +219,14 @@
 		txt::put_ch(32);		
 		txt::print_dec(defense, false);
 		
-	
-		
-		@endif
 	end;
+
 
 	procedure update_status(new_status: global pointer);
 	begin
-		@ifndef ATARI800	
 			the_status:=new_status;
 			display_text();
-		@endif
+
 	end;
 
 
@@ -293,6 +292,8 @@
 	end;
 
 	
+@endif
+	
 	procedure check_collisions();
 	begin
 		
@@ -303,51 +304,54 @@
 			42: // Gazer
 				begin
 					
-					update_status("GAZER ATTACKS!"); 
-					combat();
+					//update_status("GAZER ATTACKS!"); 
+					//combat();
 	
 				end;
 
 			$58: // Artifact
 				begin
-					update_status("ARTIFACT!");
+					//update_status("ARTIFACT!");
 				end;
 
-			$43: door();
+			$43:
+				begin  
+				//door();
+				end;
 
 			75: // Key
 				begin 
 					inc(keys);
-					update_status("KEY ACQUIRED");
+					//update_status("KEY ACQUIRED");
 			 	end;
 			 				
 			
 			83: // Health potion
 				begin
 					health:=health+1;
-					update_status("AHH THAT'S BETTER!");
+					//update_status("AHH THAT'S BETTER!");
 
 				end;	
 				
 			87: // Gobbo
 				begin				
 					
-					update_status("GOBBO ATTACKS!");
-					combat();
+					//update_status("GOBBO ATTACKS!");
+					//combat();
 				end;			
 		
 			90: // Jewell
 				begin
 					gold:=gold+100;
-					update_status("KA-CHING!");
+					//update_status("KA-CHING!");
 
 				end;		
 		
 			94: // Rat
 				begin
 					
-					update_status("RAT ATTACKS!"); 
-					combat();
+					//update_status("RAT ATTACKS!"); 
+					//combat();
 	
 				end;
 		
@@ -364,13 +368,13 @@
 				// Reset to backup position
 				x:=oldx;
 				y:=oldy;		
-			@ifndef ATARI800	
+				
+			
 				// Unknown
-				_A:=charat;
-				update_status("EXISTING TILE:");
-				txt::move_to(15,19);
-				txt::print_dec(charat, false);
-			@endif
+				//_A:=charat;
+				//update_status("EXISTING TILE:");
+				//txt::move_to(15,19);
+				//txt::print_dec(charat, false);
 			
 		end;
 			
