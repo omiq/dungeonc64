@@ -9,6 +9,7 @@ var
 	this_row: integer;
 	tiles_across:byte;
 	detected_screen_width: byte; // built-in doesn't work for pet
+	this_string: string=("                              ");
 	
 	// screen buffer
 	screen_buffer: array[1000] of byte;
@@ -74,8 +75,11 @@ var
 	
 	
 	end;
+	
 
+	
 
+@ifndef BBCM
 	procedure refresh_screen();
 	begin
 		
@@ -88,14 +92,48 @@ var
 			dest:=txt::ytab[r];
 			MemCpyFast(temp_s, 0, dest, detected_screen_width);
 			temp_s:=temp_s+detected_screen_width;
-		end;	
-
-		
+		end;		
 
 	end;
+@endif
 
+@ifdef BBCM
+	procedure refresh_screen();
+	var
 
-	// Put a char in the screen buffer
+	begin
+		
+		temp_s:=#screen_buffer;
+		
+		// Need rows at the bottom 
+		// for text output
+		if(txt::current_bbc()>0) then
+		begin
+
+			for r:=0 to 18 do
+			begin
+				dest:=txt::ytab[r];
+				MemCpyFast(temp_s, 0, dest, detected_screen_width);
+				temp_s:=temp_s+detected_screen_width;
+			end;		
+		end
+		else
+		begin
+			// Electron
+			txt::move_to(0,0);
+			for r:=0 to 18 do
+			begin
+				memcpyfast(#temp_s,0,#this_string,30);
+				txt::print_string(#this_string,true);
+				temp_s:=temp_s+40;
+			end;	
+
+		end;
+
+	end;
+@endif
+
+		// Put a char in the screen buffer
 	function get_buffer(buf_x, buf_y: byte):byte;
 	begin
 		

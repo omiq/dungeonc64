@@ -11,9 +11,9 @@ program dungeon64;
 
 //	@projectsettings "system" APPLEII
 
-//  @projectsettings "system" BBCM
+@projectsettings "system" BBCM
 
-@projectsettings "system" ATARI800
+// @projectsettings "system" ATARI800
 
 var
 
