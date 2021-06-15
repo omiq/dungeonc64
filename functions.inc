@@ -2,18 +2,36 @@
 
 	
 	procedure init();
+	var
+		
 	begin
 		
 		// Initialise start position
 		x:=5;
 		y:=5;	
+
+
+		// Clean the screen buffer		
+		p:=#levels::screen_buffer;
+		fill(p,32,250);
+		
+		p:=p+250;
+		fill(p,32,250);
+		
+		p:=p+250;
+		fill(p,32,250);
+		
+		p:=p+250;
+		fill(p,32,250);
 		
 		// Initialise player inventory
 		keys:=0;
 		
 		levels::tiles_across:=10;
-		if(screen_width<39) then levels::tiles_across:=7;
-		
+
+	@ifdef VIC20
+		levels::tiles_across:=7;
+	@endif	
 		// Clear screen,
 		txt::cls();
 

@@ -12,7 +12,7 @@ var
 	// screen buffer
 	screen_buffer: array[1000] of byte;
 	
-	tiles: incbin("levels/tiles.bin");	
+	tiles: incbin("levels/map - Tiles.bin");	
 	
 	level: incbin("levels/map.bin");	
 	level_p: pointer;
@@ -48,8 +48,6 @@ var
 		
 	begin
 
-
-
 		// set to draw tiles
 		dest:=#screen_buffer;	
 		level_p:=#level+(current_level*60);
@@ -71,7 +69,6 @@ var
 	procedure refresh_screen();
 	begin
 		
-		//CopyFullScreen(#screen_buffer,SCREEN_CHAR_LOC);
 		temp_s:=#screen_buffer;
 		
 		// Need rows at the bottom 
