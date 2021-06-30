@@ -1,10 +1,12 @@
 
 
-	
 	procedure init();
 	var
 		
 	begin
+		
+		game_running:=true;
+
 		
 		// Initialise start position
 		x:=5;
@@ -108,7 +110,23 @@
 		end;
 	@endif
 
+		
 
+	
+
+
+	
+
+
+@ifdef x86
+	@use "math/random"
+	function random():byte;
+	begin
+		
+		random:=Random::Random();
+		
+	end;
+@endif
 
 
 
@@ -132,14 +150,14 @@
 			txt::print_string_centered("dddddddddddddd", true, levels::detected_screen_width);	
 			txt::put_ch(13);
 			txt::print_string_centered("CHRIS GARRETT", true, levels::detected_screen_width);		
-				//txt::print_string_centered("(C)2021", true, levels::detected_screen_width);	
+				txt::print_string_centered("(C)2021", true, levels::detected_screen_width);	
 			txt::put_ch(13);
 			txt::print_string_centered("BUILT WITH TRSE", true, levels::detected_screen_width);
 			txt::put_ch(13);		
 			txt::print_string_centered("eeeeeeeeeeeeeeeee", true, levels::detected_screen_width);	
-				//txt::print_string_centered("@ = YOU k = KEY", true, levels::detected_screen_width);
-				//txt::print_string_centered("s = HEALTH c = DOOR", true, levels::detected_screen_width);
-				//txt::print_string_centered("z = GEM x = ARTIFACT", true, levels::detected_screen_width);	
+				txt::print_string_centered("@ = YOU k = KEY", true, levels::detected_screen_width);
+				txt::print_string_centered("s = HEALTH c = DOOR", true, levels::detected_screen_width);
+				txt::print_string_centered("z = GEM x = ARTIFACT", true, levels::detected_screen_width);	
 			txt::print_string_centered("rrrrrrrrrrrrrrrrr", true, levels::detected_screen_width);	
 		end;
 
@@ -148,12 +166,15 @@
 			txt::put_ch(13);
 			txt::put_ch(18);
 		@endif
+		
 		txt::print_string_centered("PRESS A KEY", false, levels::detected_screen_width);
 		txt::print_space(txt::max_digits);
+		
 		@ifndef ATARI800
 			txt::put_ch(13);
 			txt::put_ch(146);
 		@endif
+		
 		txt::wait_key();
 
 
@@ -384,7 +405,7 @@
 				
 			
 				// Unknown
-				_A:=charat;
+				//_A:=charat;
 				update_status("EXISTING TILE:");
 				txt::move_to(15,19);
 				txt::print_dec(charat, false);

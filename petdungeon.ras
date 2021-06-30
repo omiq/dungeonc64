@@ -15,6 +15,10 @@ program dungeon64;
 
 //@projectsettings "system" ATARI800
 
+//	@projectsettings "system" X86
+
+//	@projectsettings "system" SPECTRUM
+
 var
 
 
@@ -35,7 +39,7 @@ var
 	charat:byte;
 	game_won,game_running: byte;
 	x,y,oldx,oldy,i,c,l,w,r: byte;
-	status_message: cstring=("                                     ");
+	status_message: string=("                                     ");
 	new_status, the_status, p: pointer;
 	
 	//player inventory/stats
