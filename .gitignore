@@ -1,2 +1,9 @@
 
 *.bak
+.DS_Store
+.backup/.DS_Store
+.backup/.DS_Store
+.DS_Store
+*.asm
+*.bin
+*.sym

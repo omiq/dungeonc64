@@ -9,15 +9,20 @@ program dungeon64;
 
 //	@projectsettings "system" VIC20
 
-//	@projectsettings "system" APPLEII
+// @projectsettings "system" APPLEII
 
 // @projectsettings "system" BBCM
 
-//@projectsettings "system" ATARI800
+// @projectsettings "system" ATARI800
 
-//	@projectsettings "system" X86
+// @projectsettings "system" X86
 
 //	@projectsettings "system" SPECTRUM
+
+//	@projectsettings "system" AMSTRADCPC
+
+//	@projectsettings "system" MSX
+
 
 var
 

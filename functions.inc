@@ -32,6 +32,7 @@
 		levels::tiles_across:=10;
 		
 		
+		
 	@ifdef BBCM
 
 		p:=#levels::screen_buffer;
@@ -47,6 +48,7 @@
 	@ifdef VIC20
 		levels::tiles_across:=7;
 	@endif	
+	
 		// Clear screen,
 		txt::cls();
 
@@ -62,6 +64,7 @@
 		
 		// Update the screen from the buffer
 		levels::refresh_screen();
+
 	end;
 	
 	@ifdef C64
@@ -118,7 +121,7 @@
 	
 
 
-@ifdef x86
+@ifdef X86
 	@use "math/random"
 	function random():byte;
 	begin
@@ -129,7 +132,17 @@
 @endif
 
 
+@ifdef CPU_Z80
 
+	@use "random"
+	function random():byte;
+	begin
+		
+		random:=12;
+		
+	end;
+
+@endif
 
 	procedure show_start_screen();
 	begin
@@ -210,7 +223,7 @@
 	end;
 
 
-@ifndef ATARI800		
+//@ifndef ATARI800		
 	procedure display_text();
 	begin
 
@@ -301,6 +314,8 @@
 	
 		
 		if((random()/12)>10) then
+
+		//if((Random::Random()/12)>10) then
 		begin
 			update_status("YOU WON THIS FIGHT");
 		end		
@@ -326,7 +341,7 @@
 	end;
 
 	
-@endif
+//@endif
 	
 	procedure check_collisions();
 	begin

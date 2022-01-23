@@ -5,7 +5,7 @@ var
 	r, row, column, height, width, b: byte;
 	current_level: integer=0;
 	t_x, t_y, tile_no: byte;	
-	temp_s, temp_d, screen, dest, ch_index: pointer;
+	temp_s, temp_d,  dest, ch_index: pointer;
 	this_row: integer;
 	tiles_across:byte;
 	detected_screen_width: byte; // built-in doesn't work for pet
@@ -32,8 +32,33 @@ var
 	level_p: pointer;
 
 
+
+@ifdef CPU_Z80	
+	procedure draw_tile(t_x, t_y, tile_no: global byte);
+	begin
 	
-@ifndef X86	
+		// Source
+		temp_s:=#tiles+(tile_no*9);
+	
+		// Dest
+		dest:=#screen_buffer+((t_y*3)*detected_screen_width)+(t_x*3);
+		MemCpy(temp_s, dest,3);
+
+		temp_s:=temp_s+3;
+		dest:=dest+detected_screen_width;		
+		MemCpy(temp_s, dest,3);
+		
+		dest:=dest+detected_screen_width;	
+		temp_s:=temp_s+3;	
+		MemCpy(temp_s, dest,3);
+
+	end;
+@endif
+
+
+	
+@ifndef X86
+@ifndef CPU_Z80
 	procedure draw_tile(t_x, t_y, tile_no: global byte);
 	begin
 	
@@ -53,6 +78,7 @@ var
 		MemCpyFast(temp_s, 0, dest,3);
 
 	end;
+@endif
 @endif
 
 @ifdef X86	
@@ -116,11 +142,16 @@ var
 		for r:=0 to 18 do
 		begin
 			dest:=txt::ytab[r];
+			@ifdef CPU_Z80
+				MemCpy(temp_s, dest, detected_screen_width);
+			@endif
 			@ifndef X86	
-			MemCpyFast(temp_s, 0, dest, detected_screen_width);
+			@ifndef CPU_Z80
+				MemCpyFast(temp_s, 0, dest, detected_screen_width);
+			@endif
 			@endif
 			@ifdef X86	
-			MemCpy16(temp_s, dest, detected_screen_width);
+				//MemCpy16(temp_s, dest, detected_screen_width);
 			@endif
 			temp_s:=temp_s+detected_screen_width;
 		end;		
