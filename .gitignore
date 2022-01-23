@@ -7,3 +7,4 @@
 *.asm
 *.bin
 *.sym
+.DS_Store
