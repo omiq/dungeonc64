@@ -15,7 +15,7 @@ FOR tiler = 46 TO 46 + (5 * 24) STEP 24
     NEXT
 NEXT
 
-
+DIM SHARED cells(500) AS _UNSIGNED _BYTE
 DIM SHARED charset(256, 8) AS _UNSIGNED _BYTE
 DIM SHARED this_char AS INTEGER
 DIM in_byte AS _UNSIGNED _BYTE
@@ -54,11 +54,16 @@ NEXT
 DIM tmp_X AS INTEGER
 DIM tmp_Y AS INTEGER
 DIM click_char AS _UNSIGNED _BYTE
+click_char = 0
 DIM del_char AS _UNSIGNED _BYTE
+del_char = 32
+CALL print_char(click_char, 150, 20)
+CALL print_char(del_char, 160, 20)
+
 DO
     IF _MOUSEINPUT THEN '  skip keyboard reads
         LOCATE 1, 1
-        PRINT _MOUSEX; _MOUSEY; _MOUSEBUTTON(1); _MOUSEBUTTON(2)
+        PRINT _MOUSEX; _MOUSEY;
         IF _MOUSEX < 138 THEN
             IF _MOUSEBUTTON(1) THEN
 
@@ -78,7 +83,7 @@ DO
                 CALL print_char(del_char, 160, 20)
             END IF
         ELSE
-            IF _MOUSEX > 139 AND _MOUSEX < 307 AND _MOUSEY > 47 AND _MOUSEY<190 THEN
+            IF _MOUSEX > 139 AND _MOUSEX < 307 AND _MOUSEY > 47 AND _MOUSEY < 190 THEN
                 cell = INT((_MOUSEX - 139) / 8) + (INT((_MOUSEY - 47) / 8)) * 21
                 tmp_Y = INT(cell / 21)
                 tmp_X = (INT(cell - (tmp_Y * 21)) * 8) + 141
@@ -89,9 +94,11 @@ DO
                 PRINT cell
 
                 IF _MOUSEBUTTON(1) THEN
+                    cells(cell) = click_char
                     CALL print_char(click_char, tmp_X, tmp_Y)
                 END IF
                 IF _MOUSEBUTTON(2) THEN
+                    cells(cell) = del_char
                     CALL print_char(del_char, tmp_X, tmp_Y)
                 END IF
 
@@ -100,10 +107,21 @@ DO
 
         END IF
     END IF
+
 LOOP UNTIL INKEY$ = CHR$(27) 'escape key exit
 
 END
 
+' CONVERT CELLS TO TILES AND OUTPUT THE TILES
+SUB save_cells ()
+
+    IF INKEY$ = "S" OR INKEY$ = "s" THEN
+        FOR i = 0 TO 500
+            PRINT cells(i);
+        NEXT
+    END IF
+
+END SUB
 
 
 ' DISPLAY THE SELECTED CHAR
