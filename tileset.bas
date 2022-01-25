@@ -51,7 +51,8 @@ FOR this_char = 0 TO 256
     END IF
 NEXT
 
-
+DIM tmp_X AS INTEGER
+DIM tmp_Y AS INTEGER
 DIM click_char AS _UNSIGNED _BYTE
 DIM del_char AS _UNSIGNED _BYTE
 DO
@@ -77,12 +78,21 @@ DO
                 CALL print_char(del_char, 160, 20)
             END IF
         ELSE
-            IF _MOUSEX > 139 AND _MOUSEY > 47 THEN
+            IF _MOUSEX > 139 AND _MOUSEX < 307 AND _MOUSEY > 47 AND _MOUSEY<190 THEN
+                cell = INT((_MOUSEX - 139) / 8) + (INT((_MOUSEY - 47) / 8)) * 21
+                tmp_Y = INT(cell / 21)
+                tmp_X = (INT(cell - (tmp_Y * 21)) * 8) + 141
+                tmp_Y = ((tmp_Y + 1) * 8) + 39
+
+
+                LOCATE 1, 35
+                PRINT cell
+
                 IF _MOUSEBUTTON(1) THEN
-                    CALL print_char(click_char, _MOUSEX, _MOUSEY)
+                    CALL print_char(click_char, tmp_X, tmp_Y)
                 END IF
                 IF _MOUSEBUTTON(2) THEN
-                    CALL print_char(del_char, _MOUSEX, _MOUSEY)
+                    CALL print_char(del_char, tmp_X, tmp_Y)
                 END IF
 
 
@@ -97,7 +107,7 @@ END
 
 
 ' DISPLAY THE SELECTED CHAR
-SUB print_char (which_char AS _UNSIGNED _BYTE, x AS _UNSIGNED _BYTE, y AS _UNSIGNED _BYTE)
+SUB print_char (which_char AS _UNSIGNED _BYTE, x AS INTEGER, y AS INTEGER)
 
     DIM r, b AS INTEGER
     DIM this_byte AS _UNSIGNED _BYTE
