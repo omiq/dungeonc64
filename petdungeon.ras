@@ -31,7 +31,7 @@ var
 @ifdef C64	
 
 	// Custom characterset
-	charset: incbin("levels/map - Chars.bin", $6000);
+	charset: incbin("c64chars.bin", $6000);
 
 @endif		
 

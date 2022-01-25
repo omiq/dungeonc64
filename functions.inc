@@ -29,6 +29,7 @@
 		// Initialise player inventory
 		keys:=0;
 		
+		// Set how wide the map should be
 		levels::tiles_across:=10;
 		
 		

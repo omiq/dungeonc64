@@ -19,16 +19,17 @@ var
 
 
 	@ifndef ATARI800	
-		tiles: incbin("levels/map - Tiles.bin");	
+		tiles: incbin("tiles.bin");	
 	@endif
 
 	@ifdef ATARI800	
-		tiles: incbin("levels/Atari Tiles.bin");	
+//		tiles: incbin("levels/Atari Tiles.bin");	
 	@endif
 
 
+
 	
-	level: incbin("levels/map.bin");	
+	level: incbin("map.bin");	
 	level_p: pointer;
 
 

@@ -14,7 +14,7 @@ EndBlock801:
 StartBlock810:
 	; Starting new memory block at $810
 dungeon64
-	; LineNumber: 494
+	; LineNumber: 495
 	jmp block1
 	; LineNumber: 4
 txt_i	dc.b	$00
@@ -36,7 +36,7 @@ txt_temp_num	dc.w	0
 	; LineNumber: 15
 txt_temp_i	dc.b	$00
 	; LineNumber: 17
-txt_in_str	=   $04
+txt_in_str	= $04
 	; LineNumber: 18
 txt_CRLF	dc.b	0
 	; LineNumber: 5
@@ -50,11 +50,11 @@ levels_t_y	dc.b	0
 	; LineNumber: 7
 levels_tile_no	dc.b	0
 	; LineNumber: 8
-levels_temp_s	=   $08
+levels_temp_s	= $08
 	; LineNumber: 8
-levels_dest	=   $16
+levels_dest	= $16
 	; LineNumber: 8
-levels_ch_index	=   $0B
+levels_ch_index	= $0B
 	; LineNumber: 10
 levels_tiles_across	dc.b	0
 	; LineNumber: 11
@@ -64,12 +64,12 @@ levels_screen_buffer	dc.b
 	org levels_screen_buffer+1000
 	; LineNumber: 22
 levels_tiles
-	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///levels/map - Tiles.bin"
-	; LineNumber: 31
-levels_level
-	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///levels/map.bin"
+	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///tiles.bin"
 	; LineNumber: 32
-levels_level_p	=   $0D
+levels_level
+	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///map.bin"
+	; LineNumber: 33
+levels_level_p	= $0D
 	; LineNumber: 34
 	; LineNumber: 40
 player_char	dc.b	$00
@@ -92,11 +92,11 @@ oldx	dc.b	0
 	; LineNumber: 46
 oldy	dc.b	0
 	; LineNumber: 48
-new_status	=   $10
+new_status	= $10
 	; LineNumber: 48
-the_status	=   $12
+the_status	= $12
 	; LineNumber: 48
-p	=   $22
+p	= $22
 	; LineNumber: 51
 keys	dc.b	$00
 	; LineNumber: 52
@@ -744,7 +744,7 @@ txt_print_string_centered
 	bcs txt_print_string_centered_skip92
 	dey
 txt_print_string_centered_skip92
-txt_print_string_centered_int_shift_var93 =   $56
+txt_print_string_centered_int_shift_var93 = $56
 	sta txt_print_string_centered_int_shift_var93
 	sty txt_print_string_centered_int_shift_var93+1
 		lsr txt_print_string_centered_int_shift_var93+1
@@ -901,7 +901,7 @@ txt_print_dec_ConditionalTrueBlock152: ;Main true block ;keep
 	lda #$a
 	sta mul16x8_num2
 	jsr mul16x8_procedure
-txt_print_dec_rightvarInteger_var176 =   $56
+txt_print_dec_rightvarInteger_var176 = $56
 	sta txt_print_dec_rightvarInteger_var176
 	sty txt_print_dec_rightvarInteger_var176+1
 	; Right is PURE NUMERIC : Is word =1
@@ -964,7 +964,7 @@ txt_print_dec_elsedoneblock180
 ; // right digit
 	; Modulo
 	lda #$a
-txt_print_dec_val_var185 =   $56
+txt_print_dec_val_var185 = $56
 	sta txt_print_dec_val_var185
 	lda txt__in_n
 	sec
@@ -1036,7 +1036,7 @@ txt_print_dec_elseblock153
 	lda #$a
 	sta mul16x8_num2
 	jsr mul16x8_procedure
-txt_print_dec_rightvarInteger_var189 =   $56
+txt_print_dec_rightvarInteger_var189 = $56
 	sta txt_print_dec_rightvarInteger_var189
 	sty txt_print_dec_rightvarInteger_var189+1
 	lda txt__in_n+1
@@ -1089,16 +1089,16 @@ txt_print_dec_elsedoneblock194
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_draw_tile
 	;    Procedure type : User-defined procedure
-	; LineNumber: 63
+	; LineNumber: 64
 levels_draw_tile_block197
 levels_draw_tile
-	; LineNumber: 66
+	; LineNumber: 67
 	
 ; // Source
 	; Generic 16 bit op
 	lda #<levels_tiles
 	ldy #>levels_tiles
-levels_draw_tile_rightvarInteger_var200 =   $56
+levels_draw_tile_rightvarInteger_var200 = $56
 	sta levels_draw_tile_rightvarInteger_var200
 	sty levels_draw_tile_rightvarInteger_var200+1
 	; Right is PURE NUMERIC : Is word =1
@@ -1123,7 +1123,7 @@ levels_draw_tile_wordAdd198
 	lda levels_draw_tile_rightvarInteger_var200
 	sta levels_temp_s
 	sty levels_temp_s+1
-	; LineNumber: 69
+	; LineNumber: 70
 	
 ; // Dest
 	; Generic 16 bit op
@@ -1137,13 +1137,13 @@ levels_draw_tile_wordAdd198
 	lda #$3
 	sta mul16x8_num2
 	jsr mul16x8_procedure
-levels_draw_tile_rightvarInteger_var203 =   $56
+levels_draw_tile_rightvarInteger_var203 = $56
 	sta levels_draw_tile_rightvarInteger_var203
 	sty levels_draw_tile_rightvarInteger_var203+1
 	; Generic 16 bit op
 	lda #<levels_screen_buffer
 	ldy #>levels_screen_buffer
-levels_draw_tile_rightvarInteger_var206 =   $58
+levels_draw_tile_rightvarInteger_var206 = $58
 	sta levels_draw_tile_rightvarInteger_var206
 	sty levels_draw_tile_rightvarInteger_var206+1
 	; Mul 16x8 setup
@@ -1185,7 +1185,7 @@ levels_draw_tile_wordAdd201
 	lda levels_draw_tile_rightvarInteger_var203
 	sta levels_dest
 	sty levels_dest+1
-	; LineNumber: 70
+	; LineNumber: 71
 	; memcpyfast
 	ldy #2
 levels_draw_tile_memcpy207
@@ -1193,7 +1193,7 @@ levels_draw_tile_memcpy207
 	sta (levels_dest),y
 	dey
 	bpl levels_draw_tile_memcpy207
-	; LineNumber: 72
+	; LineNumber: 73
 	lda levels_temp_s
 	clc
 	adc #$03
@@ -1202,7 +1202,7 @@ levels_draw_tile_memcpy207
 	bcc levels_draw_tile_WordAdd208
 	inc levels_temp_s+1
 levels_draw_tile_WordAdd208
-	; LineNumber: 73
+	; LineNumber: 74
 	lda levels_dest
 	clc
 	adc levels_detected_screen_width
@@ -1211,7 +1211,7 @@ levels_draw_tile_WordAdd208
 	bcc levels_draw_tile_WordAdd209
 	inc levels_dest+1
 levels_draw_tile_WordAdd209
-	; LineNumber: 74
+	; LineNumber: 75
 	; memcpyfast
 	ldy #2
 levels_draw_tile_memcpy210
@@ -1219,7 +1219,7 @@ levels_draw_tile_memcpy210
 	sta (levels_dest),y
 	dey
 	bpl levels_draw_tile_memcpy210
-	; LineNumber: 76
+	; LineNumber: 77
 	lda levels_dest
 	clc
 	adc levels_detected_screen_width
@@ -1228,7 +1228,7 @@ levels_draw_tile_memcpy210
 	bcc levels_draw_tile_WordAdd211
 	inc levels_dest+1
 levels_draw_tile_WordAdd211
-	; LineNumber: 77
+	; LineNumber: 78
 	lda levels_temp_s
 	clc
 	adc #$03
@@ -1237,7 +1237,7 @@ levels_draw_tile_WordAdd211
 	bcc levels_draw_tile_WordAdd212
 	inc levels_temp_s+1
 levels_draw_tile_WordAdd212
-	; LineNumber: 78
+	; LineNumber: 79
 	; memcpyfast
 	ldy #2
 levels_draw_tile_memcpy213
@@ -1245,7 +1245,7 @@ levels_draw_tile_memcpy213
 	sta (levels_dest),y
 	dey
 	bpl levels_draw_tile_memcpy213
-	; LineNumber: 80
+	; LineNumber: 81
 	rts
 	
 ; // Source
@@ -1253,20 +1253,20 @@ levels_draw_tile_memcpy213
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_draw_level
 	;    Procedure type : User-defined procedure
-	; LineNumber: 112
+	; LineNumber: 113
 levels_draw_level
-	; LineNumber: 115
+	; LineNumber: 116
 	
 ; // set to draw tiles
 	lda #<levels_screen_buffer
 	ldx #>levels_screen_buffer
 	sta levels_dest
 	stx levels_dest+1
-	; LineNumber: 116
+	; LineNumber: 117
 	; Generic 16 bit op
 	lda #<levels_level
 	ldy #>levels_level
-levels_draw_level_rightvarInteger_var217 =   $56
+levels_draw_level_rightvarInteger_var217 = $56
 	sta levels_draw_level_rightvarInteger_var217
 	sty levels_draw_level_rightvarInteger_var217+1
 	; Right is PURE NUMERIC : Is word =1
@@ -1292,19 +1292,19 @@ levels_draw_level_wordAdd215
 	lda levels_draw_level_rightvarInteger_var217
 	sta levels_level_p
 	sty levels_level_p+1
-	; LineNumber: 127
+	; LineNumber: 128
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta levels_t_y
 levels_draw_level_forloop218
-	; LineNumber: 120
-	; LineNumber: 125
+	; LineNumber: 121
+	; LineNumber: 126
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta levels_t_x
 levels_draw_level_forloop237
-	; LineNumber: 122
 	; LineNumber: 123
+	; LineNumber: 124
 	; Load pointer array
 	; 8 bit binop
 	; Add/sub where right value is constant number
@@ -1322,9 +1322,9 @@ levels_draw_level_forloop237
 	lda (levels_level_p),y
 	; Calling storevariable on generic assign expression
 	sta levels_tile_no
-	; LineNumber: 124
-	jsr levels_draw_tile
 	; LineNumber: 125
+	jsr levels_draw_tile
+	; LineNumber: 126
 levels_draw_level_forloopcounter239
 levels_draw_level_loopstart240
 	; Compare is onpage
@@ -1336,7 +1336,7 @@ levels_draw_level_loopstart240
 levels_draw_level_loopdone248: ;keep
 levels_draw_level_forloopend238
 levels_draw_level_loopend241
-	; LineNumber: 126
+	; LineNumber: 127
 levels_draw_level_forloopcounter220
 levels_draw_level_loopstart221
 	; Compare is onpage
@@ -1348,25 +1348,25 @@ levels_draw_level_loopstart221
 levels_draw_level_loopdone249: ;keep
 levels_draw_level_forloopend219
 levels_draw_level_loopend222
-	; LineNumber: 129
+	; LineNumber: 130
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_refresh_screen
 	;    Procedure type : User-defined procedure
-	; LineNumber: 136
+	; LineNumber: 137
 levels_refresh_screen
-	; LineNumber: 138
+	; LineNumber: 139
 	lda #<levels_screen_buffer
 	ldx #>levels_screen_buffer
 	sta levels_temp_s
 	stx levels_temp_s+1
-	; LineNumber: 157
+	; LineNumber: 158
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta levels_r
 levels_refresh_screen_forloop251
-	; LineNumber: 143
 	; LineNumber: 144
+	; LineNumber: 145
 	
 ; // Need rows at the bottom 
 ; // for text output
@@ -1378,7 +1378,7 @@ levels_refresh_screen_forloop251
 	ldy txt_ytab+1,x
 	sta levels_dest
 	sty levels_dest+1
-	; LineNumber: 150
+	; LineNumber: 151
 	; memcpyfast
 	ldy levels_detected_screen_width
 	dey
@@ -1387,7 +1387,7 @@ levels_refresh_screen_memcpy260
 	sta (levels_dest),y
 	dey
 	bpl levels_refresh_screen_memcpy260
-	; LineNumber: 156
+	; LineNumber: 157
 	
 ; //MemCpy16(temp_s, dest, detected_screen_width);
 	lda levels_temp_s
@@ -1398,7 +1398,7 @@ levels_refresh_screen_memcpy260
 	bcc levels_refresh_screen_WordAdd261
 	inc levels_temp_s+1
 levels_refresh_screen_WordAdd261
-	; LineNumber: 157
+	; LineNumber: 158
 levels_refresh_screen_forloopcounter253
 levels_refresh_screen_loopstart254
 	; Compare is onpage
@@ -1410,29 +1410,29 @@ levels_refresh_screen_loopstart254
 levels_refresh_screen_loopdone262: ;keep
 levels_refresh_screen_forloopend252
 levels_refresh_screen_loopend255
-	; LineNumber: 159
+	; LineNumber: 160
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_get_buffer
 	;    Procedure type : User-defined procedure
+	; LineNumber: 226
 	; LineNumber: 225
-	; LineNumber: 224
 levels_buf_x	dc.b	0
-	; LineNumber: 224
+	; LineNumber: 225
 levels_buf_y	dc.b	0
 levels_get_buffer_block263
 levels_get_buffer
-	; LineNumber: 227
+	; LineNumber: 228
 	; Generic 16 bit op
 	ldy #0
 	lda levels_buf_x
-levels_get_buffer_rightvarInteger_var266 =   $56
+levels_get_buffer_rightvarInteger_var266 = $56
 	sta levels_get_buffer_rightvarInteger_var266
 	sty levels_get_buffer_rightvarInteger_var266+1
 	; Generic 16 bit op
 	lda #<levels_screen_buffer
 	ldy #>levels_screen_buffer
-levels_get_buffer_rightvarInteger_var269 =   $58
+levels_get_buffer_rightvarInteger_var269 = $58
 	sta levels_get_buffer_rightvarInteger_var269
 	sty levels_get_buffer_rightvarInteger_var269+1
 	; Mul 16x8 setup
@@ -1465,8 +1465,8 @@ levels_get_buffer_wordAdd264
 	lda levels_get_buffer_rightvarInteger_var266
 	sta levels_ch_index
 	sty levels_ch_index+1
-	; LineNumber: 229
 	; LineNumber: 230
+	; LineNumber: 231
 	; Load pointer array
 	ldy #$0
 	lda (levels_ch_index),y
@@ -1474,26 +1474,26 @@ levels_get_buffer_wordAdd264
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_plot_buffer
 	;    Procedure type : User-defined procedure
+	; LineNumber: 236
 	; LineNumber: 235
-	; LineNumber: 234
 levels_plot_x	dc.b	0
-	; LineNumber: 234
+	; LineNumber: 235
 levels_plot_y	dc.b	0
-	; LineNumber: 234
+	; LineNumber: 235
 levels_plot_ch	dc.b	0
 levels_plot_buffer_block270
 levels_plot_buffer
-	; LineNumber: 237
+	; LineNumber: 238
 	; Generic 16 bit op
 	ldy #0
 	lda levels_plot_x
-levels_plot_buffer_rightvarInteger_var273 =   $56
+levels_plot_buffer_rightvarInteger_var273 = $56
 	sta levels_plot_buffer_rightvarInteger_var273
 	sty levels_plot_buffer_rightvarInteger_var273+1
 	; Generic 16 bit op
 	lda #<levels_screen_buffer
 	ldy #>levels_screen_buffer
-levels_plot_buffer_rightvarInteger_var276 =   $58
+levels_plot_buffer_rightvarInteger_var276 = $58
 	sta levels_plot_buffer_rightvarInteger_var276
 	sty levels_plot_buffer_rightvarInteger_var276+1
 	; Mul 16x8 setup
@@ -1526,13 +1526,13 @@ levels_plot_buffer_wordAdd271
 	lda levels_plot_buffer_rightvarInteger_var273
 	sta levels_ch_index
 	sty levels_ch_index+1
-	; LineNumber: 238
+	; LineNumber: 239
 	lda levels_plot_ch
 	; Calling storevariable on generic assign expression
 	; Storing to a pointer
 	ldy #$0
 	sta (levels_ch_index),y
-	; LineNumber: 240
+	; LineNumber: 241
 	rts
 	
 ; //player inventory/stats
@@ -1627,23 +1627,25 @@ init_fill284
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta keys
-	; LineNumber: 91
+	; LineNumber: 92
+	
+; // Set how wide the map should be
 	lda #$a
 	; Calling storevariable on generic assign expression
 	sta levels_tiles_across
-	; LineNumber: 112
+	; LineNumber: 113
 	
 ; // Clear screen,
 	jsr txt_cls
-	; LineNumber: 114
+	; LineNumber: 115
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta game_won
-	; LineNumber: 115
+	; LineNumber: 116
 	lda #$1
 	; Calling storevariable on generic assign expression
 	sta game_running
-	; LineNumber: 118
+	; LineNumber: 119
 	
 ; // Draw current level
 	ldy #0   ; Force integer assignment, set y = 0 for values lower than 255
@@ -1651,9 +1653,9 @@ init_fill284
 	; Calling storevariable on generic assign expression
 	sta levels_current_level
 	sty levels_current_level+1
-	; LineNumber: 119
+	; LineNumber: 120
 	jsr levels_draw_level
-	; LineNumber: 122
+	; LineNumber: 123
 	
 ; // Draw the player
 	lda x
@@ -1666,34 +1668,34 @@ init_fill284
 	; Calling storevariable on generic assign expression
 	sta levels_plot_ch
 	jsr levels_plot_buffer
-	; LineNumber: 125
+	; LineNumber: 126
 	
 ; // Update the screen from the buffer
 	jsr levels_refresh_screen
-	; LineNumber: 127
+	; LineNumber: 128
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : c64_chars
 	;    Procedure type : User-defined procedure
+	; LineNumber: 134
 	; LineNumber: 133
-	; LineNumber: 132
-dest	=   $24
-	; LineNumber: 132
-temp_s	=   $68
+dest	= $24
+	; LineNumber: 133
+temp_s	= $68
 c64_chars_block285
 c64_chars
-	; LineNumber: 136
+	; LineNumber: 137
 	
 ; // Set to use the new characterset
 	; Set bank
 	lda #$2
 	sta $dd00
-	; LineNumber: 137
+	; LineNumber: 138
 	lda $d018
 	and #%11110001
 	ora #8
 	sta $d018
-	; LineNumber: 140
+	; LineNumber: 141
 	
 ; // Force the screen address
 	; Integer constant assigning
@@ -1702,33 +1704,33 @@ c64_chars
 	; Calling storevariable on generic assign expression
 	sta txt_temp_address_p
 	sty txt_temp_address_p+1
-	; LineNumber: 143
+	; LineNumber: 144
 	
 ; // Tells basic routines where screen memory is located
 	; Poke
 	; Optimization: shift is zero
 	lda #$44
 	sta $288
-	; LineNumber: 146
+	; LineNumber: 147
 	
 ; // Clear screen,
 	jsr txt_cls
-	; LineNumber: 149
+	; LineNumber: 150
 	
 ; // Black screen
 	; Poke
 	; Optimization: shift is zero
 	lda #$0
 	sta $d020
-	; LineNumber: 150
+	; LineNumber: 151
 	; Poke
 	; Optimization: shift is zero
 	sta $d021
-	; LineNumber: 154
+	; LineNumber: 155
 	
 ; // Ensure no flashing cursor
 	jsr txt_cursor_off
-	; LineNumber: 156
+	; LineNumber: 157
 	rts
 	
 ; // Force the screen address
@@ -1736,11 +1738,11 @@ c64_chars
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : show_start_screen
 	;    Procedure type : User-defined procedure
-	; LineNumber: 207
+	; LineNumber: 208
 show_start_screen
-	; LineNumber: 209
-	jsr txt_cls
 	; LineNumber: 210
+	jsr txt_cls
+	; LineNumber: 211
 	; Binary clause Simplified: EQUALS
 	lda game_running
 	; Compare with pure num / var optimization
@@ -1750,8 +1752,8 @@ show_start_screen
 show_start_screen_localfailed318
 	jmp show_start_screen_elsedoneblock290
 show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep 
-	; LineNumber: 211
-	; LineNumber: 214
+	; LineNumber: 212
+	; LineNumber: 215
 	
 ; //                         01234567890123456789012
 ; // Text colour to green:
@@ -1759,12 +1761,12 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 215
+	; LineNumber: 216
 	lda #$d
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 216
+	; LineNumber: 217
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr320
 	sta txt_in_str
@@ -1777,12 +1779,12 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 217
+	; LineNumber: 218
 	lda #$d
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 218
+	; LineNumber: 219
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr322
 	sta txt_in_str
@@ -1795,7 +1797,7 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 219
+	; LineNumber: 220
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr324
 	sta txt_in_str
@@ -1808,7 +1810,7 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 220
+	; LineNumber: 221
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr326
 	sta txt_in_str
@@ -1821,12 +1823,12 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 221
+	; LineNumber: 222
 	lda #$d
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 222
+	; LineNumber: 223
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr328
 	sta txt_in_str
@@ -1839,12 +1841,12 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 223
+	; LineNumber: 224
 	lda #$d
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 224
+	; LineNumber: 225
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr330
 	sta txt_in_str
@@ -1857,7 +1859,7 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 225
+	; LineNumber: 226
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr332
 	sta txt_in_str
@@ -1870,12 +1872,12 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 226
+	; LineNumber: 227
 	lda #$d
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 227
+	; LineNumber: 228
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr334
 	sta txt_in_str
@@ -1888,12 +1890,12 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 228
+	; LineNumber: 229
 	lda #$d
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 229
+	; LineNumber: 230
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr336
 	sta txt_in_str
@@ -1906,7 +1908,7 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 230
+	; LineNumber: 231
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr338
 	sta txt_in_str
@@ -1919,7 +1921,7 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 231
+	; LineNumber: 232
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr340
 	sta txt_in_str
@@ -1932,7 +1934,7 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 232
+	; LineNumber: 233
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr342
 	sta txt_in_str
@@ -1945,7 +1947,7 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 233
+	; LineNumber: 234
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr344
 	sta txt_in_str
@@ -1958,21 +1960,21 @@ show_start_screen_ConditionalTrueBlock288: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 234
+	; LineNumber: 235
 show_start_screen_elsedoneblock290
-	; LineNumber: 238
+	; LineNumber: 239
 	
 ; // Wait for keypress
 	lda #$d
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 239
+	; LineNumber: 240
 	lda #$12
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 242
+	; LineNumber: 243
 	; Assigning a string : txt_in_str
 	lda #<show_start_screen_stringassignstr346
 	sta txt_in_str
@@ -1985,38 +1987,38 @@ show_start_screen_elsedoneblock290
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 243
+	; LineNumber: 244
 	jsr txt_print_space
-	; LineNumber: 246
+	; LineNumber: 247
 	lda #$d
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 247
+	; LineNumber: 248
 	lda #$92
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 250
+	; LineNumber: 251
 	jsr txt_wait_key
-	; LineNumber: 253
+	; LineNumber: 254
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : show_end_screen
 	;    Procedure type : User-defined procedure
-	; LineNumber: 258
+	; LineNumber: 259
 show_end_screen
-	; LineNumber: 260
-	jsr txt_cls
 	; LineNumber: 261
+	jsr txt_cls
+	; LineNumber: 262
 	; Binary clause Simplified: NOTEQUALS
 	lda game_won
 	; Compare with pure num / var optimization
 	cmp #$0;keep
 	beq show_end_screen_elseblock351
 show_end_screen_ConditionalTrueBlock350: ;Main true block ;keep 
-	; LineNumber: 261
-	; LineNumber: 263
+	; LineNumber: 262
+	; LineNumber: 264
 	; Assigning a string : txt_in_str
 	lda #<show_end_screen_stringassignstr360
 	sta txt_in_str
@@ -2029,11 +2031,11 @@ show_end_screen_ConditionalTrueBlock350: ;Main true block ;keep
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 265
+	; LineNumber: 266
 	jmp show_end_screen_elsedoneblock352
 show_end_screen_elseblock351
-	; LineNumber: 266
 	; LineNumber: 267
+	; LineNumber: 268
 	; Assigning a string : txt_in_str
 	lda #<show_end_screen_stringassignstr363
 	sta txt_in_str
@@ -2046,9 +2048,9 @@ show_end_screen_elseblock351
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 268
+	; LineNumber: 269
 show_end_screen_elsedoneblock352
-	; LineNumber: 271
+	; LineNumber: 272
 	
 ; // Wait for keypress
 	; Assigning a string : txt_in_str
@@ -2063,12 +2065,12 @@ show_end_screen_elsedoneblock352
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 273
+	; LineNumber: 274
 	lda #$12
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 275
+	; LineNumber: 276
 	; Assigning a string : txt_in_str
 	lda #<show_end_screen_stringassignstr367
 	sta txt_in_str
@@ -2081,28 +2083,28 @@ show_end_screen_elsedoneblock352
 	; Calling storevariable on generic assign expression
 	sta txt__sc_w
 	jsr txt_print_string_centered
-	; LineNumber: 277
+	; LineNumber: 278
 	lda #$92
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 279
+	; LineNumber: 280
 	jsr txt_wait_key
-	; LineNumber: 282
+	; LineNumber: 283
 	rts
 	
 ; //@ifndef ATARI800		
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : display_text
 	;    Procedure type : User-defined procedure
-	; LineNumber: 287
+	; LineNumber: 288
 display_text
-	; LineNumber: 289
+	; LineNumber: 290
 	lda #$12
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 290
+	; LineNumber: 291
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta txt__text_x
@@ -2110,7 +2112,7 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__text_y
 	jsr txt_move_to
-	; LineNumber: 291
+	; LineNumber: 292
 	; Assigning a string : txt_in_str
 	lda #<display_text_stringassignstr370
 	sta txt_in_str
@@ -2120,7 +2122,7 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt_CRLF
 	jsr txt_print_string
-	; LineNumber: 292
+	; LineNumber: 293
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta txt__text_x
@@ -2128,7 +2130,7 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__text_y
 	jsr txt_move_to
-	; LineNumber: 293
+	; LineNumber: 294
 	lda the_status
 	ldx the_status+1
 	sta txt_in_str
@@ -2137,12 +2139,12 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt_CRLF
 	jsr txt_print_string
-	; LineNumber: 294
+	; LineNumber: 295
 	lda #$92
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 296
+	; LineNumber: 297
 	lda #$5
 	; Calling storevariable on generic assign expression
 	sta txt__text_x
@@ -2150,17 +2152,17 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__text_y
 	jsr txt_move_to
-	; LineNumber: 297
+	; LineNumber: 298
 	lda #$cb
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 298
+	; LineNumber: 299
 	lda #$20
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 299
+	; LineNumber: 300
 	lda keys
 	; Calling storevariable on generic assign expression
 	sta txt__in_n
@@ -2168,7 +2170,7 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__add_cr
 	jsr txt_print_dec
-	; LineNumber: 301
+	; LineNumber: 302
 	lda #$f
 	; Calling storevariable on generic assign expression
 	sta txt__text_x
@@ -2176,17 +2178,17 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__text_y
 	jsr txt_move_to
-	; LineNumber: 302
+	; LineNumber: 303
 	lda #$7a
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 303
+	; LineNumber: 304
 	lda #$20
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 304
+	; LineNumber: 305
 	; integer assignment NodeVar
 	ldy gold+1 ; keep
 	lda gold
@@ -2196,7 +2198,7 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__add_cr
 	jsr txt_print_dec
-	; LineNumber: 307
+	; LineNumber: 308
 	lda #$5
 	; Calling storevariable on generic assign expression
 	sta txt__text_x
@@ -2204,27 +2206,27 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__text_y
 	jsr txt_move_to
-	; LineNumber: 308
+	; LineNumber: 309
 	lda #$12
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 309
+	; LineNumber: 310
 	lda #$d3
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 310
+	; LineNumber: 311
 	lda #$92
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 311
+	; LineNumber: 312
 	lda #$20
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 312
+	; LineNumber: 313
 	lda health
 	; Calling storevariable on generic assign expression
 	sta txt__in_n
@@ -2232,7 +2234,7 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__add_cr
 	jsr txt_print_dec
-	; LineNumber: 315
+	; LineNumber: 316
 	lda #$f
 	; Calling storevariable on generic assign expression
 	sta txt__text_x
@@ -2240,17 +2242,17 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__text_y
 	jsr txt_move_to
-	; LineNumber: 316
+	; LineNumber: 317
 	lda #$76
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 317
+	; LineNumber: 318
 	lda #$20
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 318
+	; LineNumber: 319
 	lda attack
 	; Calling storevariable on generic assign expression
 	sta txt__in_n
@@ -2258,7 +2260,7 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__add_cr
 	jsr txt_print_dec
-	; LineNumber: 321
+	; LineNumber: 322
 	lda #$5
 	; Calling storevariable on generic assign expression
 	sta txt__text_x
@@ -2266,27 +2268,27 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__text_y
 	jsr txt_move_to
-	; LineNumber: 322
+	; LineNumber: 323
 	lda #$12
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 323
+	; LineNumber: 324
 	lda #$d6
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 324
+	; LineNumber: 325
 	lda #$92
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 325
+	; LineNumber: 326
 	lda #$20
 	; Calling storevariable on generic assign expression
 	sta txt_CH
 	jsr txt_put_ch
-	; LineNumber: 326
+	; LineNumber: 327
 	lda defense
 	; Calling storevariable on generic assign expression
 	sta txt__in_n
@@ -2294,29 +2296,29 @@ display_text
 	; Calling storevariable on generic assign expression
 	sta txt__add_cr
 	jsr txt_print_dec
-	; LineNumber: 328
+	; LineNumber: 329
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : update_status
 	;    Procedure type : User-defined procedure
-	; LineNumber: 332
+	; LineNumber: 333
 update_status_block372
 update_status
-	; LineNumber: 333
+	; LineNumber: 334
 	lda new_status
 	ldx new_status+1
 	sta the_status
 	stx the_status+1
-	; LineNumber: 334
+	; LineNumber: 335
 	jsr display_text
-	; LineNumber: 336
+	; LineNumber: 337
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : door
 	;    Procedure type : User-defined procedure
-	; LineNumber: 340
+	; LineNumber: 341
 door
-	; LineNumber: 343
+	; LineNumber: 344
 	; Optimization: replacing a > N with a >= N+1
 	; Binary clause Simplified: GREATEREQUAL
 	lda keys
@@ -2327,27 +2329,27 @@ door
 door_localfailed426
 	jmp door_elseblock376
 door_ConditionalTrueBlock375: ;Main true block ;keep 
-	; LineNumber: 344
 	; LineNumber: 345
+	; LineNumber: 346
 	
 ; // Check if have a key		
 	; Test Inc dec D
 	dec keys
-	; LineNumber: 346
+	; LineNumber: 347
 	; Assigning a string : new_status
 	lda #<door_stringassignstr428
 	sta new_status
 	lda #>door_stringassignstr428
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 348
+	; LineNumber: 349
 	; Binary clause Simplified: EQUALS
 	lda x
 	; Compare with pure num / var optimization
 	cmp #$0;keep
 	bne door_elsedoneblock433
 door_ConditionalTrueBlock431: ;Main true block ;keep 
-	; LineNumber: 347
+	; LineNumber: 348
 	; Assigning a string : new_status
 	lda #<door_stringassignstr438
 	sta new_status
@@ -2355,14 +2357,14 @@ door_ConditionalTrueBlock431: ;Main true block ;keep
 	sta new_status+1
 	jsr update_status
 door_elsedoneblock433
-	; LineNumber: 349
+	; LineNumber: 350
 	; Binary clause Simplified: EQUALS
 	lda x
 	; Compare with pure num / var optimization
 	cmp #$1e;keep
 	bne door_elsedoneblock443
 door_ConditionalTrueBlock441: ;Main true block ;keep 
-	; LineNumber: 348
+	; LineNumber: 349
 	; Assigning a string : new_status
 	lda #<door_stringassignstr448
 	sta new_status
@@ -2370,14 +2372,14 @@ door_ConditionalTrueBlock441: ;Main true block ;keep
 	sta new_status+1
 	jsr update_status
 door_elsedoneblock443
-	; LineNumber: 350
+	; LineNumber: 351
 	; Binary clause Simplified: EQUALS
 	lda y
 	; Compare with pure num / var optimization
 	cmp #$0;keep
 	bne door_elsedoneblock453
 door_ConditionalTrueBlock451: ;Main true block ;keep 
-	; LineNumber: 349
+	; LineNumber: 350
 	; Assigning a string : new_status
 	lda #<door_stringassignstr458
 	sta new_status
@@ -2385,22 +2387,22 @@ door_ConditionalTrueBlock451: ;Main true block ;keep
 	sta new_status+1
 	jsr update_status
 door_elsedoneblock453
-	; LineNumber: 351
+	; LineNumber: 352
 	; Binary clause Simplified: EQUALS
 	lda y
 	; Compare with pure num / var optimization
 	cmp #$11;keep
 	bne door_elsedoneblock463
 door_ConditionalTrueBlock461: ;Main true block ;keep 
-	; LineNumber: 352
 	; LineNumber: 353
+	; LineNumber: 354
 	; Assigning a string : new_status
 	lda #<door_stringassignstr469
 	sta new_status
 	lda #>door_stringassignstr469
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 354
+	; LineNumber: 355
 	lda levels_current_level
 	clc
 	adc #$01
@@ -2409,44 +2411,44 @@ door_ConditionalTrueBlock461: ;Main true block ;keep
 	bcc door_WordAdd471
 	inc levels_current_level+1
 door_WordAdd471
-	; LineNumber: 355
+	; LineNumber: 356
 	; Test Inc dec D
 	dec y
-	; LineNumber: 356
-	jsr levels_draw_level
 	; LineNumber: 357
+	jsr levels_draw_level
+	; LineNumber: 358
 door_elsedoneblock463
-	; LineNumber: 359
+	; LineNumber: 360
 	jmp door_elsedoneblock377
 door_elseblock376
-	; LineNumber: 360
 	; LineNumber: 361
+	; LineNumber: 362
 	; Assigning a string : new_status
 	lda #<door_stringassignstr473
 	sta new_status
 	lda #>door_stringassignstr473
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 364
+	; LineNumber: 365
 	
 ; // Reset to backup position
 	lda oldx
 	; Calling storevariable on generic assign expression
 	sta x
-	; LineNumber: 365
+	; LineNumber: 366
 	lda oldy
 	; Calling storevariable on generic assign expression
 	sta y
-	; LineNumber: 366
+	; LineNumber: 367
 door_elsedoneblock377
-	; LineNumber: 368
+	; LineNumber: 369
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : combat
 	;    Procedure type : User-defined procedure
-	; LineNumber: 372
+	; LineNumber: 373
 combat
-	; LineNumber: 375
+	; LineNumber: 376
 	; Optimization: replacing a > N with a >= N+1
 	; Binary clause Simplified: GREATEREQUAL
 	; Right is PURE NUMERIC : Is word =0
@@ -2461,8 +2463,8 @@ combat
 	cmp #$b;keep
 	bcc combat_elseblock478
 combat_ConditionalTrueBlock477: ;Main true block ;keep 
-	; LineNumber: 378
 	; LineNumber: 379
+	; LineNumber: 380
 	
 ; //if((Random::Random()/12)>10) then
 	; Assigning a string : new_status
@@ -2471,31 +2473,31 @@ combat_ConditionalTrueBlock477: ;Main true block ;keep
 	lda #>combat_stringassignstr495
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 380
+	; LineNumber: 381
 	jmp combat_elsedoneblock479
 combat_elseblock478
-	; LineNumber: 382
-	; LineNumber: 384
+	; LineNumber: 383
+	; LineNumber: 385
 	; Test Inc dec D
 	dec health
-	; LineNumber: 387
+	; LineNumber: 388
 	
 ; // Reset to backup position
 	lda oldx
 	; Calling storevariable on generic assign expression
 	sta x
-	; LineNumber: 388
+	; LineNumber: 389
 	lda oldy
 	; Calling storevariable on generic assign expression
 	sta y
-	; LineNumber: 390
+	; LineNumber: 391
 	; Assigning a string : new_status
 	lda #<combat_stringassignstr498
 	sta new_status
 	lda #>combat_stringassignstr498
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 392
+	; LineNumber: 393
 	; Binary clause Simplified: LESSEQUAL
 	lda health
 	; Compare with pure num / var optimization
@@ -2503,33 +2505,33 @@ combat_elseblock478
 	beq combat_ConditionalTrueBlock501
 	bcs combat_elsedoneblock503
 combat_ConditionalTrueBlock501: ;Main true block ;keep 
-	; LineNumber: 393
 	; LineNumber: 394
+	; LineNumber: 395
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta game_won
-	; LineNumber: 395
+	; LineNumber: 396
 	; Calling storevariable on generic assign expression
 	sta game_running
-	; LineNumber: 396
+	; LineNumber: 397
 combat_elsedoneblock503
-	; LineNumber: 398
+	; LineNumber: 399
 combat_elsedoneblock479
-	; LineNumber: 400
+	; LineNumber: 401
 	rts
 	
 ; //@endif
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : check_collisions
 	;    Procedure type : User-defined procedure
-	; LineNumber: 406
+	; LineNumber: 407
 check_collisions
-	; LineNumber: 409
+	; LineNumber: 410
 	lda #$2a
 	cmp charat ;keep
 	bne check_collisions_casenext508
-	; LineNumber: 413
-	; LineNumber: 415
+	; LineNumber: 414
+	; LineNumber: 416
 	
 ; // Gazer
 	; Assigning a string : new_status
@@ -2538,16 +2540,16 @@ check_collisions
 	lda #>check_collisions_stringassignstr510
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 416
+	; LineNumber: 417
 	jsr combat
-	; LineNumber: 418
+	; LineNumber: 419
 	jmp check_collisions_caseend507
 check_collisions_casenext508
 	lda #$58
 	cmp charat ;keep
 	bne check_collisions_casenext512
-	; LineNumber: 421
 	; LineNumber: 422
+	; LineNumber: 423
 	
 ; // Artifact
 	; Assigning a string : new_status
@@ -2556,61 +2558,61 @@ check_collisions_casenext508
 	lda #>check_collisions_stringassignstr514
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 423
+	; LineNumber: 424
 	jmp check_collisions_caseend507
 check_collisions_casenext512
 	lda #$43
 	cmp charat ;keep
 	bne check_collisions_casenext516
-	; LineNumber: 425
-	; LineNumber: 427
-	jsr door
+	; LineNumber: 426
 	; LineNumber: 428
+	jsr door
+	; LineNumber: 429
 	jmp check_collisions_caseend507
 check_collisions_casenext516
 	lda #$4b
 	cmp charat ;keep
 	bne check_collisions_casenext518
-	; LineNumber: 430
-	; LineNumber: 432
+	; LineNumber: 431
+	; LineNumber: 433
 	
 ; // Key
 	; Test Inc dec D
 	inc keys
-	; LineNumber: 433
+	; LineNumber: 434
 	; Assigning a string : new_status
 	lda #<check_collisions_stringassignstr520
 	sta new_status
 	lda #>check_collisions_stringassignstr520
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 434
+	; LineNumber: 435
 	jmp check_collisions_caseend507
 check_collisions_casenext518
 	lda #$53
 	cmp charat ;keep
 	bne check_collisions_casenext522
-	; LineNumber: 438
 	; LineNumber: 439
+	; LineNumber: 440
 	
 ; // Health potion
 	; Test Inc dec D
 	inc health
-	; LineNumber: 440
+	; LineNumber: 441
 	; Assigning a string : new_status
 	lda #<check_collisions_stringassignstr524
 	sta new_status
 	lda #>check_collisions_stringassignstr524
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 442
+	; LineNumber: 443
 	jmp check_collisions_caseend507
 check_collisions_casenext522
 	lda #$57
 	cmp charat ;keep
 	bne check_collisions_casenext526
-	; LineNumber: 444
-	; LineNumber: 447
+	; LineNumber: 445
+	; LineNumber: 448
 	
 ; // Gobbo
 	; Assigning a string : new_status
@@ -2619,16 +2621,16 @@ check_collisions_casenext522
 	lda #>check_collisions_stringassignstr528
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 448
-	jsr combat
 	; LineNumber: 449
+	jsr combat
+	; LineNumber: 450
 	jmp check_collisions_caseend507
 check_collisions_casenext526
 	lda #$5a
 	cmp charat ;keep
 	bne check_collisions_casenext530
-	; LineNumber: 452
 	; LineNumber: 453
+	; LineNumber: 454
 	
 ; // Jewell
 	lda gold
@@ -2639,21 +2641,21 @@ check_collisions_casenext526
 	bcc check_collisions_WordAdd532
 	inc gold+1
 check_collisions_WordAdd532
-	; LineNumber: 454
+	; LineNumber: 455
 	; Assigning a string : new_status
 	lda #<check_collisions_stringassignstr533
 	sta new_status
 	lda #>check_collisions_stringassignstr533
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 456
+	; LineNumber: 457
 	jmp check_collisions_caseend507
 check_collisions_casenext530
 	lda #$5e
 	cmp charat ;keep
 	bne check_collisions_casenext535
-	; LineNumber: 459
-	; LineNumber: 461
+	; LineNumber: 460
+	; LineNumber: 462
 	
 ; // Rat
 	; Assigning a string : new_status
@@ -2662,30 +2664,30 @@ check_collisions_casenext530
 	lda #>check_collisions_stringassignstr537
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 462
+	; LineNumber: 463
 	jsr combat
-	; LineNumber: 464
+	; LineNumber: 465
 	jmp check_collisions_caseend507
 check_collisions_casenext535
 	lda player_char
 	cmp charat ;keep
 	bne check_collisions_casenext539
-	; LineNumber: 468
-	; LineNumber: 470
+	; LineNumber: 469
+	; LineNumber: 471
 	jmp check_collisions_caseend507
 check_collisions_casenext539
-	; LineNumber: 474
-	; LineNumber: 477
+	; LineNumber: 475
+	; LineNumber: 478
 	
 ; // Reset to backup position
 	lda oldx
 	; Calling storevariable on generic assign expression
 	sta x
-	; LineNumber: 478
+	; LineNumber: 479
 	lda oldy
 	; Calling storevariable on generic assign expression
 	sta y
-	; LineNumber: 483
+	; LineNumber: 484
 	
 ; // Unknown
 ; //_A:=charat;
@@ -2695,7 +2697,7 @@ check_collisions_casenext539
 	lda #>check_collisions_stringassignstr542
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 484
+	; LineNumber: 485
 	lda #$f
 	; Calling storevariable on generic assign expression
 	sta txt__text_x
@@ -2703,7 +2705,7 @@ check_collisions_casenext539
 	; Calling storevariable on generic assign expression
 	sta txt__text_y
 	jsr txt_move_to
-	; LineNumber: 485
+	; LineNumber: 486
 	lda charat
 	; Calling storevariable on generic assign expression
 	sta txt__in_n
@@ -2711,26 +2713,26 @@ check_collisions_casenext539
 	; Calling storevariable on generic assign expression
 	sta txt__add_cr
 	jsr txt_print_dec
-	; LineNumber: 487
+	; LineNumber: 488
 check_collisions_caseend507
-	; LineNumber: 490
+	; LineNumber: 491
 	rts
 block1
-	; LineNumber: 496
+	; LineNumber: 497
 	
 ; // ********************************
 	lda #$28
 	; Calling storevariable on generic assign expression
 	sta levels_detected_screen_width
-	; LineNumber: 500
+	; LineNumber: 501
 	
 ; // C64 has it's own special characters
 	jsr c64_chars
-	; LineNumber: 501
+	; LineNumber: 502
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta player_char
-	; LineNumber: 528
+	; LineNumber: 529
 MainProgram_while544
 MainProgram_loopstart548
 	; Binary clause Simplified: NOTEQUALS
@@ -2742,29 +2744,29 @@ MainProgram_loopstart548
 MainProgram_localfailed640
 	jmp MainProgram_elsedoneblock547
 MainProgram_ConditionalTrueBlock545: ;Main true block ;keep 
-	; LineNumber: 528
-	; LineNumber: 533
+	; LineNumber: 529
+	; LineNumber: 534
 	
 ; // Borked, will need some work
 ; // Infinite loop
 ; // Show start screen
 ; // *****************
 	jsr show_start_screen
-	; LineNumber: 537
+	; LineNumber: 538
 	
 ; // Initial screen fill
 ; // and(re)set variables
 	jsr init
-	; LineNumber: 540
+	; LineNumber: 541
 	; Assigning a string : new_status
 	lda #<MainProgram_stringassignstr642
 	sta new_status
 	lda #>MainProgram_stringassignstr642
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 541
+	; LineNumber: 542
 	jsr display_text
-	; LineNumber: 545
+	; LineNumber: 546
 MainProgram_while644
 MainProgram_loopstart648
 	; Binary clause Simplified: NOTEQUALS
@@ -2776,36 +2778,36 @@ MainProgram_loopstart648
 MainProgram_localfailed690
 	jmp MainProgram_elsedoneblock647
 MainProgram_ConditionalTrueBlock645: ;Main true block ;keep 
-	; LineNumber: 546
-	; LineNumber: 551
+	; LineNumber: 547
+	; LineNumber: 552
 	
 ; // Main loop
 ; // Backup the current position			
 	lda x
 	; Calling storevariable on generic assign expression
 	sta oldx
-	; LineNumber: 552
+	; LineNumber: 553
 	lda y
 	; Calling storevariable on generic assign expression
 	sta oldy
-	; LineNumber: 555
+	; LineNumber: 556
 	
 ; // Get keyboard input
 	jsr txt_get_key
 	; Calling storevariable on generic assign expression
 	sta key_press
-	; LineNumber: 558
+	; LineNumber: 559
 	lda #$51
 	cmp key_press ;keep
 	bne MainProgram_casenext693
-	; LineNumber: 560
+	; LineNumber: 561
 	; Binary clause Simplified: GREATEREQUAL
 	lda y
 	; Compare with pure num / var optimization
 	cmp #$1;keep
 	bcc MainProgram_elsedoneblock698
 MainProgram_ConditionalTrueBlock696: ;Main true block ;keep 
-	; LineNumber: 560
+	; LineNumber: 561
 	
 ; // Check the pressed key
 ; // Cursor keys defined in unit		        
@@ -2817,14 +2819,14 @@ MainProgram_casenext693
 	lda #$41
 	cmp key_press ;keep
 	bne MainProgram_casenext701
-	; LineNumber: 561
+	; LineNumber: 562
 	; Binary clause Simplified: LESS
 	lda y
 	; Compare with pure num / var optimization
 	cmp #$17;keep
 	bcs MainProgram_elsedoneblock706
 MainProgram_ConditionalTrueBlock704: ;Main true block ;keep 
-	; LineNumber: 561
+	; LineNumber: 562
 	; Test Inc dec D
 	inc y
 MainProgram_elsedoneblock706
@@ -2833,14 +2835,14 @@ MainProgram_casenext701
 	lda #$4f
 	cmp key_press ;keep
 	bne MainProgram_casenext709
-	; LineNumber: 562
+	; LineNumber: 563
 	; Binary clause Simplified: GREATEREQUAL
 	lda x
 	; Compare with pure num / var optimization
 	cmp #$1;keep
 	bcc MainProgram_elsedoneblock714
 MainProgram_ConditionalTrueBlock712: ;Main true block ;keep 
-	; LineNumber: 562
+	; LineNumber: 563
 	; Test Inc dec D
 	dec x
 MainProgram_elsedoneblock714
@@ -2849,20 +2851,20 @@ MainProgram_casenext709
 	lda #$50
 	cmp key_press ;keep
 	bne MainProgram_casenext717
-	; LineNumber: 563
+	; LineNumber: 564
 	; Binary clause Simplified: LESS
 	lda x
 	; Compare with pure num / var optimization
 	cmp #$27;keep
 	bcs MainProgram_elsedoneblock722
 MainProgram_ConditionalTrueBlock720: ;Main true block ;keep 
-	; LineNumber: 563
+	; LineNumber: 564
 	; Test Inc dec D
 	inc x
 MainProgram_elsedoneblock722
 MainProgram_casenext717
 MainProgram_caseend692
-	; LineNumber: 571
+	; LineNumber: 572
 	
 ; // Find out if the space we want to move to
 ; // is empty or if it contains anything special
@@ -2875,21 +2877,21 @@ MainProgram_caseend692
 	jsr levels_get_buffer
 	; Calling storevariable on generic assign expression
 	sta charat
-	; LineNumber: 575
+	; LineNumber: 576
 	; Binary clause Simplified: NOTEQUALS
 	; Compare with pure num / var optimization
 	cmp space_char;keep
 	beq MainProgram_elsedoneblock728
 MainProgram_ConditionalTrueBlock726: ;Main true block ;keep 
-	; LineNumber: 576
-	; LineNumber: 579
+	; LineNumber: 577
+	; LineNumber: 580
 	
 ; // $20 is space
 ; // Tile isn't empty so check what should happen
 	jsr check_collisions
-	; LineNumber: 581
+	; LineNumber: 582
 MainProgram_elsedoneblock728
-	; LineNumber: 587
+	; LineNumber: 588
 	
 ; // Remove old position
 ; // Rather than blank could also get background
@@ -2904,7 +2906,7 @@ MainProgram_elsedoneblock728
 	; Calling storevariable on generic assign expression
 	sta levels_plot_ch
 	jsr levels_plot_buffer
-	; LineNumber: 591
+	; LineNumber: 592
 	
 ; // Keep the new position and output
 ; // our player
@@ -2918,23 +2920,23 @@ MainProgram_elsedoneblock728
 	; Calling storevariable on generic assign expression
 	sta levels_plot_ch
 	jsr levels_plot_buffer
-	; LineNumber: 595
+	; LineNumber: 596
 	
 ; // Update screen from the buffer
 	jsr levels_refresh_screen
-	; LineNumber: 597
+	; LineNumber: 598
 	jmp MainProgram_while644
 MainProgram_elsedoneblock647
 MainProgram_loopend649
-	; LineNumber: 601
+	; LineNumber: 602
 	
 ; // Show end screen
 	jsr show_end_screen
-	; LineNumber: 604
+	; LineNumber: 605
 	jmp MainProgram_while544
 MainProgram_elsedoneblock547
 MainProgram_loopend549
-	; LineNumber: 606
+	; LineNumber: 607
 	; End of program
 	; Ending memory block at $810
 show_start_screen_stringassignstr292		dc.b	"dddddddddddddd"
@@ -3078,5 +3080,5 @@ EndBlock810:
 StartBlock6000:
 	org $6000
 charset:
-	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///levels/map - Chars.bin"
+	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///c64chars.bin"
 EndBlock6000:
