@@ -43,6 +43,7 @@ NEXT
 
 ' BUTTONS
 CALL draw_button("Save", 142, 36)
+CALL draw_button("X", 300, 0)
 
 
 ' TILE DATA
@@ -129,6 +130,11 @@ DO
             ' __________________________
             ' BUTTONS
             ' --------------------------
+
+
+            ' [QUIT]
+            IF _MOUSEX > 299 AND _MOUSEY < 20 AND _MOUSEBUTTON(1) THEN END
+
 
             ' [SAVE]
             IF _MOUSEX > 141 AND _MOUSEX < 193 AND _MOUSEY > 35 AND _MOUSEY < 48 THEN
