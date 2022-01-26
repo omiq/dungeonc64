@@ -25,6 +25,8 @@ CONST black = 12
 _FULLSCREEN
 _MOUSESHOW
 OPTION BASE 0
+DIM SHARED chars_file$
+DIM SHARED tiles_file$
 chars_file$ = "c64chars.bin"
 tiles_file$ = "tiles.bin"
 
@@ -72,33 +74,8 @@ DIM tmp_Y AS INTEGER
 DIM this_cell AS INTEGER
 DIM tiles(43, 10) AS _UNSIGNED _BYTE
 
-
-' GET THE CURRENT TILE DATA
-OPEN tiles_file$ FOR BINARY AS #2
-GET #2, , tiles()
-CLOSE #2
-
-tile_row = 0
-tile_col = 0
-this_cell = 0
-cell_row = 0
-cell_col = 0
-FOR tile_row = 0 TO 5
-    FOR tile_col = 0 TO 6
-        tile = (tile_row * 7) + tile_col
-        if tile < 5 then PRINT chr$(13)+str(tile)
-        FOR cell_row = 0 TO 2
-            FOR cell_col = 0 TO 2
-                tile_cell = (cell_row * 3) + cell_col
-                cellx = INT((tile_col * 24) + (cell_col * 8) + 141)
-                celly = INT((tile_row * 24) + (cell_row * 8) + 48)
-                CALL print_char(tiles(tile, tile_cell), cellx, celly)
-                IF tile < 5 THEN PRINT tiles(tile, tile_cell);
-            NEXT
-        NEXT
-    NEXT
-NEXT
-END
+' LOAD CELL DATA FILE
+CALL load_cells
 
 
 ' CHAR PICKER
@@ -128,16 +105,18 @@ DO
         LOCATE 1, 1
         PRINT _MOUSEX; _MOUSEY;
         IF _MOUSEX < 138 THEN
+
+            ' PAINT CHARACTER SELECTION
             IF _MOUSEBUTTON(1) THEN
 
                 LOCATE 1, 20
-
                 PRINT INT(_MOUSEX / 10); INT(_MOUSEY / 10) - 1
                 click_char = (INT(_MOUSEX / 10) + (INT((_MOUSEY / 10) - 1) * 14))
+
                 CALL print_char(click_char, 150, 20)
             END IF
 
-
+            ' ERASE CHARACTER SELECTION
             IF _MOUSEBUTTON(2) THEN
 
                 LOCATE 1, 20
@@ -145,6 +124,7 @@ DO
                 del_char = (INT(_MOUSEX / 10) + (INT((_MOUSEY / 10) - 1) * 14))
                 CALL print_char(del_char, 160, 20)
             END IF
+
         ELSE
             ' __________________________
             ' BUTTONS
@@ -158,26 +138,24 @@ DO
                     this_cell = 0
                     cell_row = 0
                     cell_col = 0
-                    FOR tile_row = 0 TO 5
-                        FOR tile_col = 0 TO 6
-                            tile = (tile_row * 7) + tile_col
-                            'PRINT tile;
-                            FOR cell_row = 0 TO 2
-                                FOR cell_col = 0 TO 2
-                                    tile_cell = (cell_row * 3) + cell_col
-                                    tiles(tile, tile_cell) = cells(this_cell)
-                                    this_cell = this_cell + 1
-                                NEXT
-                            NEXT
-                        NEXT
-                    NEXT
 
-                    ' SAVE THE TILES
-                    OPEN "tiles.dat" FOR BINARY AS #1
-                    PUT #1, , tiles()
-                    CLOSE
-                    LOCATE 1, 1
-                    PRINT "TILE DATA SAVED"
+                    CALL save_cells
+
+                    'FOR tile_row = 0 TO 5
+                    '    FOR tile_col = 0 TO 6
+                    '        tile = (tile_row * 7) + tile_col
+                    ' PRINT tile;
+                    '        FOR cell_row = 0 TO 2
+                    '            FOR cell_col = 0 TO 2
+                    '                tile_cell = (cell_row * 3) + cell_col
+                    '                tiles(tile, tile_cell) = cells(this_cell)
+                    '                this_cell = this_cell + 1
+                    '            NEXT
+                    '        NEXT
+                    '    NEXT
+                    'NEXT
+
+
 
                 END IF
             END IF
@@ -216,13 +194,41 @@ END
 ' CONVERT CELLS TO TILES AND OUTPUT THE TILES
 SUB save_cells ()
 
-    IF INKEY$ = "S" OR INKEY$ = "s" THEN
-        FOR i = 0 TO 500
-            PRINT cells(i);
-        NEXT
-    END IF
+
+    ' SAVE THE TILES
+    OPEN tiles_file$ FOR BINARY AS #1
+    PUT #1, , cells()
+    CLOSE
+
+    LOCATE 1, 1
+    PRINT "TILE DATA SAVED"
+
+
 
 END SUB
+
+
+' LOAD THE CELL DATA
+SUB load_cells ()
+    ' GET THE CURRENT TILE DATA
+    OPEN tiles_file$ FOR BINARY AS #2
+    GET #2, , cells()
+    CLOSE #2
+
+    this_cell = 0
+    cell_row = 0
+    cell_col = 0
+    FOR cell_row = 0 TO 17
+        FOR cell_col = 0 TO 20
+            tmp_X = cell_col * 8
+            tmp_Y = cell_row * 8
+            CALL print_char(cells(this_cell), tmp_X + 141, tmp_Y + 47)
+            this_cell = this_cell + 1
+        NEXT
+    NEXT
+
+END SUB
+
 
 ' BUTTON DRAWING
 SUB draw_button (label AS STRING, x AS INTEGER, y AS INTEGER)
@@ -232,9 +238,6 @@ SUB draw_button (label AS STRING, x AS INTEGER, y AS INTEGER)
     LINE (x, y)-(x, y + 8), white, BF
 
     LINE (x + 2, y + 8)-(x + 49, y + 8), dgrey, BF
-
-
-
 
     _PRINTSTRING (x + 8, y + 1), label
 END SUB
