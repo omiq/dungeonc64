@@ -1,5 +1,5 @@
 SCREEN 1
-_PRINTMODE _KEEPBACKGROUND
+'_PRINTMODE _KEEPBACKGROUND
 
 ' BLUE
 _PALETTECOLOR 1, _RGB32(0, 155, 155)
@@ -25,7 +25,8 @@ CONST black = 12
 _FULLSCREEN
 _MOUSESHOW
 OPTION BASE 0
-tiles_file$ = "c64chars.bin"
+chars_file$ = "c64chars.bin"
+tiles_file$ = "tiles.bin"
 
 
 'GRID LINES
@@ -38,12 +39,11 @@ FOR tiler = 46 TO 46 + (5 * 24) STEP 24
     NEXT
 NEXT
 
+' BUTTONS
 CALL draw_button("Save", 142, 36)
 
 
-
-
-CONST pi = 3.1415926
+' TILE DATA
 DIM SHARED cells(500) AS _UNSIGNED _BYTE
 DIM SHARED charset(256, 8) AS _UNSIGNED _BYTE
 DIM SHARED this_char AS INTEGER
@@ -55,7 +55,7 @@ this_char = 0
 in_byte = 0
 
 ' LOAD DATA
-OPEN tiles_file$ FOR BINARY AS #1
+OPEN chars_file$ FOR BINARY AS #1
 FOR this_char = 0 TO 256
 
     ' PREPARE THE ARRAY
@@ -65,6 +65,40 @@ FOR this_char = 0 TO 256
 
 NEXT
 CLOSE #1
+
+DIM tmp_X AS INTEGER
+DIM tmp_Y AS INTEGER
+
+DIM this_cell AS INTEGER
+DIM tiles(43, 10) AS _UNSIGNED _BYTE
+
+
+' GET THE CURRENT TILE DATA
+OPEN tiles_file$ FOR BINARY AS #2
+GET #2, , tiles()
+CLOSE #2
+
+tile_row = 0
+tile_col = 0
+this_cell = 0
+cell_row = 0
+cell_col = 0
+FOR tile_row = 0 TO 5
+    FOR tile_col = 0 TO 6
+        tile = (tile_row * 7) + tile_col
+        if tile < 5 then PRINT chr$(13)+str(tile)
+        FOR cell_row = 0 TO 2
+            FOR cell_col = 0 TO 2
+                tile_cell = (cell_row * 3) + cell_col
+                cellx = INT((tile_col * 24) + (cell_col * 8) + 141)
+                celly = INT((tile_row * 24) + (cell_row * 8) + 48)
+                CALL print_char(tiles(tile, tile_cell), cellx, celly)
+                IF tile < 5 THEN PRINT tiles(tile, tile_cell);
+            NEXT
+        NEXT
+    NEXT
+NEXT
+END
 
 
 ' CHAR PICKER
@@ -80,8 +114,8 @@ FOR this_char = 0 TO 256
     END IF
 NEXT
 
-DIM tmp_X AS INTEGER
-DIM tmp_Y AS INTEGER
+
+
 DIM click_char AS _UNSIGNED _BYTE
 click_char = 0
 DIM del_char AS _UNSIGNED _BYTE
@@ -112,6 +146,44 @@ DO
                 CALL print_char(del_char, 160, 20)
             END IF
         ELSE
+            ' __________________________
+            ' BUTTONS
+            ' --------------------------
+
+            ' [SAVE]
+            IF _MOUSEX > 141 AND _MOUSEX < 193 AND _MOUSEY > 35 AND _MOUSEY < 48 THEN
+                IF _MOUSEBUTTON(1) THEN
+                    tile_row = 0
+                    tile_col = 0
+                    this_cell = 0
+                    cell_row = 0
+                    cell_col = 0
+                    FOR tile_row = 0 TO 5
+                        FOR tile_col = 0 TO 6
+                            tile = (tile_row * 7) + tile_col
+                            'PRINT tile;
+                            FOR cell_row = 0 TO 2
+                                FOR cell_col = 0 TO 2
+                                    tile_cell = (cell_row * 3) + cell_col
+                                    tiles(tile, tile_cell) = cells(this_cell)
+                                    this_cell = this_cell + 1
+                                NEXT
+                            NEXT
+                        NEXT
+                    NEXT
+
+                    ' SAVE THE TILES
+                    OPEN "tiles.dat" FOR BINARY AS #1
+                    PUT #1, , tiles()
+                    CLOSE
+                    LOCATE 1, 1
+                    PRINT "TILE DATA SAVED"
+
+                END IF
+            END IF
+
+
+            ' TILES
             IF _MOUSEX > 139 AND _MOUSEX < 307 AND _MOUSEY > 47 AND _MOUSEY < 190 THEN
                 cell = INT((_MOUSEX - 139) / 8) + (INT((_MOUSEY - 47) / 8)) * 21
                 tmp_Y = INT(cell / 21)
