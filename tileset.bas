@@ -1,20 +1,49 @@
 SCREEN 1
+_PRINTMODE _KEEPBACKGROUND
+
+' BLUE
+_PALETTECOLOR 1, _RGB32(0, 155, 155)
+CONST blue = 1
+
+' DARK GREY
+_PALETTECOLOR 2, _RGB32(55, 55, 55)
+CONST dgrey = 2
+
+' WHITE
+_PALETTECOLOR 3, _RGB32(255, 255, 255)
+CONST white = 3
+
+' M GREY
+_PALETTECOLOR 4, _RGB32(100, 100, 100)
+CONST mgrey = 4
+
+' BLACK
+_PALETTECOLOR 12, _RGB32(0, 0, 0)
+CONST black = 12
+
+
 _FULLSCREEN
 _MOUSESHOW
 OPTION BASE 0
 tiles_file$ = "c64chars.bin"
 
 
-LINE (140, 10)-(308, 190), , B
-
-LINE (140, 35)-(308, 190), , B
+'GRID LINES
+LINE (140, 10)-(308, 190), dgrey, B
+LINE (140, 35)-(308, 190), dgrey, B
 
 FOR tiler = 46 TO 46 + (5 * 24) STEP 24
     FOR tilec = 140 TO 140 + (24 * 6) STEP 24
-        LINE (tilec, tiler)-(tilec + 24, tiler + 24), , B
+        LINE (tilec, tiler)-(tilec + 24, tiler + 24), dgrey, B
     NEXT
 NEXT
 
+CALL draw_button("Save", 142, 36)
+
+
+
+
+CONST pi = 3.1415926
 DIM SHARED cells(500) AS _UNSIGNED _BYTE
 DIM SHARED charset(256, 8) AS _UNSIGNED _BYTE
 DIM SHARED this_char AS INTEGER
@@ -122,6 +151,23 @@ SUB save_cells ()
     END IF
 
 END SUB
+
+' BUTTON DRAWING
+SUB draw_button (label AS STRING, x AS INTEGER, y AS INTEGER)
+
+    LINE (x, y)-(x + 49, y + 8), dgrey, BF
+    LINE (x, y)-(x + 50, y), white, BF
+    LINE (x, y)-(x, y + 8), white, BF
+
+    LINE (x + 2, y + 8)-(x + 49, y + 8), dgrey, BF
+
+
+
+
+    _PRINTSTRING (x + 8, y + 1), label
+END SUB
+
+
 
 
 ' DISPLAY THE SELECTED CHAR
