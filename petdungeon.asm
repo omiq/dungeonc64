@@ -1108,7 +1108,7 @@ levels_draw_tile_rightvarInteger_var200 = $56
 	lda levels_tile_no
 	sta mul16x8_num1
 	sty mul16x8_num1Hi
-	lda #$9
+	lda #$3
 	sta mul16x8_num2
 	jsr mul16x8_procedure
 	; Low bit binop:
@@ -1196,7 +1196,7 @@ levels_draw_tile_memcpy207
 	; LineNumber: 73
 	lda levels_temp_s
 	clc
-	adc #$03
+	adc #$15
 	sta levels_temp_s+0
 	; Optimization : A := A op 8 bit - var and bvar are the same - perform inc
 	bcc levels_draw_tile_WordAdd208
@@ -1231,7 +1231,7 @@ levels_draw_tile_WordAdd211
 	; LineNumber: 78
 	lda levels_temp_s
 	clc
-	adc #$03
+	adc #$15
 	sta levels_temp_s+0
 	; Optimization : A := A op 8 bit - var and bvar are the same - perform inc
 	bcc levels_draw_tile_WordAdd212
@@ -1342,7 +1342,7 @@ levels_draw_level_loopstart221
 	; Compare is onpage
 	; Test Inc dec D
 	inc levels_t_y
-	lda #$6
+	lda #$5
 	cmp levels_t_y ;keep
 	bne levels_draw_level_forloop218
 levels_draw_level_loopdone249: ;keep

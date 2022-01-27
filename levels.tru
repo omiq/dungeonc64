@@ -18,13 +18,13 @@ var
 	screen_buffer: array[1000] of byte;
 
 
-	@ifndef ATARI800	
+//	@ifndef ATARI800	
 		tiles: incbin("tiles.bin");	
-	@endif
+//	@endif
 
-	@ifdef ATARI800	
+//	@ifdef ATARI800	
 //		tiles: incbin("levels/Atari Tiles.bin");	
-	@endif
+//	@endif
 
 
 
@@ -64,18 +64,18 @@ var
 	begin
 	
 		// Source
-		temp_s:=#tiles+(tile_no*9);
+		temp_s:=#tiles+(tile_no*3);
 	
 		// Dest
 		dest:=#screen_buffer+((t_y*3)*detected_screen_width)+(t_x*3);
 		MemCpyFast(temp_s, 0, dest,3);
 
-		temp_s:=temp_s+3;
+		temp_s:=temp_s+21;
 		dest:=dest+detected_screen_width;		
 		MemCpyFast(temp_s, 0, dest,3);
 		
 		dest:=dest+detected_screen_width;	
-		temp_s:=temp_s+3;	
+		temp_s:=temp_s+21;	
 		MemCpyFast(temp_s, 0, dest,3);
 
 	end;
@@ -117,7 +117,7 @@ var
 		level_p:=#level+(current_level*60);
 
 		
-		for t_y:=0 to 6 do
+		for t_y:=0 to 5 do
 		begin
 			for t_x:=0 to tiles_across do
 			begin
