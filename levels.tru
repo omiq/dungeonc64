@@ -19,6 +19,17 @@ var
 
 	level_p: pointer;
 	tiles: incbin("tiles.bin");	
+	tlevel: array[42] of byte = (
+	
+		0,	1,	2,	3,	4,	5,	6,
+		7,	8,	9,	10,	11,	12,	13,
+		14,	15,	16,	17,	18,	19,	20,
+		21,	22,	23,	24,	25,	26,	27,
+		28,	29,	30,	31,	32,	33,	34,
+		35, 36, 37, 38, 39, 40, 41
+	);
+
+	// Load level instead of array
 	level: incbin("map.bin");	
 
 
@@ -63,14 +74,14 @@ var
 
 		// set to draw tiles
 		dest:=#screen_buffer;	
-		level_p:=#level;//+(current_level*60);
+		level_p:=#level;
 
 		
 		for t_y:=0 to 5 do
 		begin
 			for t_x:=0 to tiles_across do
 			begin
-				tile_no:=level_p[(t_y*10)+t_x];
+				tile_no:=level_p[(t_y*tiles_across)+t_x];
 				draw_tile(t_x,t_y,tile_no);
 			end;			
 		end;

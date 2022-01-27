@@ -67,7 +67,7 @@ levels_level_p	= $0D
 	; LineNumber: 21
 levels_tiles
 	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///tiles.bin"
-	; LineNumber: 22
+	; LineNumber: 33
 levels_level
 	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///map.bin"
 	; LineNumber: 34
@@ -1089,16 +1089,16 @@ txt_print_dec_elsedoneblock194
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_draw_tile
 	;    Procedure type : User-defined procedure
-	; LineNumber: 32
-	; LineNumber: 29
+	; LineNumber: 43
+	; LineNumber: 40
 levels_tremainder	dc.b	0
-	; LineNumber: 30
+	; LineNumber: 41
 levels_trow	dc.b	0
-	; LineNumber: 31
+	; LineNumber: 42
 levels_tile_cell	dc.w	0
 levels_draw_tile_block197
 levels_draw_tile
-	; LineNumber: 35
+	; LineNumber: 46
 	
 ; // Get starting byte
 	; Modulo
@@ -1113,7 +1113,7 @@ levels_draw_tile_modulo199
 	adc levels_draw_tile_val_var198
 	; Calling storevariable on generic assign expression
 	sta levels_tremainder
-	; LineNumber: 36
+	; LineNumber: 47
 	; Right is PURE NUMERIC : Is word =0
 	; 8 bit div
 	; 8 bit binop
@@ -1129,7 +1129,7 @@ levels_draw_tile_modulo199
 	jsr div8x8_procedure
 	; Calling storevariable on generic assign expression
 	sta levels_trow
-	; LineNumber: 37
+	; LineNumber: 48
 	; Generic 16 bit op
 	ldy #0
 	; Right is PURE NUMERIC : Is word =1
@@ -1167,7 +1167,7 @@ levels_draw_tile_wordAdd202
 	; Calling storevariable on generic assign expression
 	sta levels_tile_cell
 	sty levels_tile_cell+1
-	; LineNumber: 41
+	; LineNumber: 52
 	
 ; // ROW 1
 	; INTEGER optimization: a=b+c 
@@ -1178,7 +1178,7 @@ levels_draw_tile_wordAdd202
 	lda #>levels_tiles
 	adc levels_tile_cell+1
 	sta levels_temp_s+1
-	; LineNumber: 42
+	; LineNumber: 53
 	; Generic 16 bit op
 	ldy #0
 	; Right is PURE NUMERIC : Is word =1
@@ -1238,7 +1238,7 @@ levels_draw_tile_wordAdd206
 	lda levels_draw_tile_rightvarInteger_var208
 	sta levels_dest
 	sty levels_dest+1
-	; LineNumber: 43
+	; LineNumber: 54
 	; memcpyfast
 	ldy #2
 levels_draw_tile_memcpy212
@@ -1246,7 +1246,7 @@ levels_draw_tile_memcpy212
 	sta (levels_dest),y
 	dey
 	bpl levels_draw_tile_memcpy212
-	; LineNumber: 46
+	; LineNumber: 57
 	
 ; // ROW 2
 	lda levels_temp_s
@@ -1257,7 +1257,7 @@ levels_draw_tile_memcpy212
 	bcc levels_draw_tile_WordAdd213
 	inc levels_temp_s+1
 levels_draw_tile_WordAdd213
-	; LineNumber: 47
+	; LineNumber: 58
 	lda levels_dest
 	clc
 	adc levels_detected_screen_width
@@ -1266,7 +1266,7 @@ levels_draw_tile_WordAdd213
 	bcc levels_draw_tile_WordAdd214
 	inc levels_dest+1
 levels_draw_tile_WordAdd214
-	; LineNumber: 48
+	; LineNumber: 59
 	; memcpyfast
 	ldy #2
 levels_draw_tile_memcpy215
@@ -1274,7 +1274,7 @@ levels_draw_tile_memcpy215
 	sta (levels_dest),y
 	dey
 	bpl levels_draw_tile_memcpy215
-	; LineNumber: 51
+	; LineNumber: 62
 	
 ; // ROW 3
 	lda levels_temp_s
@@ -1285,7 +1285,7 @@ levels_draw_tile_memcpy215
 	bcc levels_draw_tile_WordAdd216
 	inc levels_temp_s+1
 levels_draw_tile_WordAdd216
-	; LineNumber: 52
+	; LineNumber: 63
 	lda levels_dest
 	clc
 	adc levels_detected_screen_width
@@ -1294,7 +1294,7 @@ levels_draw_tile_WordAdd216
 	bcc levels_draw_tile_WordAdd217
 	inc levels_dest+1
 levels_draw_tile_WordAdd217
-	; LineNumber: 53
+	; LineNumber: 64
 	; memcpyfast
 	ldy #2
 levels_draw_tile_memcpy218
@@ -1302,48 +1302,45 @@ levels_draw_tile_memcpy218
 	sta (levels_dest),y
 	dey
 	bpl levels_draw_tile_memcpy218
-	; LineNumber: 55
+	; LineNumber: 66
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_draw_level
 	;    Procedure type : User-defined procedure
-	; LineNumber: 62
+	; LineNumber: 73
 levels_draw_level
-	; LineNumber: 65
+	; LineNumber: 76
 	
 ; // set to draw tiles
 	lda #<levels_screen_buffer
 	ldx #>levels_screen_buffer
 	sta levels_dest
 	stx levels_dest+1
-	; LineNumber: 66
+	; LineNumber: 77
 	lda #<levels_level
 	ldx #>levels_level
 	sta levels_level_p
 	stx levels_level_p+1
-	; LineNumber: 77
+	; LineNumber: 88
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta levels_t_y
 levels_draw_level_forloop220
-	; LineNumber: 70
-	; LineNumber: 75
+	; LineNumber: 81
+	; LineNumber: 86
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta levels_t_x
 levels_draw_level_forloop239
-	; LineNumber: 72
-	; LineNumber: 73
-	
-; //+(current_level*60);
+	; LineNumber: 83
+	; LineNumber: 84
 	; Load pointer array
 	; 8 bit binop
 	; Add/sub where right value is constant number
-	; Right is PURE NUMERIC : Is word =0
 	; 8 bit mul
 	ldx levels_t_y ; optimized, look out for bugs
 	; Load right hand side
-	lda #$a
+	lda levels_tiles_across
 	jsr multiply_eightbit
 	txa
 	clc
@@ -1353,9 +1350,9 @@ levels_draw_level_forloop239
 	lda (levels_level_p),y
 	; Calling storevariable on generic assign expression
 	sta levels_tile_no
-	; LineNumber: 74
+	; LineNumber: 85
 	jsr levels_draw_tile
-	; LineNumber: 75
+	; LineNumber: 86
 levels_draw_level_forloopcounter241
 levels_draw_level_loopstart242
 	; Compare is onpage
@@ -1367,7 +1364,7 @@ levels_draw_level_loopstart242
 levels_draw_level_loopdone250: ;keep
 levels_draw_level_forloopend240
 levels_draw_level_loopend243
-	; LineNumber: 76
+	; LineNumber: 87
 levels_draw_level_forloopcounter222
 levels_draw_level_loopstart223
 	; Compare is onpage
@@ -1379,25 +1376,25 @@ levels_draw_level_loopstart223
 levels_draw_level_loopdone251: ;keep
 levels_draw_level_forloopend221
 levels_draw_level_loopend224
-	; LineNumber: 79
+	; LineNumber: 90
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_refresh_screen
 	;    Procedure type : User-defined procedure
-	; LineNumber: 86
+	; LineNumber: 97
 levels_refresh_screen
-	; LineNumber: 88
+	; LineNumber: 99
 	lda #<levels_screen_buffer
 	ldx #>levels_screen_buffer
 	sta levels_temp_s
 	stx levels_temp_s+1
-	; LineNumber: 107
+	; LineNumber: 118
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta levels_r
 levels_refresh_screen_forloop253
-	; LineNumber: 93
-	; LineNumber: 94
+	; LineNumber: 104
+	; LineNumber: 105
 	
 ; // Need rows at the bottom 
 ; // for text output
@@ -1409,7 +1406,7 @@ levels_refresh_screen_forloop253
 	ldy txt_ytab+1,x
 	sta levels_dest
 	sty levels_dest+1
-	; LineNumber: 100
+	; LineNumber: 111
 	; memcpyfast
 	ldy levels_detected_screen_width
 	dey
@@ -1418,7 +1415,7 @@ levels_refresh_screen_memcpy262
 	sta (levels_dest),y
 	dey
 	bpl levels_refresh_screen_memcpy262
-	; LineNumber: 106
+	; LineNumber: 117
 	
 ; //MemCpy16(temp_s, dest, detected_screen_width);
 	lda levels_temp_s
@@ -1429,7 +1426,7 @@ levels_refresh_screen_memcpy262
 	bcc levels_refresh_screen_WordAdd263
 	inc levels_temp_s+1
 levels_refresh_screen_WordAdd263
-	; LineNumber: 107
+	; LineNumber: 118
 levels_refresh_screen_forloopcounter255
 levels_refresh_screen_loopstart256
 	; Compare is onpage
@@ -1441,19 +1438,19 @@ levels_refresh_screen_loopstart256
 levels_refresh_screen_loopdone264: ;keep
 levels_refresh_screen_forloopend254
 levels_refresh_screen_loopend257
-	; LineNumber: 109
+	; LineNumber: 120
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_get_buffer
 	;    Procedure type : User-defined procedure
-	; LineNumber: 175
-	; LineNumber: 174
+	; LineNumber: 186
+	; LineNumber: 185
 levels_buf_x	dc.b	0
-	; LineNumber: 174
+	; LineNumber: 185
 levels_buf_y	dc.b	0
 levels_get_buffer_block265
 levels_get_buffer
-	; LineNumber: 177
+	; LineNumber: 188
 	; Generic 16 bit op
 	ldy #0
 	lda levels_buf_x
@@ -1496,8 +1493,8 @@ levels_get_buffer_wordAdd266
 	lda levels_get_buffer_rightvarInteger_var268
 	sta levels_ch_index
 	sty levels_ch_index+1
-	; LineNumber: 179
-	; LineNumber: 180
+	; LineNumber: 190
+	; LineNumber: 191
 	; Load pointer array
 	ldy #$0
 	lda (levels_ch_index),y
@@ -1505,16 +1502,16 @@ levels_get_buffer_wordAdd266
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_plot_buffer
 	;    Procedure type : User-defined procedure
-	; LineNumber: 185
-	; LineNumber: 184
+	; LineNumber: 196
+	; LineNumber: 195
 levels_plot_x	dc.b	0
-	; LineNumber: 184
+	; LineNumber: 195
 levels_plot_y	dc.b	0
-	; LineNumber: 184
+	; LineNumber: 195
 levels_plot_ch	dc.b	0
 levels_plot_buffer_block272
 levels_plot_buffer
-	; LineNumber: 187
+	; LineNumber: 198
 	; Generic 16 bit op
 	ldy #0
 	lda levels_plot_x
@@ -1557,13 +1554,13 @@ levels_plot_buffer_wordAdd273
 	lda levels_plot_buffer_rightvarInteger_var275
 	sta levels_ch_index
 	sty levels_ch_index+1
-	; LineNumber: 188
+	; LineNumber: 199
 	lda levels_plot_ch
 	; Calling storevariable on generic assign expression
 	; Storing to a pointer
 	ldy #$0
 	sta (levels_ch_index),y
-	; LineNumber: 190
+	; LineNumber: 201
 	rts
 	
 ; //player inventory/stats
