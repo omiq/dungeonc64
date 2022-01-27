@@ -23,7 +23,7 @@ _PALETTECOLOR 12, _RGB32(0, 0, 0)
 CONST black = 12
 
 
-'_FULLSCREEN
+_FULLSCREEN
 _MOUSESHOW
 OPTION BASE 0
 DIM SHARED chars_file$
@@ -32,15 +32,6 @@ chars_file$ = "c64chars.bin"
 tiles_file$ = "tiles.bin"
 
 
-'GRID LINES
-LINE (140, 10)-(308, 190), dgrey, B
-LINE (140, 35)-(308, 190), dgrey, B
-
-FOR tiler = 46 TO 46 + (5 * 24) STEP 24
-    FOR tilec = 140 TO 140 + (24 * 6) STEP 24
-        LINE (tilec, tiler)-(tilec + 24, tiler + 24), dgrey, B
-    NEXT
-NEXT
 
 ' BUTTONS
 CALL draw_button("Save", 142, 36)
@@ -78,6 +69,9 @@ DIM tiles(43, 10) AS _UNSIGNED _BYTE
 
 ' LOAD CELL DATA FILE
 CALL load_cells
+
+' DRAW GRID LINES
+CALL draw_grid
 
 
 ' CHAR PICKER
@@ -163,7 +157,8 @@ DO
                     CALL print_char(del_char, tmp_X, tmp_Y)
                 END IF
 
-
+                ' REPLACE GRID LINES
+                CALL draw_grid
             END IF
 
         END IF
@@ -172,6 +167,24 @@ DO
 LOOP UNTIL INKEY$ = CHR$(27) 'escape key exit
 
 END
+
+
+' GRID LINES
+SUB draw_grid ()
+
+    ' TOP BOXES
+    LINE (140, 10)-(308, 190), dgrey, B
+    LINE (140, 35)-(308, 190), dgrey, B
+
+    ' CELL GRID
+    FOR tiler = 46 TO 46 + (5 * 24) STEP 24
+        FOR tilec = 140 TO 140 + (24 * 6) STEP 24
+            LINE (tilec, tiler)-(tilec + 24, tiler + 24), dgrey, B
+        NEXT
+    NEXT
+
+END SUB
+
 
 ' CONVERT CELLS TO TILES AND OUTPUT THE TILES
 SUB save_cells ()

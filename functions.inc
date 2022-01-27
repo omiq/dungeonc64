@@ -164,7 +164,7 @@
 			txt::print_string_centered("dddddddddddddd", true, levels::detected_screen_width);	
 			txt::put_ch(13);
 			txt::print_string_centered("CHRIS GARRETT", true, levels::detected_screen_width);		
-				txt::print_string_centered("(C)2021", true, levels::detected_screen_width);	
+				txt::print_string_centered("(C)2022", true, levels::detected_screen_width);	
 			txt::put_ch(13);
 			txt::print_string_centered("BUILT WITH TRSE", true, levels::detected_screen_width);
 			txt::put_ch(13);		

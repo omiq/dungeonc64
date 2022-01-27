@@ -2979,7 +2979,7 @@ show_start_screen_stringassignstr302		dc.b	"dddddddddddddd"
 	dc.b	0
 show_start_screen_stringassignstr304		dc.b	"CHRIS GARRETT"
 	dc.b	0
-show_start_screen_stringassignstr306		dc.b	"(C)2021"
+show_start_screen_stringassignstr306		dc.b	"(C)2022"
 	dc.b	0
 show_start_screen_stringassignstr308		dc.b	"BUILT WITH TRSE"
 	dc.b	0
@@ -3005,7 +3005,7 @@ show_start_screen_stringassignstr330		dc.b	"dddddddddddddd"
 	dc.b	0
 show_start_screen_stringassignstr332		dc.b	"CHRIS GARRETT"
 	dc.b	0
-show_start_screen_stringassignstr334		dc.b	"(C)2021"
+show_start_screen_stringassignstr334		dc.b	"(C)2022"
 	dc.b	0
 show_start_screen_stringassignstr336		dc.b	"BUILT WITH TRSE"
 	dc.b	0
