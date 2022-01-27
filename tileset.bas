@@ -22,7 +22,7 @@ _PALETTECOLOR 12, _RGB32(0, 0, 0)
 CONST black = 12
 
 
-_FULLSCREEN
+'_FULLSCREEN
 _MOUSESHOW
 OPTION BASE 0
 DIM SHARED chars_file$
@@ -110,7 +110,7 @@ DO
             ' PAINT CHARACTER SELECTION
             IF _MOUSEBUTTON(1) THEN
 
-                LOCATE 1, 20
+                LOCATE 1, 10
                 PRINT INT(_MOUSEX / 10); INT(_MOUSEY / 10) - 1
                 click_char = (INT(_MOUSEX / 10) + (INT((_MOUSEY / 10) - 1) * 14))
 
@@ -120,7 +120,7 @@ DO
             ' ERASE CHARACTER SELECTION
             IF _MOUSEBUTTON(2) THEN
 
-                LOCATE 1, 20
+                LOCATE 1, 10
                 PRINT INT(_MOUSEX / 10); INT(_MOUSEY / 10) - 1
                 del_char = (INT(_MOUSEX / 10) + (INT((_MOUSEY / 10) - 1) * 14))
                 CALL print_char(del_char, 160, 20)
@@ -138,32 +138,7 @@ DO
 
             ' [SAVE]
             IF _MOUSEX > 141 AND _MOUSEX < 193 AND _MOUSEY > 35 AND _MOUSEY < 48 THEN
-                IF _MOUSEBUTTON(1) THEN
-                    tile_row = 0
-                    tile_col = 0
-                    this_cell = 0
-                    cell_row = 0
-                    cell_col = 0
-
-                    CALL save_cells
-
-                    'FOR tile_row = 0 TO 5
-                    '    FOR tile_col = 0 TO 6
-                    '        tile = (tile_row * 7) + tile_col
-                    ' PRINT tile;
-                    '        FOR cell_row = 0 TO 2
-                    '            FOR cell_col = 0 TO 2
-                    '                tile_cell = (cell_row * 3) + cell_col
-                    '                tiles(tile, tile_cell) = cells(this_cell)
-                    '                this_cell = this_cell + 1
-                    '            NEXT
-                    '        NEXT
-                    '    NEXT
-                    'NEXT
-
-
-
-                END IF
+                IF _MOUSEBUTTON(1) THEN CALL save_cells
             END IF
 
 
@@ -175,7 +150,7 @@ DO
                 tmp_Y = ((tmp_Y + 1) * 8) + 39
 
 
-                LOCATE 1, 35
+                LOCATE 1, 25
                 PRINT cell
 
                 IF _MOUSEBUTTON(1) THEN

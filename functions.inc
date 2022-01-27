@@ -30,7 +30,7 @@
 		keys:=0;
 		
 		// Set how wide the map should be
-		levels::tiles_across:=10;
+		levels::tiles_across:=7;
 		
 		
 		

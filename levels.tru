@@ -17,93 +17,42 @@ var
 	// screen buffer
 	screen_buffer: array[1000] of byte;
 
-
-//	@ifndef ATARI800	
-		tiles: incbin("tiles.bin");	
-//	@endif
-
-//	@ifdef ATARI800	
-//		tiles: incbin("levels/Atari Tiles.bin");	
-//	@endif
-
-
-
-	
-	level: incbin("map.bin");	
 	level_p: pointer;
+	tiles: incbin("tiles.bin");	
+	level: incbin("map.bin");	
 
 
 
-@ifdef CPU_Z80	
+
 	procedure draw_tile(t_x, t_y, tile_no: global byte);
+	var
+		tremainder: byte;
+		trow: byte;
+		tile_cell: integer;
 	begin
 	
-		// Source
-		temp_s:=#tiles+(tile_no*9);
+		// Get starting byte
+		tremainder:=mod(tile_no,7);
+		trow:=(tile_no-tremainder)/7;
+		tile_cell:=(trow * 63)+(tremainder*3);
 	
-		// Dest
-		dest:=#screen_buffer+((t_y*3)*detected_screen_width)+(t_x*3);
-		MemCpy(temp_s, dest,3);
-
-		temp_s:=temp_s+3;
-		dest:=dest+detected_screen_width;		
-		MemCpy(temp_s, dest,3);
-		
-		dest:=dest+detected_screen_width;	
-		temp_s:=temp_s+3;	
-		MemCpy(temp_s, dest,3);
-
-	end;
-@endif
-
-
 	
-@ifndef X86
-@ifndef CPU_Z80
-	procedure draw_tile(t_x, t_y, tile_no: global byte);
-	begin
-	
-		// Source
-		temp_s:=#tiles+(tile_no*3);
-	
-		// Dest
+		// ROW 1
+		temp_s:=#tiles+tile_cell;
 		dest:=#screen_buffer+((t_y*3)*detected_screen_width)+(t_x*3);
 		MemCpyFast(temp_s, 0, dest,3);
 
+		// ROW 2
 		temp_s:=temp_s+21;
 		dest:=dest+detected_screen_width;		
 		MemCpyFast(temp_s, 0, dest,3);
 		
-		dest:=dest+detected_screen_width;	
+		// ROW 3
 		temp_s:=temp_s+21;	
+		dest:=dest+detected_screen_width;	
 		MemCpyFast(temp_s, 0, dest,3);
 
 	end;
-@endif
-@endif
-
-@ifdef X86	
-	procedure draw_tile(t_x, t_y, tile_no: global byte);
-	begin
-	
-		// Source
-		temp_s:=#tiles+(tile_no*9);
-	
-		// Dest
-		dest:=#screen_buffer+((t_y*3)*detected_screen_width)+(t_x*3);
-		MemCpy8(temp_s, dest,3);
-
-		temp_s:=temp_s+3;
-		dest:=dest+detected_screen_width;		
-		MemCpy8(temp_s, dest,3);
-		
-		dest:=dest+detected_screen_width;	
-		temp_s:=temp_s+3;	
-		MemCpy8(temp_s, dest,3);
-
-	end;
-@endif
-	
 
 	
 
@@ -114,7 +63,7 @@ var
 
 		// set to draw tiles
 		dest:=#screen_buffer;	
-		level_p:=#level+(current_level*60);
+		level_p:=#level;//+(current_level*60);
 
 		
 		for t_y:=0 to 5 do
