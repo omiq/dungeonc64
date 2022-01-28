@@ -1,5 +1,5 @@
 _TITLE "MAP EDITOR"
-SCREEN 1
+SCREEN 8
 '_PRINTMODE _KEEPBACKGROUND
 
 ' BLUE
@@ -28,14 +28,15 @@ _MOUSESHOW
 OPTION BASE 0
 DIM SHARED chars_file$
 DIM SHARED tiles_file$
+DIM SHARED map_file$
 chars_file$ = "c64chars.bin"
 tiles_file$ = "tiles.bin"
-
+map_file$ = "map.bin"
 
 
 ' BUTTONS
-CALL draw_button("Save", 142, 36)
-CALL draw_button("X", 300, 0)
+CALL draw_button("Save", 242, 0)
+CALL draw_button("X", 620, 0)
 
 
 ' TILE DATA
@@ -70,6 +71,10 @@ DIM SHARED tiles(500) AS _UNSIGNED _BYTE
 ' LOAD TILE DATA
 CALL load_tiles
 
+' LOAD MAP
+CALL load_map
+
+
 ' DRAW GRID LINES
 CALL draw_grid
 
@@ -79,16 +84,16 @@ DO
     IF _MOUSEINPUT THEN '  skip keyboard reads
         LOCATE 1, 1
         PRINT _MOUSEX; _MOUSEY;
-        IF _MOUSEX < 138 THEN
+        IF _MOUSEX < 238 THEN
 
             ' PAINT CHARACTER SELECTION
             IF _MOUSEBUTTON(1) THEN
 
-                LOCATE 1, 10
-                PRINT INT(_MOUSEX / 10); INT(_MOUSEY / 10) - 1
-                click_char = (INT(_MOUSEX / 10) + (INT((_MOUSEY / 10) - 1) * 14))
+                selected_tile = INT((_MOUSEX - 10) / 24 + (((_MOUSEY - 10) / 24) * 7))
+                LOCATE 2, 20
+                PRINT selected_tile
 
-                CALL print_char(click_char, 150, 20)
+                'CALL print_char(click_char, 150, 20)
             END IF
 
             ' ERASE CHARACTER SELECTION
@@ -96,8 +101,8 @@ DO
 
                 LOCATE 1, 10
                 PRINT INT(_MOUSEX / 10); INT(_MOUSEY / 10) - 1
-                del_char = (INT(_MOUSEX / 10) + (INT((_MOUSEY / 10) - 1) * 14))
-                CALL print_char(del_char, 160, 20)
+
+
             END IF
 
         ELSE
@@ -151,18 +156,32 @@ END
 ' GRID LINES
 SUB draw_grid ()
 
-    ' TOP BOXES
-    LINE (140, 10)-(308, 190), dgrey, B
-    LINE (140, 35)-(308, 190), dgrey, B
-
     ' CELL GRID
-    FOR tiler = 46 TO 46 + (5 * 24) STEP 24
-        FOR tilec = 140 TO 140 + (24 * 6) STEP 24
+    FOR tiler = 10 TO 10 + (5 * 24) STEP 24
+        FOR tilec = 240 TO 240 + (24 * 6) STEP 24
             LINE (tilec, tiler)-(tilec + 24, tiler + 24), dgrey, B
         NEXT
     NEXT
 
 END SUB
+
+' OUTPUT THE MAP
+SUB load_map ()
+
+
+    ' SAVE THE TILES
+    OPEN map_file$ FOR BINARY AS #1
+    GET #1, , map()
+    CLOSE
+
+    LOCATE 1, 1
+    PRINT "MAP DATA LOADED"
+
+
+
+END SUB
+
+
 
 
 ' OUTPUT THE MAP
@@ -206,8 +225,8 @@ SUB load_tiles ()
     this_tile = 0
     tile_row = 0
     tile_col = 0
-    FOR tile_row = 0 TO 6
-        FOR tile_col = 0 TO 5
+    FOR tile_row = 0 TO 5
+        FOR tile_col = 0 TO 6
             tmp_X = tile_col * 24
             tmp_Y = tile_row * 24
             CALL print_tile(this_tile, tmp_X + 10, tmp_Y + 10)
@@ -230,7 +249,15 @@ SUB print_tile (tile_no, x, y)
     trow = (tile_no - tremainder) / 7
     tile_cell = ((trow * 63) + (tremainder * 3))
     'PRINT tile_cell
-    CALL print_char(tiles(tile_cell), x, y)
+
+    trow = 0
+    FOR trow = 1 TO 3
+        CALL print_char(tiles(tile_cell), x, y)
+        CALL print_char(tiles(tile_cell + 1), x + 8, y)
+        CALL print_char(tiles(tile_cell + 2), x + 16, y)
+        tile_cell = tile_cell + 21
+        y = y + 8
+    NEXT
 
 END SUB
 
