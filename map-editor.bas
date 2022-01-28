@@ -88,12 +88,22 @@ DO
 
             ' PAINT CHARACTER SELECTION
             IF _MOUSEBUTTON(1) THEN
+                tmp_row = _MOUSEY - 10
+                tmp_row = INT(tmp_row / 24)
 
-                selected_tile = INT(((_MOUSEY - 10) / 24) / 7) + INT((_MOUSEX - 10) / 24)
+                selected_tile = INT((_MOUSEX - 10) / 24) + (tmp_row * 7)
                 LOCATE 1, 10
                 PRINT selected_tile
 
-                'CALL print_char(click_char, 150, 20)
+
+                remainder = selected_tile MOD 7
+                tilerow = (selected_tile - remainder) / 7
+                y = tilerow * 24
+                x = remainder * 24
+                CALL draw_grid
+                LINE (x + 10, y + 10)-(x + 34, y + 34), blue, B
+
+
             END IF
 
             ' ERASE CHARACTER SELECTION

@@ -19,7 +19,7 @@ var
 
 	level_p: pointer;
 	tiles: incbin("tiles.bin");	
-	tlevel: array[42] of byte = (
+	level: array[42] of byte = (
 	
 		0,	1,	2,	3,	4,	5,	6,
 		7,	8,	9,	10,	11,	12,	13,
@@ -30,7 +30,7 @@ var
 	);
 
 	// Load level instead of array
-	level: incbin("map.bin");	
+	ilevel: incbin("map.bin");	
 
 
 
