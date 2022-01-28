@@ -89,8 +89,8 @@ DO
             ' PAINT CHARACTER SELECTION
             IF _MOUSEBUTTON(1) THEN
 
-                selected_tile = INT((_MOUSEX - 10) / 24 + (((_MOUSEY - 10) / 24) * 7))
-                LOCATE 2, 20
+                selected_tile = INT(((_MOUSEY - 10) / 24) / 7) + INT((_MOUSEX - 10) / 24)
+                LOCATE 1, 10
                 PRINT selected_tile
 
                 'CALL print_char(click_char, 150, 20)
@@ -156,12 +156,21 @@ END
 ' GRID LINES
 SUB draw_grid ()
 
-    ' CELL GRID
+    ' MAP GRID
     FOR tiler = 10 TO 10 + (5 * 24) STEP 24
         FOR tilec = 240 TO 240 + (24 * 6) STEP 24
             LINE (tilec, tiler)-(tilec + 24, tiler + 24), dgrey, B
         NEXT
     NEXT
+
+    ' MAP GRID
+    FOR tiler = 10 TO 10 + (5 * 24) STEP 24
+        FOR tilec = 10 TO 10 + (24 * 6) STEP 24
+            LINE (tilec, tiler)-(tilec + 24, tiler + 24), dgrey, B
+        NEXT
+    NEXT
+
+
 
 END SUB
 
