@@ -132,27 +132,28 @@ DO
 
 
             ' TILES
-            IF _MOUSEX > 139 AND _MOUSEX < 307 AND _MOUSEY > 47 AND _MOUSEY < 190 THEN
-                cell = INT((_MOUSEX - 139) / 8) + (INT((_MOUSEY - 47) / 8)) * 21
-                tmp_Y = INT(cell / 21)
-                tmp_X = (INT(cell - (tmp_Y * 21)) * 8) + 141
-                tmp_Y = ((tmp_Y + 1) * 8) + 39
+            IF _MOUSEX > 243 AND _MOUSEX < 408 AND _MOUSEY > 10 AND _MOUSEY < 190 THEN
 
+
+                tile_col = INT((_MOUSEX - 239) / 24)
+                tile_row = INT((_MOUSEY - 10) / 24)
+                tile = tile_col + (tile_row * 7)
+
+                tmp_X = tile_col * 24 + 239
+                tmp_Y = tile_row * 24 + 10
 
                 LOCATE 1, 25
-                PRINT cell
+                PRINT tile
 
                 IF _MOUSEBUTTON(1) THEN
-                    cells(cell) = click_char
-                    CALL print_char(click_char, tmp_X, tmp_Y)
+                    map(tile) = selected_tile
+                    CALL print_tile(selected_tile, tmp_X, tmp_Y)
                 END IF
                 IF _MOUSEBUTTON(2) THEN
-                    cells(cell) = del_char
-                    CALL print_char(del_char, tmp_X, tmp_Y)
+                    map(tile) = 41
+                    CALL print_tile(41, tmp_X, tmp_Y)
                 END IF
 
-                ' REPLACE GRID LINES
-                CALL draw_grid
             END IF
 
         END IF
@@ -164,7 +165,7 @@ END
 
 
 ' GRID LINES
-SUB draw_grid ()
+SUB draw_map_grid ()
 
     ' MAP GRID
     FOR tiler = 10 TO 10 + (5 * 24) STEP 24
@@ -173,7 +174,10 @@ SUB draw_grid ()
         NEXT
     NEXT
 
-    ' MAP GRID
+END SUB
+SUB draw_grid ()
+
+    ' TILE GRID
     FOR tiler = 10 TO 10 + (5 * 24) STEP 24
         FOR tilec = 10 TO 10 + (24 * 6) STEP 24
             LINE (tilec, tiler)-(tilec + 24, tiler + 24), dgrey, B
@@ -196,7 +200,7 @@ SUB load_map ()
     LOCATE 1, 1
     PRINT "MAP DATA LOADED"
 
-
+    '========== print the map
 
 END SUB
 
@@ -277,6 +281,9 @@ SUB print_tile (tile_no, x, y)
         tile_cell = tile_cell + 21
         y = y + 8
     NEXT
+
+    ' REPLACE GRID LINES
+    CALL draw_map_grid
 
 END SUB
 
