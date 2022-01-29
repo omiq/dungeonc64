@@ -40,13 +40,13 @@ CALL draw_button("X", 620, 0)
 
 
 ' TILE DATA
-DIM SHARED cells(500) AS _UNSIGNED _BYTE
+DIM SHARED map(43) AS _UNSIGNED _BYTE
 DIM SHARED charset(256, 8) AS _UNSIGNED _BYTE
 DIM SHARED this_char AS INTEGER
 DIM in_byte AS _UNSIGNED _BYTE
 DIM row AS INTEGER
 DIM col AS INTEGER
-
+DIM SHARED tiler, tilec AS INTEGER
 this_char = 0
 in_byte = 0
 
@@ -84,36 +84,30 @@ DO
     IF _MOUSEINPUT THEN '  skip keyboard reads
         LOCATE 1, 1
         PRINT _MOUSEX; _MOUSEY;
-        IF _MOUSEX < 238 THEN
+        IF _MOUSEX > 15 AND _MOUSEX < 182 AND _MOUSEY > 15 AND _MOUSEY < 155 THEN
 
             ' PAINT CHARACTER SELECTION
             IF _MOUSEBUTTON(1) THEN
                 tmp_row = _MOUSEY - 10
                 tmp_row = INT(tmp_row / 24)
 
-                selected_tile = INT((_MOUSEX - 10) / 24) + (tmp_row * 7)
+                selected_tile = INT((_MOUSEX - 15) / 24) + INT((tmp_row * 7))
+                IF selected_tile > 41 THEN selected_tile = selected_tile - 7
                 LOCATE 1, 10
                 PRINT selected_tile
 
 
                 remainder = selected_tile MOD 7
-                tilerow = (selected_tile - remainder) / 7
+                tilerow = INT((selected_tile - remainder) / 7)
                 y = tilerow * 24
                 x = remainder * 24
-                CALL draw_grid
-                LINE (x + 10, y + 10)-(x + 34, y + 34), blue, B
-
-
-            END IF
-
-            ' ERASE CHARACTER SELECTION
-            IF _MOUSEBUTTON(2) THEN
-
-                LOCATE 1, 10
-                PRINT INT(_MOUSEX / 10); INT(_MOUSEY / 10) - 1
-
+                IF (y + 34) < 156 THEN
+                    CALL draw_grid
+                    LINE (x + 10, y + 10)-(x + 34, y + 34), blue, B
+                END IF
 
             END IF
+
 
         ELSE
             ' __________________________
@@ -122,17 +116,17 @@ DO
 
 
             ' [QUIT]
-            IF _MOUSEX > 299 AND _MOUSEY < 20 AND _MOUSEBUTTON(1) THEN END
+            IF _MOUSEX > 620 AND _MOUSEY < 20 AND _MOUSEBUTTON(1) THEN END
 
 
             ' [SAVE]
-            IF _MOUSEX > 141 AND _MOUSEX < 193 AND _MOUSEY > 35 AND _MOUSEY < 48 THEN
+            IF _MOUSEX > 241 AND _MOUSEX < 293 AND _MOUSEY > 0 AND _MOUSEY < 20 THEN
                 IF _MOUSEBUTTON(1) THEN CALL save_map
             END IF
 
 
             ' TILES
-            IF _MOUSEX > 243 AND _MOUSEX < 408 AND _MOUSEY > 10 AND _MOUSEY < 190 THEN
+            IF _MOUSEX > 243 AND _MOUSEX < 408 AND _MOUSEY > 10 AND _MOUSEY < 155 THEN
 
 
                 tile_col = INT((_MOUSEX - 239) / 24)
@@ -190,17 +184,32 @@ END SUB
 
 ' OUTPUT THE MAP
 SUB load_map ()
+    DIM this_tile, in_tile AS _UNSIGNED _BYTE
+    tiler = 0
+    tilec = 0
+    this_tile = 0
 
 
     ' SAVE THE TILES
     OPEN map_file$ FOR BINARY AS #1
-    GET #1, , map()
+
+    ' MAP GRID
+    FOR tiler = 0 TO 6
+        FOR tilec = 0 TO 7
+
+            GET #1, , in_tile
+            map(this_tile) = in_tile
+            PRINT in_tile;
+            CALL print_tile(in_tile, (tilec * 24) + 240, (tiler * 24) + 10)
+            this_tile = this_tile + 1
+        NEXT
+    NEXT
+
     CLOSE
 
-    LOCATE 1, 1
+    LOCATE 10, 10
     PRINT "MAP DATA LOADED"
-
-    '========== print the map
+    PRINT UBOUND(map, 1)
 
 END SUB
 
@@ -209,7 +218,8 @@ END SUB
 
 ' OUTPUT THE MAP
 SUB save_map ()
-
+    LOCATE 10, 10
+    PRINT UBOUND(map, 1)
 
     ' SAVE THE TILES
     OPEN map_file$ FOR BINARY AS #1
