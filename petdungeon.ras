@@ -4,14 +4,15 @@ program dungeon64;
 
 //	@projectsettings "system" PET
 //	@projectsettings "petmodel" "4032"
-//	@projectsettings "system" C64
+	@projectsettings "system" C64
 
-//
-	@projectsettings "system" VIC20
+// @projectsettings "system" VIC20
 
 // @projectsettings "system" APPLEII
 
 // @projectsettings "system" BBCM
+
+
 
 // @projectsettings "system" ATARI800
 
