@@ -67,15 +67,8 @@ levels_level_p	= $0D
 	; LineNumber: 21
 levels_tiles
 	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///tiles.bin"
-	; LineNumber: 22
-levels_level	dc.b $00, $01, $02, $03, $04, $05, $06, $07
-	dc.b $08, $09, $0a, $0b, $0c, $0d, $0e, $0f
-	dc.b $010, $011, $012, $013, $014, $015, $016, $017
-	dc.b $018, $019, $01a, $01b, $01c, $01d, $01e, $01f
-	dc.b $020, $021, $022, $023, $024, $025, $026, $027
-	dc.b $028, $029
 	; LineNumber: 33
-levels_ilevel
+levels_level
 	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///map.bin"
 	; LineNumber: 34
 	; LineNumber: 40
@@ -1377,7 +1370,7 @@ levels_draw_level_loopstart223
 	; Compare is onpage
 	; Test Inc dec D
 	inc levels_t_y
-	lda #$5
+	lda #$6
 	cmp levels_t_y ;keep
 	bne levels_draw_level_forloop220
 levels_draw_level_loopdone251: ;keep

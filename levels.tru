@@ -77,7 +77,7 @@ var
 		level_p:=#level;
 
 		
-		for t_y:=0 to 5 do
+		for t_y:=0 to 6 do
 		begin
 			for t_x:=0 to tiles_across do
 			begin

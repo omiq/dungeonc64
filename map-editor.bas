@@ -1,5 +1,6 @@
 _TITLE "MAP EDITOR"
 SCREEN 8
+_FULLSCREEN
 '_PRINTMODE _KEEPBACKGROUND
 
 ' BLUE
@@ -28,10 +29,12 @@ _MOUSESHOW
 OPTION BASE 0
 DIM SHARED chars_file$
 DIM SHARED tiles_file$
-DIM SHARED map_file$
 chars_file$ = "c64chars.bin"
 tiles_file$ = "tiles.bin"
+
+DIM SHARED map_file$
 map_file$ = "map.bin"
+
 
 
 ' BUTTONS
@@ -40,12 +43,11 @@ CALL draw_button("X", 620, 0)
 
 
 ' TILE DATA
-DIM SHARED map(43) AS _UNSIGNED _BYTE
+
 DIM SHARED charset(256, 8) AS _UNSIGNED _BYTE
 DIM SHARED this_char AS INTEGER
 DIM in_byte AS _UNSIGNED _BYTE
 DIM row AS INTEGER
-DIM col AS INTEGER
 DIM SHARED tiler, tilec AS INTEGER
 this_char = 0
 in_byte = 0
@@ -64,21 +66,23 @@ CLOSE #1
 
 DIM tmp_X AS INTEGER
 DIM tmp_Y AS INTEGER
-
+DIM SHARED selected_tile AS _UNSIGNED _BYTE
+selected_tile = 1
 DIM SHARED this_tile AS INTEGER
 DIM SHARED tiles(500) AS _UNSIGNED _BYTE
-
+DIM SHARED tile AS _UNSIGNED _BYTE
 ' LOAD TILE DATA
 CALL load_tiles
 
 ' LOAD MAP
+DIM SHARED map(42) AS _UNSIGNED _BYTE
 CALL load_map
-
+CALL draw_map_grid
 
 ' DRAW GRID LINES
 CALL draw_grid
 
-
+DIM draw_tile AS _UNSIGNED _BYTE
 
 DO
     IF _MOUSEINPUT THEN '  skip keyboard reads
@@ -94,7 +98,7 @@ DO
                 selected_tile = INT((_MOUSEX - 15) / 24) + INT((tmp_row * 7))
                 IF selected_tile > 41 THEN selected_tile = selected_tile - 7
                 LOCATE 1, 10
-                PRINT selected_tile
+                PRINT "SELECTED:"; selected_tile
 
 
                 remainder = selected_tile MOD 7
@@ -128,26 +132,26 @@ DO
             ' TILES
             IF _MOUSEX > 243 AND _MOUSEX < 408 AND _MOUSEY > 10 AND _MOUSEY < 155 THEN
 
-
                 tile_col = INT((_MOUSEX - 239) / 24)
                 tile_row = INT((_MOUSEY - 10) / 24)
-                tile = tile_col + (tile_row * 7)
+                draw_tile = INT(tile_col + (tile_row * 7))
 
-                tmp_X = tile_col * 24 + 239
-                tmp_Y = tile_row * 24 + 10
+                tmp_X = INT((tile_col * 24) + 240)
+                tmp_Y = INT((tile_row * 24) + 10)
+                IF draw_tile < 42 AND _MOUSEX < 408 THEN
+                    IF _MOUSEBUTTON(1) THEN
 
-                LOCATE 1, 25
-                PRINT tile
+                        map(draw_tile) = selected_tile
+                        CALL print_tile(selected_tile, tmp_X, tmp_Y)
+                        CALL draw_map_grid
+                    END IF
 
-                IF _MOUSEBUTTON(1) THEN
-                    map(tile) = selected_tile
-                    CALL print_tile(selected_tile, tmp_X, tmp_Y)
+                    IF _MOUSEBUTTON(2) THEN
+                        map(draw_tile) = 41
+                        CALL print_tile(41, tmp_X, tmp_Y)
+                        CALL draw_map_grid
+                    END IF
                 END IF
-                IF _MOUSEBUTTON(2) THEN
-                    map(tile) = 41
-                    CALL print_tile(41, tmp_X, tmp_Y)
-                END IF
-
             END IF
 
         END IF
@@ -184,32 +188,47 @@ END SUB
 
 ' OUTPUT THE MAP
 SUB load_map ()
-    DIM this_tile, in_tile AS _UNSIGNED _BYTE
+
+
+    DIM i_byte AS _UNSIGNED _BYTE
+    DIM b_tile AS _UNSIGNED INTEGER
     tiler = 0
     tilec = 0
-    this_tile = 0
+    b_tile = 0
+    DIM dx, dy AS _UNSIGNED INTEGER
 
 
-    ' SAVE THE TILES
-    OPEN map_file$ FOR BINARY AS #1
+    OPEN map_file$ FOR BINARY AS #3
 
-    ' MAP GRID
-    FOR tiler = 0 TO 6
-        FOR tilec = 0 TO 7
+    FOR i = 1 TO 42
+        GET #3, i, i_byte
+        map(i - 1) = i_byte
+        'PRINT map(i - 1);
+    NEXT
+    CLOSE #3
 
-            GET #1, , in_tile
-            map(this_tile) = in_tile
-            PRINT in_tile;
-            CALL print_tile(in_tile, (tilec * 24) + 240, (tiler * 24) + 10)
-            this_tile = this_tile + 1
+
+    ' MAP LAYOUT
+    b_tile = 0
+    tile_to_draw = 0
+
+    FOR tiler = 0 TO 5
+        FOR tilec = 0 TO 6
+
+            dx = (tilec * 24) + 240
+            dy = (tiler * 24) + 10
+            tile_to_draw = map(b_tile)
+            CALL print_tile(tile_to_draw, dx, dy)
+            b_tile = b_tile + 1
+
+
         NEXT
     NEXT
 
-    CLOSE
 
-    LOCATE 10, 10
-    PRINT "MAP DATA LOADED"
-    PRINT UBOUND(map, 1)
+    LOCATE 1, 1
+    PRINT "MAP DATA LOADED"; UBOUND(map, 1)
+
 
 END SUB
 
@@ -218,16 +237,16 @@ END SUB
 
 ' OUTPUT THE MAP
 SUB save_map ()
-    LOCATE 10, 10
-    PRINT UBOUND(map, 1)
 
     ' SAVE THE TILES
     OPEN map_file$ FOR BINARY AS #1
+
     PUT #1, , map()
-    CLOSE
+
+    CLOSE #1
 
     LOCATE 1, 1
-    PRINT "MAP DATA SAVED"
+    PRINT "MAP DATA SAVED"; UBOUND(map, 1)
 
 
 
@@ -276,12 +295,13 @@ SUB print_tile (tile_no, x, y)
     DIM trow AS _BYTE
     DIM tile_cell AS INTEGER
 
+    IF (x + 16) > 400 THEN EXIT SUB
 
     ' Get starting byte
     tremainder = INT(tile_no MOD 7)
     trow = (tile_no - tremainder) / 7
     tile_cell = ((trow * 63) + (tremainder * 3))
-    'PRINT tile_cell
+
 
     trow = 0
     FOR trow = 1 TO 3
@@ -291,9 +311,6 @@ SUB print_tile (tile_no, x, y)
         tile_cell = tile_cell + 21
         y = y + 8
     NEXT
-
-    ' REPLACE GRID LINES
-    CALL draw_map_grid
 
 END SUB
 
