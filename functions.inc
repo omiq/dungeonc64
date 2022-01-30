@@ -315,10 +315,22 @@
 	
 		
 		if((random()/12)>10) then
-
-		//if((Random::Random()/12)>10) then
 		begin
-			update_status("YOU WON THIS FIGHT");
+						
+			if (charat=87) then
+			begin
+				// Gobbo drops key
+				levels::plot_buffer(x,y,75);
+				
+				// Reset player to backup position
+				x:=oldx;
+				y:=oldy;		
+				update_status("YOU WON THIS FIGHT - HAVE A KEY!");	
+			end			
+			else
+			begin
+				update_status("YOU WON THIS FIGHT               ");		
+			end;
 		end		
 		else
 		begin
@@ -329,7 +341,7 @@
 			x:=oldx;
 			y:=oldy;		
 			
-			update_status("YOU LOST THIS FIGHT");
+			update_status("YOU LOST THIS FIGHT                  ");
 			
 			if(health<=0) then 
 			begin

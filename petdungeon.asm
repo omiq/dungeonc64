@@ -14,7 +14,7 @@ EndBlock801:
 StartBlock810:
 	; Starting new memory block at $810
 dungeon64
-	; LineNumber: 496
+	; LineNumber: 508
 	jmp block1
 	; LineNumber: 4
 txt_i	dc.b	$00
@@ -36,7 +36,7 @@ txt_temp_num	dc.w	0
 	; LineNumber: 15
 txt_temp_i	dc.b	$00
 	; LineNumber: 17
-txt_in_str	=  $04
+txt_in_str	= $04
 	; LineNumber: 18
 txt_CRLF	dc.b	0
 	; LineNumber: 5
@@ -50,11 +50,11 @@ levels_t_y	dc.b	0
 	; LineNumber: 7
 levels_tile_no	dc.b	0
 	; LineNumber: 8
-levels_temp_s	=  $08
+levels_temp_s	= $08
 	; LineNumber: 8
-levels_dest	=  $16
+levels_dest	= $16
 	; LineNumber: 8
-levels_ch_index	=  $0B
+levels_ch_index	= $0B
 	; LineNumber: 10
 levels_tiles_across	dc.b	0
 	; LineNumber: 11
@@ -63,7 +63,7 @@ levels_detected_screen_width	dc.b	0
 levels_screen_buffer	dc.b	 
 	org levels_screen_buffer+1000
 	; LineNumber: 20
-levels_level_p	=  $0D
+levels_level_p	= $0D
 	; LineNumber: 21
 levels_tiles
 	incbin	 "/Users/chrisg/Dropbox/My Mac (Chriss-Mac-mini.local)/Documents/GitHub/dungeonc64///tiles.bin"
@@ -92,11 +92,11 @@ oldx	dc.b	0
 	; LineNumber: 47
 oldy	dc.b	0
 	; LineNumber: 49
-new_status	=  $10
+new_status	= $10
 	; LineNumber: 49
-the_status	=  $12
+the_status	= $12
 	; LineNumber: 49
-p	=  $22
+p	= $22
 	; LineNumber: 52
 keys	dc.b	$00
 	; LineNumber: 53
@@ -744,7 +744,7 @@ txt_print_string_centered
 	bcs txt_print_string_centered_skip92
 	dey
 txt_print_string_centered_skip92
-txt_print_string_centered_int_shift_var93 =  $56
+txt_print_string_centered_int_shift_var93 = $56
 	sta txt_print_string_centered_int_shift_var93
 	sty txt_print_string_centered_int_shift_var93+1
 		lsr txt_print_string_centered_int_shift_var93+1
@@ -901,7 +901,7 @@ txt_print_dec_ConditionalTrueBlock152: ;Main true block ;keep
 	lda #$a
 	sta mul16x8_num2
 	jsr mul16x8_procedure
-txt_print_dec_rightvarInteger_var176 =  $56
+txt_print_dec_rightvarInteger_var176 = $56
 	sta txt_print_dec_rightvarInteger_var176
 	sty txt_print_dec_rightvarInteger_var176+1
 	; Right is PURE NUMERIC : Is word =1
@@ -964,7 +964,7 @@ txt_print_dec_elsedoneblock180
 ; // right digit
 	; Modulo
 	lda #$a
-txt_print_dec_val_var185 =  $56
+txt_print_dec_val_var185 = $56
 	sta txt_print_dec_val_var185
 	lda txt__in_n
 	sec
@@ -1036,7 +1036,7 @@ txt_print_dec_elseblock153
 	lda #$a
 	sta mul16x8_num2
 	jsr mul16x8_procedure
-txt_print_dec_rightvarInteger_var189 =  $56
+txt_print_dec_rightvarInteger_var189 = $56
 	sta txt_print_dec_rightvarInteger_var189
 	sty txt_print_dec_rightvarInteger_var189+1
 	lda txt__in_n+1
@@ -1087,33 +1087,155 @@ txt_print_dec_elsedoneblock194
 	; LineNumber: 742
 	rts
 	; NodeProcedureDecl -1
+	; ***********  Defining procedure : levels_get_buffer
+	;    Procedure type : User-defined procedure
+	; LineNumber: 38
+	; LineNumber: 37
+levels_buf_x	dc.b	0
+	; LineNumber: 37
+levels_buf_y	dc.b	0
+levels_get_buffer_block197
+levels_get_buffer
+	; LineNumber: 40
+	; Generic 16 bit op
+	ldy #0
+	lda levels_buf_x
+levels_get_buffer_rightvarInteger_var200 = $56
+	sta levels_get_buffer_rightvarInteger_var200
+	sty levels_get_buffer_rightvarInteger_var200+1
+	; Generic 16 bit op
+	lda #<levels_screen_buffer
+	ldy #>levels_screen_buffer
+levels_get_buffer_rightvarInteger_var203 = $58
+	sta levels_get_buffer_rightvarInteger_var203
+	sty levels_get_buffer_rightvarInteger_var203+1
+	; Mul 16x8 setup
+	ldy #0
+	lda levels_buf_y
+	sta mul16x8_num1
+	sty mul16x8_num1Hi
+	lda levels_detected_screen_width
+	sta mul16x8_num2
+	jsr mul16x8_procedure
+	; Low bit binop:
+	clc
+	adc levels_get_buffer_rightvarInteger_var203
+levels_get_buffer_wordAdd201
+	sta levels_get_buffer_rightvarInteger_var203
+	; High-bit binop
+	tya
+	adc levels_get_buffer_rightvarInteger_var203+1
+	tay
+	lda levels_get_buffer_rightvarInteger_var203
+	; Low bit binop:
+	clc
+	adc levels_get_buffer_rightvarInteger_var200
+levels_get_buffer_wordAdd198
+	sta levels_get_buffer_rightvarInteger_var200
+	; High-bit binop
+	tya
+	adc levels_get_buffer_rightvarInteger_var200+1
+	tay
+	lda levels_get_buffer_rightvarInteger_var200
+	sta levels_ch_index
+	sty levels_ch_index+1
+	; LineNumber: 42
+	; LineNumber: 43
+	; Load pointer array
+	ldy #$0
+	lda (levels_ch_index),y
+	rts
+	; NodeProcedureDecl -1
+	; ***********  Defining procedure : levels_plot_buffer
+	;    Procedure type : User-defined procedure
+	; LineNumber: 48
+	; LineNumber: 47
+levels_plot_x	dc.b	0
+	; LineNumber: 47
+levels_plot_y	dc.b	0
+	; LineNumber: 47
+levels_plot_ch	dc.b	0
+levels_plot_buffer_block204
+levels_plot_buffer
+	; LineNumber: 50
+	; Generic 16 bit op
+	ldy #0
+	lda levels_plot_x
+levels_plot_buffer_rightvarInteger_var207 = $56
+	sta levels_plot_buffer_rightvarInteger_var207
+	sty levels_plot_buffer_rightvarInteger_var207+1
+	; Generic 16 bit op
+	lda #<levels_screen_buffer
+	ldy #>levels_screen_buffer
+levels_plot_buffer_rightvarInteger_var210 = $58
+	sta levels_plot_buffer_rightvarInteger_var210
+	sty levels_plot_buffer_rightvarInteger_var210+1
+	; Mul 16x8 setup
+	ldy #0
+	lda levels_plot_y
+	sta mul16x8_num1
+	sty mul16x8_num1Hi
+	lda levels_detected_screen_width
+	sta mul16x8_num2
+	jsr mul16x8_procedure
+	; Low bit binop:
+	clc
+	adc levels_plot_buffer_rightvarInteger_var210
+levels_plot_buffer_wordAdd208
+	sta levels_plot_buffer_rightvarInteger_var210
+	; High-bit binop
+	tya
+	adc levels_plot_buffer_rightvarInteger_var210+1
+	tay
+	lda levels_plot_buffer_rightvarInteger_var210
+	; Low bit binop:
+	clc
+	adc levels_plot_buffer_rightvarInteger_var207
+levels_plot_buffer_wordAdd205
+	sta levels_plot_buffer_rightvarInteger_var207
+	; High-bit binop
+	tya
+	adc levels_plot_buffer_rightvarInteger_var207+1
+	tay
+	lda levels_plot_buffer_rightvarInteger_var207
+	sta levels_ch_index
+	sty levels_ch_index+1
+	; LineNumber: 51
+	lda levels_plot_ch
+	; Calling storevariable on generic assign expression
+	; Storing to a pointer
+	ldy #$0
+	sta (levels_ch_index),y
+	; LineNumber: 53
+	rts
+	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_draw_tile
 	;    Procedure type : User-defined procedure
-	; LineNumber: 43
-	; LineNumber: 40
+	; LineNumber: 62
+	; LineNumber: 59
 levels_tremainder	dc.b	0
-	; LineNumber: 41
+	; LineNumber: 60
 levels_trow	dc.b	0
-	; LineNumber: 42
+	; LineNumber: 61
 levels_tile_cell	dc.w	0
-levels_draw_tile_block197
+levels_draw_tile_block211
 levels_draw_tile
-	; LineNumber: 46
+	; LineNumber: 65
 	
 ; // Get starting byte
 	; Modulo
 	lda #$7
-levels_draw_tile_val_var198 =  $56
-	sta levels_draw_tile_val_var198
+levels_draw_tile_val_var212 = $56
+	sta levels_draw_tile_val_var212
 	lda levels_tile_no
 	sec
-levels_draw_tile_modulo199
-	sbc levels_draw_tile_val_var198
-	bcs levels_draw_tile_modulo199
-	adc levels_draw_tile_val_var198
+levels_draw_tile_modulo213
+	sbc levels_draw_tile_val_var212
+	bcs levels_draw_tile_modulo213
+	adc levels_draw_tile_val_var212
 	; Calling storevariable on generic assign expression
 	sta levels_tremainder
-	; LineNumber: 47
+	; LineNumber: 66
 	; Right is PURE NUMERIC : Is word =0
 	; 8 bit div
 	; 8 bit binop
@@ -1129,7 +1251,7 @@ levels_draw_tile_modulo199
 	jsr div8x8_procedure
 	; Calling storevariable on generic assign expression
 	sta levels_trow
-	; LineNumber: 48
+	; LineNumber: 67
 	; Generic 16 bit op
 	ldy #0
 	; Right is PURE NUMERIC : Is word =1
@@ -1141,9 +1263,9 @@ levels_draw_tile_modulo199
 	lda #$3
 	sta mul16x8_num2
 	jsr mul16x8_procedure
-levels_draw_tile_rightvarInteger_var204 =  $56
-	sta levels_draw_tile_rightvarInteger_var204
-	sty levels_draw_tile_rightvarInteger_var204+1
+levels_draw_tile_rightvarInteger_var218 = $56
+	sta levels_draw_tile_rightvarInteger_var218
+	sty levels_draw_tile_rightvarInteger_var218+1
 	; Right is PURE NUMERIC : Is word =1
 	; 16 bit mul or div
 	; Mul 16x8 setup
@@ -1156,18 +1278,18 @@ levels_draw_tile_rightvarInteger_var204 =  $56
 	jsr mul16x8_procedure
 	; Low bit binop:
 	clc
-	adc levels_draw_tile_rightvarInteger_var204
-levels_draw_tile_wordAdd202
-	sta levels_draw_tile_rightvarInteger_var204
+	adc levels_draw_tile_rightvarInteger_var218
+levels_draw_tile_wordAdd216
+	sta levels_draw_tile_rightvarInteger_var218
 	; High-bit binop
 	tya
-	adc levels_draw_tile_rightvarInteger_var204+1
+	adc levels_draw_tile_rightvarInteger_var218+1
 	tay
-	lda levels_draw_tile_rightvarInteger_var204
+	lda levels_draw_tile_rightvarInteger_var218
 	; Calling storevariable on generic assign expression
 	sta levels_tile_cell
 	sty levels_tile_cell+1
-	; LineNumber: 52
+	; LineNumber: 71
 	
 ; // ROW 1
 	; INTEGER optimization: a=b+c 
@@ -1178,7 +1300,7 @@ levels_draw_tile_wordAdd202
 	lda #>levels_tiles
 	adc levels_tile_cell+1
 	sta levels_temp_s+1
-	; LineNumber: 53
+	; LineNumber: 72
 	; Generic 16 bit op
 	ldy #0
 	; Right is PURE NUMERIC : Is word =1
@@ -1190,15 +1312,15 @@ levels_draw_tile_wordAdd202
 	lda #$3
 	sta mul16x8_num2
 	jsr mul16x8_procedure
-levels_draw_tile_rightvarInteger_var208 =  $56
-	sta levels_draw_tile_rightvarInteger_var208
-	sty levels_draw_tile_rightvarInteger_var208+1
+levels_draw_tile_rightvarInteger_var222 = $56
+	sta levels_draw_tile_rightvarInteger_var222
+	sty levels_draw_tile_rightvarInteger_var222+1
 	; Generic 16 bit op
 	lda #<levels_screen_buffer
 	ldy #>levels_screen_buffer
-levels_draw_tile_rightvarInteger_var211 =  $58
-	sta levels_draw_tile_rightvarInteger_var211
-	sty levels_draw_tile_rightvarInteger_var211+1
+levels_draw_tile_rightvarInteger_var225 = $58
+	sta levels_draw_tile_rightvarInteger_var225
+	sty levels_draw_tile_rightvarInteger_var225+1
 	; Mul 16x8 setup
 	; Right is PURE NUMERIC : Is word =1
 	; 16 bit mul or div
@@ -1218,35 +1340,35 @@ levels_draw_tile_rightvarInteger_var211 =  $58
 	jsr mul16x8_procedure
 	; Low bit binop:
 	clc
-	adc levels_draw_tile_rightvarInteger_var211
-levels_draw_tile_wordAdd209
-	sta levels_draw_tile_rightvarInteger_var211
+	adc levels_draw_tile_rightvarInteger_var225
+levels_draw_tile_wordAdd223
+	sta levels_draw_tile_rightvarInteger_var225
 	; High-bit binop
 	tya
-	adc levels_draw_tile_rightvarInteger_var211+1
+	adc levels_draw_tile_rightvarInteger_var225+1
 	tay
-	lda levels_draw_tile_rightvarInteger_var211
+	lda levels_draw_tile_rightvarInteger_var225
 	; Low bit binop:
 	clc
-	adc levels_draw_tile_rightvarInteger_var208
-levels_draw_tile_wordAdd206
-	sta levels_draw_tile_rightvarInteger_var208
+	adc levels_draw_tile_rightvarInteger_var222
+levels_draw_tile_wordAdd220
+	sta levels_draw_tile_rightvarInteger_var222
 	; High-bit binop
 	tya
-	adc levels_draw_tile_rightvarInteger_var208+1
+	adc levels_draw_tile_rightvarInteger_var222+1
 	tay
-	lda levels_draw_tile_rightvarInteger_var208
+	lda levels_draw_tile_rightvarInteger_var222
 	sta levels_dest
 	sty levels_dest+1
-	; LineNumber: 54
+	; LineNumber: 73
 	; memcpyfast
 	ldy #2
-levels_draw_tile_memcpy212
+levels_draw_tile_memcpy226
 	lda (levels_temp_s),y
 	sta (levels_dest),y
 	dey
-	bpl levels_draw_tile_memcpy212
-	; LineNumber: 57
+	bpl levels_draw_tile_memcpy226
+	; LineNumber: 76
 	
 ; // ROW 2
 	lda levels_temp_s
@@ -1254,27 +1376,27 @@ levels_draw_tile_memcpy212
 	adc #$15
 	sta levels_temp_s+0
 	; Optimization : A := A op 8 bit - var and bvar are the same - perform inc
-	bcc levels_draw_tile_WordAdd213
+	bcc levels_draw_tile_WordAdd227
 	inc levels_temp_s+1
-levels_draw_tile_WordAdd213
-	; LineNumber: 58
+levels_draw_tile_WordAdd227
+	; LineNumber: 77
 	lda levels_dest
 	clc
 	adc levels_detected_screen_width
 	sta levels_dest+0
 	; Optimization : A := A op 8 bit - var and bvar are the same - perform inc
-	bcc levels_draw_tile_WordAdd214
+	bcc levels_draw_tile_WordAdd228
 	inc levels_dest+1
-levels_draw_tile_WordAdd214
-	; LineNumber: 59
+levels_draw_tile_WordAdd228
+	; LineNumber: 78
 	; memcpyfast
 	ldy #2
-levels_draw_tile_memcpy215
+levels_draw_tile_memcpy229
 	lda (levels_temp_s),y
 	sta (levels_dest),y
 	dey
-	bpl levels_draw_tile_memcpy215
-	; LineNumber: 62
+	bpl levels_draw_tile_memcpy229
+	; LineNumber: 81
 	
 ; // ROW 3
 	lda levels_temp_s
@@ -1282,58 +1404,58 @@ levels_draw_tile_memcpy215
 	adc #$15
 	sta levels_temp_s+0
 	; Optimization : A := A op 8 bit - var and bvar are the same - perform inc
-	bcc levels_draw_tile_WordAdd216
+	bcc levels_draw_tile_WordAdd230
 	inc levels_temp_s+1
-levels_draw_tile_WordAdd216
-	; LineNumber: 63
+levels_draw_tile_WordAdd230
+	; LineNumber: 82
 	lda levels_dest
 	clc
 	adc levels_detected_screen_width
 	sta levels_dest+0
 	; Optimization : A := A op 8 bit - var and bvar are the same - perform inc
-	bcc levels_draw_tile_WordAdd217
+	bcc levels_draw_tile_WordAdd231
 	inc levels_dest+1
-levels_draw_tile_WordAdd217
-	; LineNumber: 64
+levels_draw_tile_WordAdd231
+	; LineNumber: 83
 	; memcpyfast
 	ldy #2
-levels_draw_tile_memcpy218
+levels_draw_tile_memcpy232
 	lda (levels_temp_s),y
 	sta (levels_dest),y
 	dey
-	bpl levels_draw_tile_memcpy218
-	; LineNumber: 66
+	bpl levels_draw_tile_memcpy232
+	; LineNumber: 85
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_draw_level
 	;    Procedure type : User-defined procedure
-	; LineNumber: 73
+	; LineNumber: 92
 levels_draw_level
-	; LineNumber: 76
+	; LineNumber: 95
 	
 ; // set to draw tiles
 	lda #<levels_screen_buffer
 	ldx #>levels_screen_buffer
 	sta levels_dest
 	stx levels_dest+1
-	; LineNumber: 77
+	; LineNumber: 96
 	lda #<levels_level
 	ldx #>levels_level
 	sta levels_level_p
 	stx levels_level_p+1
-	; LineNumber: 88
+	; LineNumber: 107
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta levels_t_y
-levels_draw_level_forloop220
-	; LineNumber: 81
-	; LineNumber: 86
+levels_draw_level_forloop234
+	; LineNumber: 100
+	; LineNumber: 105
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta levels_t_x
-levels_draw_level_forloop239
-	; LineNumber: 83
-	; LineNumber: 84
+levels_draw_level_forloop253
+	; LineNumber: 102
+	; LineNumber: 103
 	; Load pointer array
 	; 8 bit binop
 	; Add/sub where right value is constant number
@@ -1350,51 +1472,125 @@ levels_draw_level_forloop239
 	lda (levels_level_p),y
 	; Calling storevariable on generic assign expression
 	sta levels_tile_no
-	; LineNumber: 85
+	; LineNumber: 104
 	jsr levels_draw_tile
-	; LineNumber: 86
-levels_draw_level_forloopcounter241
-levels_draw_level_loopstart242
+	; LineNumber: 105
+levels_draw_level_forloopcounter255
+levels_draw_level_loopstart256
 	; Compare is onpage
 	; Test Inc dec D
 	inc levels_t_x
 	lda levels_tiles_across
 	cmp levels_t_x ;keep
-	bne levels_draw_level_forloop239
-levels_draw_level_loopdone250: ;keep
-levels_draw_level_forloopend240
-levels_draw_level_loopend243
-	; LineNumber: 87
-levels_draw_level_forloopcounter222
-levels_draw_level_loopstart223
+	bne levels_draw_level_forloop253
+levels_draw_level_loopdone264: ;keep
+levels_draw_level_forloopend254
+levels_draw_level_loopend257
+	; LineNumber: 106
+levels_draw_level_forloopcounter236
+levels_draw_level_loopstart237
 	; Compare is onpage
 	; Test Inc dec D
 	inc levels_t_y
 	lda #$6
 	cmp levels_t_y ;keep
-	bne levels_draw_level_forloop220
-levels_draw_level_loopdone251: ;keep
-levels_draw_level_forloopend221
-levels_draw_level_loopend224
-	; LineNumber: 90
+	bne levels_draw_level_forloop234
+levels_draw_level_loopdone265: ;keep
+levels_draw_level_forloopend235
+levels_draw_level_loopend238
+	; LineNumber: 112
+	
+; // Let's drop some keys
+; // Key = 75
+	lda #$6
+	; Calling storevariable on generic assign expression
+	sta levels_plot_x
+	; Calling storevariable on generic assign expression
+	sta levels_plot_y
+	lda #$4b
+	; Calling storevariable on generic assign expression
+	sta levels_plot_ch
+	jsr levels_plot_buffer
+	; LineNumber: 113
+	lda #$3
+	; Calling storevariable on generic assign expression
+	sta levels_plot_x
+	; Calling storevariable on generic assign expression
+	sta levels_plot_y
+	lda #$4b
+	; Calling storevariable on generic assign expression
+	sta levels_plot_ch
+	jsr levels_plot_buffer
+	; LineNumber: 116
+	
+; // Gobbo
+	lda #$2
+	; Calling storevariable on generic assign expression
+	sta levels_plot_x
+	lda #$8
+	; Calling storevariable on generic assign expression
+	sta levels_plot_y
+	lda #$57
+	; Calling storevariable on generic assign expression
+	sta levels_plot_ch
+	jsr levels_plot_buffer
+	; LineNumber: 119
+	
+; // Gold
+	lda #$c
+	; Calling storevariable on generic assign expression
+	sta levels_plot_x
+	; Calling storevariable on generic assign expression
+	sta levels_plot_y
+	lda #$5a
+	; Calling storevariable on generic assign expression
+	sta levels_plot_ch
+	jsr levels_plot_buffer
+	; LineNumber: 122
+	
+; // Rat
+	lda #$12
+	; Calling storevariable on generic assign expression
+	sta levels_plot_x
+	lda #$6
+	; Calling storevariable on generic assign expression
+	sta levels_plot_y
+	lda #$5e
+	; Calling storevariable on generic assign expression
+	sta levels_plot_ch
+	jsr levels_plot_buffer
+	; LineNumber: 126
+	
+; // Health
+	lda #$1
+	; Calling storevariable on generic assign expression
+	sta levels_plot_x
+	lda #$e
+	; Calling storevariable on generic assign expression
+	sta levels_plot_y
+	lda #$53
+	; Calling storevariable on generic assign expression
+	sta levels_plot_ch
+	jsr levels_plot_buffer
+	; LineNumber: 129
 	rts
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : levels_refresh_screen
 	;    Procedure type : User-defined procedure
-	; LineNumber: 97
+	; LineNumber: 136
 levels_refresh_screen
-	; LineNumber: 99
+	; LineNumber: 138
 	lda #<levels_screen_buffer
 	ldx #>levels_screen_buffer
 	sta levels_temp_s
 	stx levels_temp_s+1
-	; LineNumber: 118
+	; LineNumber: 157
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta levels_r
-levels_refresh_screen_forloop253
-	; LineNumber: 104
-	; LineNumber: 105
+levels_refresh_screen_forloop267
+	; LineNumber: 143
+	; LineNumber: 144
 	
 ; // Need rows at the bottom 
 ; // for text output
@@ -1406,16 +1602,16 @@ levels_refresh_screen_forloop253
 	ldy txt_ytab+1,x
 	sta levels_dest
 	sty levels_dest+1
-	; LineNumber: 111
+	; LineNumber: 150
 	; memcpyfast
 	ldy levels_detected_screen_width
 	dey
-levels_refresh_screen_memcpy262
+levels_refresh_screen_memcpy276
 	lda (levels_temp_s),y
 	sta (levels_dest),y
 	dey
-	bpl levels_refresh_screen_memcpy262
-	; LineNumber: 117
+	bpl levels_refresh_screen_memcpy276
+	; LineNumber: 156
 	
 ; //MemCpy16(temp_s, dest, detected_screen_width);
 	lda levels_temp_s
@@ -1423,144 +1619,22 @@ levels_refresh_screen_memcpy262
 	adc levels_detected_screen_width
 	sta levels_temp_s+0
 	; Optimization : A := A op 8 bit - var and bvar are the same - perform inc
-	bcc levels_refresh_screen_WordAdd263
+	bcc levels_refresh_screen_WordAdd277
 	inc levels_temp_s+1
-levels_refresh_screen_WordAdd263
-	; LineNumber: 118
-levels_refresh_screen_forloopcounter255
-levels_refresh_screen_loopstart256
+levels_refresh_screen_WordAdd277
+	; LineNumber: 157
+levels_refresh_screen_forloopcounter269
+levels_refresh_screen_loopstart270
 	; Compare is onpage
 	; Test Inc dec D
 	inc levels_r
 	lda #$12
 	cmp levels_r ;keep
-	bne levels_refresh_screen_forloop253
-levels_refresh_screen_loopdone264: ;keep
-levels_refresh_screen_forloopend254
-levels_refresh_screen_loopend257
-	; LineNumber: 120
-	rts
-	; NodeProcedureDecl -1
-	; ***********  Defining procedure : levels_get_buffer
-	;    Procedure type : User-defined procedure
-	; LineNumber: 186
-	; LineNumber: 185
-levels_buf_x	dc.b	0
-	; LineNumber: 185
-levels_buf_y	dc.b	0
-levels_get_buffer_block265
-levels_get_buffer
-	; LineNumber: 188
-	; Generic 16 bit op
-	ldy #0
-	lda levels_buf_x
-levels_get_buffer_rightvarInteger_var268 =  $56
-	sta levels_get_buffer_rightvarInteger_var268
-	sty levels_get_buffer_rightvarInteger_var268+1
-	; Generic 16 bit op
-	lda #<levels_screen_buffer
-	ldy #>levels_screen_buffer
-levels_get_buffer_rightvarInteger_var271 =  $58
-	sta levels_get_buffer_rightvarInteger_var271
-	sty levels_get_buffer_rightvarInteger_var271+1
-	; Mul 16x8 setup
-	ldy #0
-	lda levels_buf_y
-	sta mul16x8_num1
-	sty mul16x8_num1Hi
-	lda levels_detected_screen_width
-	sta mul16x8_num2
-	jsr mul16x8_procedure
-	; Low bit binop:
-	clc
-	adc levels_get_buffer_rightvarInteger_var271
-levels_get_buffer_wordAdd269
-	sta levels_get_buffer_rightvarInteger_var271
-	; High-bit binop
-	tya
-	adc levels_get_buffer_rightvarInteger_var271+1
-	tay
-	lda levels_get_buffer_rightvarInteger_var271
-	; Low bit binop:
-	clc
-	adc levels_get_buffer_rightvarInteger_var268
-levels_get_buffer_wordAdd266
-	sta levels_get_buffer_rightvarInteger_var268
-	; High-bit binop
-	tya
-	adc levels_get_buffer_rightvarInteger_var268+1
-	tay
-	lda levels_get_buffer_rightvarInteger_var268
-	sta levels_ch_index
-	sty levels_ch_index+1
-	; LineNumber: 190
-	; LineNumber: 191
-	; Load pointer array
-	ldy #$0
-	lda (levels_ch_index),y
-	rts
-	; NodeProcedureDecl -1
-	; ***********  Defining procedure : levels_plot_buffer
-	;    Procedure type : User-defined procedure
-	; LineNumber: 196
-	; LineNumber: 195
-levels_plot_x	dc.b	0
-	; LineNumber: 195
-levels_plot_y	dc.b	0
-	; LineNumber: 195
-levels_plot_ch	dc.b	0
-levels_plot_buffer_block272
-levels_plot_buffer
-	; LineNumber: 198
-	; Generic 16 bit op
-	ldy #0
-	lda levels_plot_x
-levels_plot_buffer_rightvarInteger_var275 =  $56
-	sta levels_plot_buffer_rightvarInteger_var275
-	sty levels_plot_buffer_rightvarInteger_var275+1
-	; Generic 16 bit op
-	lda #<levels_screen_buffer
-	ldy #>levels_screen_buffer
-levels_plot_buffer_rightvarInteger_var278 =  $58
-	sta levels_plot_buffer_rightvarInteger_var278
-	sty levels_plot_buffer_rightvarInteger_var278+1
-	; Mul 16x8 setup
-	ldy #0
-	lda levels_plot_y
-	sta mul16x8_num1
-	sty mul16x8_num1Hi
-	lda levels_detected_screen_width
-	sta mul16x8_num2
-	jsr mul16x8_procedure
-	; Low bit binop:
-	clc
-	adc levels_plot_buffer_rightvarInteger_var278
-levels_plot_buffer_wordAdd276
-	sta levels_plot_buffer_rightvarInteger_var278
-	; High-bit binop
-	tya
-	adc levels_plot_buffer_rightvarInteger_var278+1
-	tay
-	lda levels_plot_buffer_rightvarInteger_var278
-	; Low bit binop:
-	clc
-	adc levels_plot_buffer_rightvarInteger_var275
-levels_plot_buffer_wordAdd273
-	sta levels_plot_buffer_rightvarInteger_var275
-	; High-bit binop
-	tya
-	adc levels_plot_buffer_rightvarInteger_var275+1
-	tay
-	lda levels_plot_buffer_rightvarInteger_var275
-	sta levels_ch_index
-	sty levels_ch_index+1
-	; LineNumber: 199
-	lda levels_plot_ch
-	; Calling storevariable on generic assign expression
-	; Storing to a pointer
-	ldy #$0
-	sta (levels_ch_index),y
-	; LineNumber: 201
+	bne levels_refresh_screen_forloop267
+levels_refresh_screen_loopdone278: ;keep
+levels_refresh_screen_forloopend268
+levels_refresh_screen_loopend271
+	; LineNumber: 159
 	rts
 	
 ; //player inventory/stats
@@ -1707,9 +1781,9 @@ init_fill286
 	;    Procedure type : User-defined procedure
 	; LineNumber: 135
 	; LineNumber: 134
-dest	=  $24
+dest	= $24
 	; LineNumber: 134
-temp_s	=  $68
+temp_s	= $68
 c64_chars_block287
 c64_chars
 	; LineNumber: 138
@@ -2491,174 +2565,216 @@ combat
 	cmp #$b;keep
 	bcc combat_elseblock480
 combat_ConditionalTrueBlock479: ;Main true block ;keep 
+	; LineNumber: 378
 	; LineNumber: 380
+	; Binary clause Simplified: EQUALS
+	lda charat
+	; Compare with pure num / var optimization
+	cmp #$57;keep
+	bne combat_elseblock513
+combat_ConditionalTrueBlock512: ;Main true block ;keep 
 	; LineNumber: 381
+	; LineNumber: 383
 	
-; //if((Random::Random()/12)>10) then
+; // Gobbo drops key
+	lda x
+	; Calling storevariable on generic assign expression
+	sta levels_plot_x
+	lda y
+	; Calling storevariable on generic assign expression
+	sta levels_plot_y
+	lda #$4b
+	; Calling storevariable on generic assign expression
+	sta levels_plot_ch
+	jsr levels_plot_buffer
+	; LineNumber: 386
+	
+; // Reset player to backup position
+	lda oldx
+	; Calling storevariable on generic assign expression
+	sta x
+	; LineNumber: 387
+	lda oldy
+	; Calling storevariable on generic assign expression
+	sta y
+	; LineNumber: 388
 	; Assigning a string : new_status
-	lda #<combat_stringassignstr497
+	lda #<combat_stringassignstr522
 	sta new_status
-	lda #>combat_stringassignstr497
+	lda #>combat_stringassignstr522
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 382
+	; LineNumber: 389
+	jmp combat_elsedoneblock514
+combat_elseblock513
+	; LineNumber: 391
+	; LineNumber: 392
+	; Assigning a string : new_status
+	lda #<combat_stringassignstr525
+	sta new_status
+	lda #>combat_stringassignstr525
+	sta new_status+1
+	jsr update_status
+	; LineNumber: 393
+combat_elsedoneblock514
+	; LineNumber: 394
 	jmp combat_elsedoneblock481
 combat_elseblock480
-	; LineNumber: 384
-	; LineNumber: 386
+	; LineNumber: 396
+	; LineNumber: 398
 	; Test Inc dec D
 	dec health
-	; LineNumber: 389
+	; LineNumber: 401
 	
 ; // Reset to backup position
 	lda oldx
 	; Calling storevariable on generic assign expression
 	sta x
-	; LineNumber: 390
+	; LineNumber: 402
 	lda oldy
 	; Calling storevariable on generic assign expression
 	sta y
-	; LineNumber: 392
+	; LineNumber: 404
 	; Assigning a string : new_status
-	lda #<combat_stringassignstr500
+	lda #<combat_stringassignstr528
 	sta new_status
-	lda #>combat_stringassignstr500
+	lda #>combat_stringassignstr528
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 394
+	; LineNumber: 406
 	; Binary clause Simplified: LESSEQUAL
 	lda health
 	; Compare with pure num / var optimization
 	cmp #$0;keep
-	beq combat_ConditionalTrueBlock503
-	bcs combat_elsedoneblock505
-combat_ConditionalTrueBlock503: ;Main true block ;keep 
-	; LineNumber: 395
-	; LineNumber: 396
+	beq combat_ConditionalTrueBlock531
+	bcs combat_elsedoneblock533
+combat_ConditionalTrueBlock531: ;Main true block ;keep 
+	; LineNumber: 407
+	; LineNumber: 408
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta game_won
-	; LineNumber: 397
+	; LineNumber: 409
 	; Calling storevariable on generic assign expression
 	sta game_running
-	; LineNumber: 398
-combat_elsedoneblock505
-	; LineNumber: 400
+	; LineNumber: 410
+combat_elsedoneblock533
+	; LineNumber: 412
 combat_elsedoneblock481
-	; LineNumber: 402
+	; LineNumber: 414
 	rts
 	
 ; //@endif
 	; NodeProcedureDecl -1
 	; ***********  Defining procedure : check_collisions
 	;    Procedure type : User-defined procedure
-	; LineNumber: 408
+	; LineNumber: 420
 check_collisions
-	; LineNumber: 411
+	; LineNumber: 423
 	lda #$2a
 	cmp charat ;keep
-	bne check_collisions_casenext510
-	; LineNumber: 415
-	; LineNumber: 417
+	bne check_collisions_casenext538
+	; LineNumber: 427
+	; LineNumber: 429
 	
 ; // Gazer
 	; Assigning a string : new_status
-	lda #<check_collisions_stringassignstr512
+	lda #<check_collisions_stringassignstr540
 	sta new_status
-	lda #>check_collisions_stringassignstr512
+	lda #>check_collisions_stringassignstr540
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 418
+	; LineNumber: 430
 	jsr combat
-	; LineNumber: 420
-	jmp check_collisions_caseend509
-check_collisions_casenext510
+	; LineNumber: 432
+	jmp check_collisions_caseend537
+check_collisions_casenext538
 	lda #$58
 	cmp charat ;keep
-	bne check_collisions_casenext514
-	; LineNumber: 423
-	; LineNumber: 424
+	bne check_collisions_casenext542
+	; LineNumber: 435
+	; LineNumber: 436
 	
 ; // Artifact
 	; Assigning a string : new_status
-	lda #<check_collisions_stringassignstr516
+	lda #<check_collisions_stringassignstr544
 	sta new_status
-	lda #>check_collisions_stringassignstr516
+	lda #>check_collisions_stringassignstr544
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 425
-	jmp check_collisions_caseend509
-check_collisions_casenext514
+	; LineNumber: 437
+	jmp check_collisions_caseend537
+check_collisions_casenext542
 	lda #$43
 	cmp charat ;keep
-	bne check_collisions_casenext518
-	; LineNumber: 427
-	; LineNumber: 429
+	bne check_collisions_casenext546
+	; LineNumber: 439
+	; LineNumber: 441
 	jsr door
-	; LineNumber: 430
-	jmp check_collisions_caseend509
-check_collisions_casenext518
+	; LineNumber: 442
+	jmp check_collisions_caseend537
+check_collisions_casenext546
 	lda #$4b
 	cmp charat ;keep
-	bne check_collisions_casenext520
-	; LineNumber: 432
-	; LineNumber: 434
+	bne check_collisions_casenext548
+	; LineNumber: 444
+	; LineNumber: 446
 	
 ; // Key
 	; Test Inc dec D
 	inc keys
-	; LineNumber: 435
+	; LineNumber: 447
 	; Assigning a string : new_status
-	lda #<check_collisions_stringassignstr522
+	lda #<check_collisions_stringassignstr550
 	sta new_status
-	lda #>check_collisions_stringassignstr522
+	lda #>check_collisions_stringassignstr550
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 436
-	jmp check_collisions_caseend509
-check_collisions_casenext520
+	; LineNumber: 448
+	jmp check_collisions_caseend537
+check_collisions_casenext548
 	lda #$53
 	cmp charat ;keep
-	bne check_collisions_casenext524
-	; LineNumber: 440
-	; LineNumber: 441
+	bne check_collisions_casenext552
+	; LineNumber: 452
+	; LineNumber: 453
 	
 ; // Health potion
 	; Test Inc dec D
 	inc health
-	; LineNumber: 442
+	; LineNumber: 454
 	; Assigning a string : new_status
-	lda #<check_collisions_stringassignstr526
+	lda #<check_collisions_stringassignstr554
 	sta new_status
-	lda #>check_collisions_stringassignstr526
+	lda #>check_collisions_stringassignstr554
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 444
-	jmp check_collisions_caseend509
-check_collisions_casenext524
+	; LineNumber: 456
+	jmp check_collisions_caseend537
+check_collisions_casenext552
 	lda #$57
 	cmp charat ;keep
-	bne check_collisions_casenext528
-	; LineNumber: 446
-	; LineNumber: 449
+	bne check_collisions_casenext556
+	; LineNumber: 458
+	; LineNumber: 461
 	
 ; // Gobbo
 	; Assigning a string : new_status
-	lda #<check_collisions_stringassignstr530
+	lda #<check_collisions_stringassignstr558
 	sta new_status
-	lda #>check_collisions_stringassignstr530
+	lda #>check_collisions_stringassignstr558
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 450
+	; LineNumber: 462
 	jsr combat
-	; LineNumber: 451
-	jmp check_collisions_caseend509
-check_collisions_casenext528
+	; LineNumber: 463
+	jmp check_collisions_caseend537
+check_collisions_casenext556
 	lda #$5a
 	cmp charat ;keep
-	bne check_collisions_casenext532
-	; LineNumber: 454
-	; LineNumber: 455
+	bne check_collisions_casenext560
+	; LineNumber: 466
+	; LineNumber: 467
 	
 ; // Jewell
 	lda gold
@@ -2666,66 +2782,66 @@ check_collisions_casenext528
 	adc #$64
 	sta gold+0
 	; Optimization : A := A op 8 bit - var and bvar are the same - perform inc
-	bcc check_collisions_WordAdd534
+	bcc check_collisions_WordAdd562
 	inc gold+1
-check_collisions_WordAdd534
-	; LineNumber: 456
+check_collisions_WordAdd562
+	; LineNumber: 468
 	; Assigning a string : new_status
-	lda #<check_collisions_stringassignstr535
+	lda #<check_collisions_stringassignstr563
 	sta new_status
-	lda #>check_collisions_stringassignstr535
+	lda #>check_collisions_stringassignstr563
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 458
-	jmp check_collisions_caseend509
-check_collisions_casenext532
+	; LineNumber: 470
+	jmp check_collisions_caseend537
+check_collisions_casenext560
 	lda #$5e
 	cmp charat ;keep
-	bne check_collisions_casenext537
-	; LineNumber: 461
-	; LineNumber: 463
+	bne check_collisions_casenext565
+	; LineNumber: 473
+	; LineNumber: 475
 	
 ; // Rat
 	; Assigning a string : new_status
-	lda #<check_collisions_stringassignstr539
+	lda #<check_collisions_stringassignstr567
 	sta new_status
-	lda #>check_collisions_stringassignstr539
+	lda #>check_collisions_stringassignstr567
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 464
+	; LineNumber: 476
 	jsr combat
-	; LineNumber: 466
-	jmp check_collisions_caseend509
-check_collisions_casenext537
+	; LineNumber: 478
+	jmp check_collisions_caseend537
+check_collisions_casenext565
 	lda player_char
 	cmp charat ;keep
-	bne check_collisions_casenext541
-	; LineNumber: 470
-	; LineNumber: 472
-	jmp check_collisions_caseend509
-check_collisions_casenext541
-	; LineNumber: 476
-	; LineNumber: 479
+	bne check_collisions_casenext569
+	; LineNumber: 482
+	; LineNumber: 484
+	jmp check_collisions_caseend537
+check_collisions_casenext569
+	; LineNumber: 488
+	; LineNumber: 491
 	
 ; // Reset to backup position
 	lda oldx
 	; Calling storevariable on generic assign expression
 	sta x
-	; LineNumber: 480
+	; LineNumber: 492
 	lda oldy
 	; Calling storevariable on generic assign expression
 	sta y
-	; LineNumber: 485
+	; LineNumber: 497
 	
 ; // Unknown
 ; //_A:=charat;
 	; Assigning a string : new_status
-	lda #<check_collisions_stringassignstr544
+	lda #<check_collisions_stringassignstr572
 	sta new_status
-	lda #>check_collisions_stringassignstr544
+	lda #>check_collisions_stringassignstr572
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 486
+	; LineNumber: 498
 	lda #$f
 	; Calling storevariable on generic assign expression
 	sta txt__text_x
@@ -2733,7 +2849,7 @@ check_collisions_casenext541
 	; Calling storevariable on generic assign expression
 	sta txt__text_y
 	jsr txt_move_to
-	; LineNumber: 487
+	; LineNumber: 499
 	lda charat
 	; Calling storevariable on generic assign expression
 	sta txt__in_n
@@ -2741,158 +2857,158 @@ check_collisions_casenext541
 	; Calling storevariable on generic assign expression
 	sta txt__add_cr
 	jsr txt_print_dec
-	; LineNumber: 489
-check_collisions_caseend509
-	; LineNumber: 492
+	; LineNumber: 501
+check_collisions_caseend537
+	; LineNumber: 504
 	rts
 block1
-	; LineNumber: 498
+	; LineNumber: 510
 	
 ; // ********************************
 	lda #$28
 	; Calling storevariable on generic assign expression
 	sta levels_detected_screen_width
-	; LineNumber: 502
+	; LineNumber: 514
 	
 ; // C64 has it's own special characters
 	jsr c64_chars
-	; LineNumber: 503
+	; LineNumber: 515
 	lda #$0
 	; Calling storevariable on generic assign expression
 	sta player_char
-	; LineNumber: 530
-MainProgram_while546
-MainProgram_loopstart550
+	; LineNumber: 542
+MainProgram_while574
+MainProgram_loopstart578
 	; Binary clause Simplified: NOTEQUALS
 	lda #$1
 	; Compare with pure num / var optimization
 	cmp #$0;keep
-	beq MainProgram_localfailed642
-	jmp MainProgram_ConditionalTrueBlock547
-MainProgram_localfailed642
-	jmp MainProgram_elsedoneblock549
-MainProgram_ConditionalTrueBlock547: ;Main true block ;keep 
-	; LineNumber: 530
-	; LineNumber: 535
+	beq MainProgram_localfailed670
+	jmp MainProgram_ConditionalTrueBlock575
+MainProgram_localfailed670
+	jmp MainProgram_elsedoneblock577
+MainProgram_ConditionalTrueBlock575: ;Main true block ;keep 
+	; LineNumber: 542
+	; LineNumber: 547
 	
 ; // Borked, will need some work
 ; // Infinite loop
 ; // Show start screen
 ; // *****************
 	jsr show_start_screen
-	; LineNumber: 539
+	; LineNumber: 551
 	
 ; // Initial screen fill
 ; // and(re)set variables
 	jsr init
-	; LineNumber: 542
+	; LineNumber: 554
 	; Assigning a string : new_status
-	lda #<MainProgram_stringassignstr644
+	lda #<MainProgram_stringassignstr672
 	sta new_status
-	lda #>MainProgram_stringassignstr644
+	lda #>MainProgram_stringassignstr672
 	sta new_status+1
 	jsr update_status
-	; LineNumber: 543
+	; LineNumber: 555
 	jsr display_text
-	; LineNumber: 547
-MainProgram_while646
-MainProgram_loopstart650
+	; LineNumber: 559
+MainProgram_while674
+MainProgram_loopstart678
 	; Binary clause Simplified: NOTEQUALS
 	lda game_running
 	; Compare with pure num / var optimization
 	cmp #$0;keep
-	beq MainProgram_localfailed692
-	jmp MainProgram_ConditionalTrueBlock647
-MainProgram_localfailed692
-	jmp MainProgram_elsedoneblock649
-MainProgram_ConditionalTrueBlock647: ;Main true block ;keep 
-	; LineNumber: 548
-	; LineNumber: 553
+	beq MainProgram_localfailed720
+	jmp MainProgram_ConditionalTrueBlock675
+MainProgram_localfailed720
+	jmp MainProgram_elsedoneblock677
+MainProgram_ConditionalTrueBlock675: ;Main true block ;keep 
+	; LineNumber: 560
+	; LineNumber: 565
 	
 ; // Main loop
 ; // Backup the current position			
 	lda x
 	; Calling storevariable on generic assign expression
 	sta oldx
-	; LineNumber: 554
+	; LineNumber: 566
 	lda y
 	; Calling storevariable on generic assign expression
 	sta oldy
-	; LineNumber: 557
+	; LineNumber: 569
 	
 ; // Get keyboard input
 	jsr txt_get_key
 	; Calling storevariable on generic assign expression
 	sta key_press
-	; LineNumber: 560
+	; LineNumber: 572
 	lda #$51
 	cmp key_press ;keep
-	bne MainProgram_casenext695
-	; LineNumber: 562
+	bne MainProgram_casenext723
+	; LineNumber: 574
 	; Binary clause Simplified: GREATEREQUAL
 	lda y
 	; Compare with pure num / var optimization
 	cmp #$1;keep
-	bcc MainProgram_elsedoneblock700
-MainProgram_ConditionalTrueBlock698: ;Main true block ;keep 
-	; LineNumber: 562
+	bcc MainProgram_elsedoneblock728
+MainProgram_ConditionalTrueBlock726: ;Main true block ;keep 
+	; LineNumber: 574
 	
 ; // Check the pressed key
 ; // Cursor keys defined in unit		        
 	; Test Inc dec D
 	dec y
-MainProgram_elsedoneblock700
-	jmp MainProgram_caseend694
-MainProgram_casenext695
+MainProgram_elsedoneblock728
+	jmp MainProgram_caseend722
+MainProgram_casenext723
 	lda #$41
 	cmp key_press ;keep
-	bne MainProgram_casenext703
-	; LineNumber: 563
+	bne MainProgram_casenext731
+	; LineNumber: 575
 	; Binary clause Simplified: LESS
 	lda y
 	; Compare with pure num / var optimization
 	cmp #$17;keep
-	bcs MainProgram_elsedoneblock708
-MainProgram_ConditionalTrueBlock706: ;Main true block ;keep 
-	; LineNumber: 563
+	bcs MainProgram_elsedoneblock736
+MainProgram_ConditionalTrueBlock734: ;Main true block ;keep 
+	; LineNumber: 575
 	; Test Inc dec D
 	inc y
-MainProgram_elsedoneblock708
-	jmp MainProgram_caseend694
-MainProgram_casenext703
+MainProgram_elsedoneblock736
+	jmp MainProgram_caseend722
+MainProgram_casenext731
 	lda #$4f
 	cmp key_press ;keep
-	bne MainProgram_casenext711
-	; LineNumber: 564
+	bne MainProgram_casenext739
+	; LineNumber: 576
 	; Binary clause Simplified: GREATEREQUAL
 	lda x
 	; Compare with pure num / var optimization
 	cmp #$1;keep
-	bcc MainProgram_elsedoneblock716
-MainProgram_ConditionalTrueBlock714: ;Main true block ;keep 
-	; LineNumber: 564
+	bcc MainProgram_elsedoneblock744
+MainProgram_ConditionalTrueBlock742: ;Main true block ;keep 
+	; LineNumber: 576
 	; Test Inc dec D
 	dec x
-MainProgram_elsedoneblock716
-	jmp MainProgram_caseend694
-MainProgram_casenext711
+MainProgram_elsedoneblock744
+	jmp MainProgram_caseend722
+MainProgram_casenext739
 	lda #$50
 	cmp key_press ;keep
-	bne MainProgram_casenext719
-	; LineNumber: 565
+	bne MainProgram_casenext747
+	; LineNumber: 577
 	; Binary clause Simplified: LESS
 	lda x
 	; Compare with pure num / var optimization
 	cmp #$27;keep
-	bcs MainProgram_elsedoneblock724
-MainProgram_ConditionalTrueBlock722: ;Main true block ;keep 
-	; LineNumber: 565
+	bcs MainProgram_elsedoneblock752
+MainProgram_ConditionalTrueBlock750: ;Main true block ;keep 
+	; LineNumber: 577
 	; Test Inc dec D
 	inc x
-MainProgram_elsedoneblock724
-MainProgram_casenext719
-MainProgram_caseend694
-	; LineNumber: 573
+MainProgram_elsedoneblock752
+MainProgram_casenext747
+MainProgram_caseend722
+	; LineNumber: 585
 	
 ; // Find out if the space we want to move to
 ; // is empty or if it contains anything special
@@ -2905,21 +3021,21 @@ MainProgram_caseend694
 	jsr levels_get_buffer
 	; Calling storevariable on generic assign expression
 	sta charat
-	; LineNumber: 577
+	; LineNumber: 589
 	; Binary clause Simplified: NOTEQUALS
 	; Compare with pure num / var optimization
 	cmp space_char;keep
-	beq MainProgram_elsedoneblock730
-MainProgram_ConditionalTrueBlock728: ;Main true block ;keep 
-	; LineNumber: 578
-	; LineNumber: 581
+	beq MainProgram_elsedoneblock758
+MainProgram_ConditionalTrueBlock756: ;Main true block ;keep 
+	; LineNumber: 590
+	; LineNumber: 593
 	
 ; // $20 is space
 ; // Tile isn't empty so check what should happen
 	jsr check_collisions
-	; LineNumber: 583
-MainProgram_elsedoneblock730
-	; LineNumber: 589
+	; LineNumber: 595
+MainProgram_elsedoneblock758
+	; LineNumber: 601
 	
 ; // Remove old position
 ; // Rather than blank could also get background
@@ -2934,7 +3050,7 @@ MainProgram_elsedoneblock730
 	; Calling storevariable on generic assign expression
 	sta levels_plot_ch
 	jsr levels_plot_buffer
-	; LineNumber: 593
+	; LineNumber: 605
 	
 ; // Keep the new position and output
 ; // our player
@@ -2948,23 +3064,23 @@ MainProgram_elsedoneblock730
 	; Calling storevariable on generic assign expression
 	sta levels_plot_ch
 	jsr levels_plot_buffer
-	; LineNumber: 597
+	; LineNumber: 609
 	
 ; // Update screen from the buffer
 	jsr levels_refresh_screen
-	; LineNumber: 599
-	jmp MainProgram_while646
-MainProgram_elsedoneblock649
-MainProgram_loopend651
-	; LineNumber: 603
+	; LineNumber: 611
+	jmp MainProgram_while674
+MainProgram_elsedoneblock677
+MainProgram_loopend679
+	; LineNumber: 615
 	
 ; // Show end screen
 	jsr show_end_screen
-	; LineNumber: 606
-	jmp MainProgram_while546
-MainProgram_elsedoneblock549
-MainProgram_loopend551
-	; LineNumber: 608
+	; LineNumber: 618
+	jmp MainProgram_while574
+MainProgram_elsedoneblock577
+MainProgram_loopend579
+	; LineNumber: 620
 	; End of program
 	; Ending memory block at $810
 show_start_screen_stringassignstr294		dc.b	"dddddddddddddd"
@@ -3075,33 +3191,45 @@ door_stringassignstr471		dc.b	"KEY USED! S"
 	dc.b	0
 door_stringassignstr475		dc.b	"YOU NEED A KEY!"
 	dc.b	0
-combat_stringassignstr483		dc.b	"YOU WON THIS FIGHT"
+combat_stringassignstr488		dc.b	"YOU WON THIS FIGHT - HAVE A KEY!"
 	dc.b	0
-combat_stringassignstr486		dc.b	"YOU LOST THIS FIGHT"
+combat_stringassignstr491		dc.b	"YOU WON THIS FIGHT               "
 	dc.b	0
-combat_stringassignstr497		dc.b	"YOU WON THIS FIGHT"
+combat_stringassignstr494		dc.b	"YOU WON THIS FIGHT - HAVE A KEY!"
 	dc.b	0
-combat_stringassignstr500		dc.b	"YOU LOST THIS FIGHT"
+combat_stringassignstr497		dc.b	"YOU WON THIS FIGHT               "
 	dc.b	0
-check_collisions_stringassignstr512		dc.b	"GAZER ATTACKS!"
+combat_stringassignstr500		dc.b	"YOU LOST THIS FIGHT                  "
 	dc.b	0
-check_collisions_stringassignstr516		dc.b	"ARTIFACT!"
+combat_stringassignstr516		dc.b	"YOU WON THIS FIGHT - HAVE A KEY!"
 	dc.b	0
-check_collisions_stringassignstr522		dc.b	"KEY ACQUIRED"
+combat_stringassignstr519		dc.b	"YOU WON THIS FIGHT               "
 	dc.b	0
-check_collisions_stringassignstr526		dc.b	"AHH THAT'S BETTER!"
+combat_stringassignstr522		dc.b	"YOU WON THIS FIGHT - HAVE A KEY!"
 	dc.b	0
-check_collisions_stringassignstr530		dc.b	"GOBBO ATTACKS!"
+combat_stringassignstr525		dc.b	"YOU WON THIS FIGHT               "
 	dc.b	0
-check_collisions_stringassignstr535		dc.b	"KA-CHING!"
+combat_stringassignstr528		dc.b	"YOU LOST THIS FIGHT                  "
 	dc.b	0
-check_collisions_stringassignstr539		dc.b	"RAT ATTACKS!"
+check_collisions_stringassignstr540		dc.b	"GAZER ATTACKS!"
 	dc.b	0
-check_collisions_stringassignstr544		dc.b	"EXISTING TILE:"
+check_collisions_stringassignstr544		dc.b	"ARTIFACT!"
 	dc.b	0
-MainProgram_stringassignstr553		dc.b	"WELCOME ADVENTURER!"
+check_collisions_stringassignstr550		dc.b	"KEY ACQUIRED"
 	dc.b	0
-MainProgram_stringassignstr644		dc.b	"WELCOME ADVENTURER!"
+check_collisions_stringassignstr554		dc.b	"AHH THAT'S BETTER!"
+	dc.b	0
+check_collisions_stringassignstr558		dc.b	"GOBBO ATTACKS!"
+	dc.b	0
+check_collisions_stringassignstr563		dc.b	"KA-CHING!"
+	dc.b	0
+check_collisions_stringassignstr567		dc.b	"RAT ATTACKS!"
+	dc.b	0
+check_collisions_stringassignstr572		dc.b	"EXISTING TILE:"
+	dc.b	0
+MainProgram_stringassignstr581		dc.b	"WELCOME ADVENTURER!"
+	dc.b	0
+MainProgram_stringassignstr672		dc.b	"WELCOME ADVENTURER!"
 	dc.b	0
 EndBlock810:
 	org $6000
