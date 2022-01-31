@@ -190,6 +190,12 @@ END SUB
 SUB load_map ()
 
 
+    OPEN "recent_file.txt" FOR INPUT AS #3
+    LINE INPUT #3, map_file$
+    CLOSE #3
+
+
+
     DIM i_byte AS _UNSIGNED _BYTE
     DIM b_tile AS _UNSIGNED INTEGER
     tiler = 0
@@ -237,6 +243,16 @@ END SUB
 
 ' OUTPUT THE MAP
 SUB save_map ()
+    LOCATE 1, 1
+    PRINT "_________________________________"
+    LOCATE 1, 1
+    PRINT "PROVIDE FILENAME OR HIT ENTER FOR '" + map_file$ + "'";
+    INPUT "", i$
+    IF i$ = "" THEN
+        i$ = map_file$
+    ELSE
+        map_file$ = i$
+    END IF
 
     ' SAVE THE TILES
     OPEN map_file$ FOR BINARY AS #1
@@ -246,9 +262,16 @@ SUB save_map ()
     CLOSE #1
 
     LOCATE 1, 1
+    PRINT "_________________________________"
+    LOCATE 1, 1
     PRINT "MAP DATA SAVED"; UBOUND(map, 1)
 
 
+    OPEN "recent_file.txt" FOR OUTPUT AS #3
+    PRINT #3, map_file$
+    CLOSE #3
+
+    _DELAY 0.5
 
 END SUB
 
@@ -267,6 +290,7 @@ END SUB
 
 ' LOAD THE CELL DATA
 SUB load_tiles ()
+
 
     ' GET THE CURRENT TILE DATA
     OPEN tiles_file$ FOR BINARY AS #2

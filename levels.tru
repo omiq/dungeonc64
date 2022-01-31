@@ -30,7 +30,9 @@ var
 	);
 
 	// Load level instead of array
-	level: incbin("map.bin");	
+	level1: incbin("map1.bin");	
+	level2: incbin("map2.bin");	
+	level3: incbin("map3.bin");	
 
 
 	// Put a char in the screen buffer
@@ -93,8 +95,22 @@ var
 
 		// set to draw tiles
 		dest:=#screen_buffer;	
-		level_p:=#level;
+		
+		if(current_level=0) then
+		begin
+			level_p:=#level1;
+		end;
+		
+		if(current_level=1) then
+		begin
+			level_p:=#level2;
+		end;
 
+		if(current_level > 1) then
+		begin
+			level_p:=#level3;
+		end;
+		
 		
 		for t_y:=0 to 6 do
 		begin
