@@ -125,6 +125,9 @@ var
 		// Health
 		levels::plot_buffer(1,14,83);		
 		
+		// South Door
+		levels::plot_buffer(8,17,$43);		
+		
 	
 	end;
 	

@@ -4,6 +4,7 @@ program dungeon64;
 
 //	@projectsettings "system" PET
 //	@projectsettings "petmodel" "4032"
+//
 	@projectsettings "system" C64
 
 // @projectsettings "system" VIC20

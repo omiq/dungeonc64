@@ -282,25 +282,41 @@
 	begin
 
 		// Check if have a key		
-		if(keys>0) then 
+		if(keys>0 or charat=93) then 
 		begin
-			dec(keys);
-			update_status("KEY USED!");
-			
+			if (charat<>93) then 
+			begin	
+				dec(keys);
+				update_status("KEY USED!");
+			end;			
+
 			if(x=0) then update_status("KEY USED! W");
 			if(x=30) then update_status("KEY USED! E");
-			if(y=0) then update_status("KEY USED! N");
+			if(y=0) then 
+			begin
+				update_status("KEY USED! N");
+				y:=16;
+				levels::draw_level();
+				// Place the open door
+				levels::plot_buffer(x,17,93);
+			end;
+
+
 			if(y=17) then 
 			begin
+
+				// Ta-da
 				update_status("KEY USED! S");
 				inc(levels::current_level);
-				dec(y);
+				y:=1;
 				levels::draw_level();
+				// Place the open door
+				levels::plot_buffer(x,0,93);
 			end;
 		end
 		else
 		begin
-			update_status("YOU NEED A KEY!");
+			update_status("YOU NEED A KEY!                    ");
 			
 			// Reset to backup position
 			x:=oldx;
@@ -325,7 +341,7 @@
 				// Reset player to backup position
 				x:=oldx;
 				y:=oldy;		
-				update_status("YOU WON THIS FIGHT - HAVE A KEY!");	
+				update_status("GOBBO DROPPED A KEY!             ");	
 			end			
 			else
 			begin
@@ -380,6 +396,11 @@
 				begin  
 					door();
 				end;
+				
+			93: // Opendoor
+				begin  
+					door();
+				end;	
 
 			75: // Key
 				begin 
