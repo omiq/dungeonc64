@@ -281,27 +281,42 @@
 	procedure door();
 	begin
 
-		// Check if have a key		
-		if(keys>0 or charat=93) then 
-		begin
+			// Check if have a key		
+			if(keys>0 or charat=93) then 
+			begin			
+		
+		
 			if (charat<>93) then 
 			begin	
 				dec(keys);
 				update_status("KEY USED!");
+				// Place the open door
+				levels::plot_buffer(x,y,93);
+			
+
+				
+/* repels, useful for later				x:=x+((oldx-x)*2);
+				y:=y+((oldy-y)*2);
+*/				
 			end;			
+
+
 
 			if(x=0) then update_status("KEY USED! W");
 			if(x=30) then update_status("KEY USED! E");
+			
+			// North Door
 			if(y=0) then 
 			begin
 				update_status("KEY USED! N");
 				y:=16;
+				oldy:=16;
 				levels::draw_level();
 				// Place the open door
 				levels::plot_buffer(x,17,93);
 			end;
 
-
+			// South Door
 			if(y=17) then 
 			begin
 
@@ -309,10 +324,17 @@
 				update_status("KEY USED! S");
 				inc(levels::current_level);
 				y:=1;
+				oldy:=1;
 				levels::draw_level();
 				// Place the open door
 				levels::plot_buffer(x,0,93);
 			end;
+			
+			
+				// Reset to new position
+				x:=x-(oldx-x);
+				y:=y-(oldy-y);
+			
 		end
 		else
 		begin
