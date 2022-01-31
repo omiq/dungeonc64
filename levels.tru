@@ -33,7 +33,7 @@ var
 	level1: incbin("map1.bin");	
 	level2: incbin("map2.bin");	
 	level3: incbin("map3.bin");	
-
+	level4: incbin("map4.bin");	
 
 	// Put a char in the screen buffer
 	function get_buffer(buf_x, buf_y: byte):byte;
@@ -106,10 +106,16 @@ var
 			level_p:=#level2;
 		end;
 
-		if(current_level > 1) then
+		if(current_level=2) then
 		begin
 			level_p:=#level3;
 		end;
+		
+		if(current_level>2) then
+		begin
+			level_p:=#level4;
+		end;
+				
 		
 		
 		for t_y:=0 to 6 do

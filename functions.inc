@@ -304,7 +304,7 @@
 			// North Door
 			if(y=0) then 
 			begin
-				if (levels::current_level >= 1) then dec(levels::current_level);
+				if (levels::current_level > 0) then dec(levels::current_level);
 				update_status("KEY USED! N");
 				y:=16;
 				oldy:=16;
