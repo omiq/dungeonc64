@@ -293,11 +293,7 @@
 				// Place the open door
 				levels::plot_buffer(x,y,93);
 			
-
-				
-/* repels, useful for later				x:=x+((oldx-x)*2);
-				y:=y+((oldy-y)*2);
-*/				
+			
 			end;			
 
 
@@ -375,9 +371,18 @@
 			
 			dec(health);
 	
-			// Reset to backup position
-			x:=oldx;
-			y:=oldy;		
+			// Repel to position
+				x:=x+((oldx-x)*2);
+				y:=y+((oldy-y)*2);
+				
+				// Find out if the space we want to move to
+				// is empty or if it contains anything special
+				charat:=levels::get_buffer(x,y);
+				if (charat <> 32) then
+				begin
+					x:=oldx;
+					y:=oldy;
+				end;
 			
 			update_status("YOU LOST THIS FIGHT                  ");
 			
