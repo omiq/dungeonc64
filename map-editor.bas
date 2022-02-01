@@ -38,7 +38,11 @@ map_file$ = "map.bin"
 
 
 ' BUTTONS
-CALL draw_button("Save", 242, 0)
+CALL draw_button("Load", 242, 0)
+
+CALL draw_button("Save", 300, 0)
+
+
 CALL draw_button("X", 620, 0)
 
 
@@ -86,7 +90,7 @@ DIM draw_tile AS _UNSIGNED _BYTE
 
 DO
     IF _MOUSEINPUT THEN '  skip keyboard reads
-        LOCATE 1, 1
+        LOCATE 1, 2
         PRINT _MOUSEX; _MOUSEY;
         IF _MOUSEX > 15 AND _MOUSEX < 182 AND _MOUSEY > 15 AND _MOUSEY < 155 THEN
 
@@ -97,7 +101,7 @@ DO
 
                 selected_tile = INT((_MOUSEX - 15) / 24) + INT((tmp_row * 7))
                 IF selected_tile > 41 THEN selected_tile = selected_tile - 7
-                LOCATE 1, 10
+                LOCATE 1, 13
                 PRINT "SELECTED:"; selected_tile
 
 
@@ -122,9 +126,13 @@ DO
             ' [QUIT]
             IF _MOUSEX > 620 AND _MOUSEY < 20 AND _MOUSEBUTTON(1) THEN END
 
+            ' [LOAD]
+            IF _MOUSEX > 241 AND _MOUSEX < 293 AND _MOUSEY > 0 AND _MOUSEY < 20 THEN
+                IF _MOUSEBUTTON(1) THEN CALL load_map
+            END IF
 
             ' [SAVE]
-            IF _MOUSEX > 241 AND _MOUSEX < 293 AND _MOUSEY > 0 AND _MOUSEY < 20 THEN
+            IF _MOUSEX > 299 AND _MOUSEX < 352 AND _MOUSEY > 0 AND _MOUSEY < 20 THEN
                 IF _MOUSEBUTTON(1) THEN CALL save_map
             END IF
 
@@ -194,6 +202,25 @@ SUB load_map ()
     LINE INPUT #3, map_file$
     CLOSE #3
 
+    STATIC firstCall AS INTEGER
+
+    ' Initial load is without dialog input
+    IF firstCall = 0 THEN
+        firstCall = -1
+    ELSE
+        LOCATE 22, 1
+        PRINT SPC(40)
+        LOCATE 22, 1
+        PRINT "PROVIDE FILENAME OR HIT ENTER FOR '" + map_file$ + "': ";
+        INPUT "", i$
+
+        IF i$ = "" THEN
+            i$ = map_file$
+        ELSE
+            map_file$ = i$
+        END IF
+
+    END IF
 
 
     DIM i_byte AS _UNSIGNED _BYTE
@@ -232,9 +259,12 @@ SUB load_map ()
     NEXT
 
 
-    LOCATE 1, 1
+    LOCATE 22, 1
     PRINT "MAP DATA LOADED"; UBOUND(map, 1)
-
+    _DELAY 1
+    LOCATE 22, 1
+    PRINT SPC(60)
+    CALL draw_map_grid
 
 END SUB
 
@@ -243,10 +273,10 @@ END SUB
 
 ' OUTPUT THE MAP
 SUB save_map ()
-    LOCATE 1, 1
-    PRINT "_________________________________"
-    LOCATE 1, 1
-    PRINT "PROVIDE FILENAME OR HIT ENTER FOR '" + map_file$ + "'";
+    LOCATE 22, 1
+    PRINT SPC(40)
+    LOCATE 22, 1
+    PRINT "PROVIDE FILENAME OR HIT ENTER FOR '" + map_file$ + "': ";
     INPUT "", i$
     IF i$ = "" THEN
         i$ = map_file$
@@ -261,17 +291,20 @@ SUB save_map ()
 
     CLOSE #1
 
-    LOCATE 1, 1
-    PRINT "_________________________________"
-    LOCATE 1, 1
+    LOCATE 22, 1
+    PRINT SPC(60)
+    LOCATE 22, 1
     PRINT "MAP DATA SAVED"; UBOUND(map, 1)
+    _DELAY 1
+    LOCATE 22, 1
+    PRINT SPC(60)
 
 
     OPEN "recent_file.txt" FOR OUTPUT AS #3
     PRINT #3, map_file$
     CLOSE #3
 
-    _DELAY 0.5
+
 
 END SUB
 
